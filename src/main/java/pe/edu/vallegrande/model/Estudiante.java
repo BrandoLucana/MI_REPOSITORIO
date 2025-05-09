@@ -1,14 +1,14 @@
-package pe.edu.vallegrande.modelo;
+package pe.edu.vallegrande.model;
 
 public class Estudiante {
+    private int id;
     private String nombre;
     private String apellido;
     private int edad;
-    private String categoria;
-
     private String dni;
     private String correo;
     private String celular;
+    private String categoria;
     private String genero;
 
     public Estudiante(String nombre, String apellido, int edad, String categoria) {
@@ -16,6 +16,47 @@ public class Estudiante {
         this.apellido = apellido;
         this.edad = edad;
         this.categoria = categoria;
+    }
+
+    // Getters
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public String getGenero() {
+        return genero;
     }
 
     // Setters

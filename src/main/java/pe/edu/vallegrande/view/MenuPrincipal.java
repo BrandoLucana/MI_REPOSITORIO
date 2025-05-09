@@ -1,8 +1,9 @@
-package pe.edu.vallegrande;
+package pe.edu.vallegrande.view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import pe.edu.vallegrande.controller.EntrenadorController; // Importar el controlador
 
 public class MenuPrincipal extends JFrame {
 
@@ -57,8 +58,17 @@ public class MenuPrincipal extends JFrame {
         add(panelBotones, BorderLayout.CENTER);
 
         // EVENTOS
-        btnFormularioEstudiante.addActionListener(e -> new FormularioEstudiante().setVisible(true));
-        btnFormularioEntrenador.addActionListener(e -> new FormularioEntrenador().setVisible(true));
+        btnFormularioEstudiante.addActionListener(e -> {
+            new FormularioEstudiante().setVisible(true);
+        });
+
+        btnFormularioEntrenador.addActionListener(e -> {
+            FormularioEntrenador formularioEntrenador = new FormularioEntrenador();
+            EntrenadorController entrenadorController = new EntrenadorController(formularioEntrenador);
+            formularioEntrenador.setController(entrenadorController);
+            formularioEntrenador.setVisible(true);
+        });
+
         btnTorneoForm.addActionListener(e -> new GestionTorneos().setVisible(true));
     }
 

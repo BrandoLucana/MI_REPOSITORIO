@@ -1,9 +1,12 @@
-package pe.edu.vallegrande;
+package pe.edu.vallegrande.view;
 
+import pe.edu.vallegrande.model.Torneo;
+import pe.edu.vallegrande.model.TorneoDAO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class GestionTorneos extends JFrame {
     private JTextField txtNombre, txtLugar, txtDescripcion;
@@ -11,8 +14,11 @@ public class GestionTorneos extends JFrame {
     private JSpinner spFecha;
     private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private TorneoDAO torneoDAO;
 
     public GestionTorneos() {
+        torneoDAO = new TorneoDAO();
+
         setTitle("Gestión de Torneos de Vóley");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,21 +103,22 @@ public class GestionTorneos extends JFrame {
         scrollPane.setBounds(20, 230, 740, 200);
         add(scrollPane);
 
-        // Acciones de los botones
-        final int[] id = {1};
+        // Cargar torneos existentes
+        cargarTorneos();
 
+        // Acciones de los botones
         btnAgregar.addActionListener(e -> {
             String nombre = txtNombre.getText();
             String lugar = txtLugar.getText();
             String descripcion = txtDescripcion.getText();
             String nivel = cbNivel.getSelectedItem().toString();
             String estado = cbEstado.getSelectedItem().toString();
-            String fecha = new java.text.SimpleDateFormat("dd/MM/yyyy").format(spFecha.getValue());
+            java.util.Date fecha = (java.util.Date) spFecha.getValue();
 
             if (!nombre.isEmpty() && !lugar.isEmpty()) {
-                modeloTabla.addRow(new Object[]{
-                        id[0]++, nombre, fecha, lugar, nivel, descripcion, estado
-                });
+                Torneo nuevoTorneo = new Torneo(0, nombre, fecha, lugar, nivel, descripcion, estado);
+                torneoDAO.addTorneo(nuevoTorneo);
+                cargarTorneos();  // Refrescar la tabla con los nuevos datos
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Completa al menos el nombre y lugar.");
@@ -121,12 +128,17 @@ public class GestionTorneos extends JFrame {
         btnModificar.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila != -1) {
-                tabla.setValueAt(txtNombre.getText(), fila, 1);
-                tabla.setValueAt(new java.text.SimpleDateFormat("dd/MM/yyyy").format(spFecha.getValue()), fila, 2);
-                tabla.setValueAt(txtLugar.getText(), fila, 3);
-                tabla.setValueAt(cbNivel.getSelectedItem(), fila, 4);
-                tabla.setValueAt(txtDescripcion.getText(), fila, 5);
-                tabla.setValueAt(cbEstado.getSelectedItem(), fila, 6);
+                int id = (int) tabla.getValueAt(fila, 0);
+                String nombre = txtNombre.getText();
+                String lugar = txtLugar.getText();
+                String descripcion = txtDescripcion.getText();
+                String nivel = cbNivel.getSelectedItem().toString();
+                String estado = cbEstado.getSelectedItem().toString();
+                java.util.Date fecha = (java.util.Date) spFecha.getValue();
+
+                Torneo torneoModificado = new Torneo(id, nombre, fecha, lugar, nivel, descripcion, estado);
+                torneoDAO.updateTorneo(torneoModificado);
+                cargarTorneos();  // Refrescar la tabla con los nuevos datos
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona una fila para modificar.");
@@ -136,7 +148,9 @@ public class GestionTorneos extends JFrame {
         btnEliminar.addActionListener(e -> {
             int fila = tabla.getSelectedRow();
             if (fila != -1) {
-                modeloTabla.removeRow(fila);
+                int id = (int) tabla.getValueAt(fila, 0);
+                torneoDAO.deleteTorneo(id);
+                cargarTorneos();  // Refrescar la tabla con los nuevos datos
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
             }
@@ -160,6 +174,17 @@ public class GestionTorneos extends JFrame {
                 }
             }
         });
+    }
+
+    private void cargarTorneos() {
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+        List<Torneo> torneos = torneoDAO.getAllTorneos();
+        for (Torneo torneo : torneos) {
+            modeloTabla.addRow(new Object[]{
+                    torneo.getId(), torneo.getNombre(), torneo.getFecha(), torneo.getLugar(),
+                    torneo.getNivel(), torneo.getDescripcion(), torneo.getEstado()
+            });
+        }
     }
 
     private void limpiarCampos() {

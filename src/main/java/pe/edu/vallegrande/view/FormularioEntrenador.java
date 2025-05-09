@@ -1,13 +1,14 @@
-package pe.edu.vallegrande;
+package pe.edu.vallegrande.view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import pe.edu.vallegrande.controller.EntrenadorController; // Importar el controlador
+import pe.edu.vallegrande.model.Entrenador;
 
 public class FormularioEntrenador extends JFrame {
 
@@ -18,10 +19,12 @@ public class FormularioEntrenador extends JFrame {
     private JButton btnGuardar, btnCancelar, btnEliminar;
 
     // Estructura para el CRUD
-    private ArrayList<Entrenador> entrenadores = new ArrayList<>();
     private JTable tablaEntrenadores;
     private DefaultTableModel modeloTabla;
     private int filaSeleccionada = -1;
+
+    // Referencia al controlador
+    private EntrenadorController controller;
 
     public FormularioEntrenador() {
         setTitle("Formulario de Entrenador");
@@ -48,25 +51,28 @@ public class FormularioEntrenador extends JFrame {
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Nombre
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         panelFormulario.add(new JLabel("Nombre:"), gbc);
         gbc.gridx = 1;
         txtNombre = new JTextField(15);
         panelFormulario.add(txtNombre, gbc);
 
         // Apellido
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         panelFormulario.add(new JLabel("Apellido:"), gbc);
         gbc.gridx = 1;
         txtApellido = new JTextField(15);
         panelFormulario.add(txtApellido, gbc);
 
         // Especialidad
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         panelFormulario.add(new JLabel("Especialidad:"), gbc);
         gbc.gridx = 1;
         comboEspecialidad = new JComboBox<>(new String[]{
@@ -80,21 +86,24 @@ public class FormularioEntrenador extends JFrame {
         panelFormulario.add(comboEspecialidad, gbc);
 
         // Teléfono
-        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         panelFormulario.add(new JLabel("Teléfono:"), gbc);
         gbc.gridx = 1;
         txtTelefono = new JTextField(15);
         panelFormulario.add(txtTelefono, gbc);
 
         // Email
-        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         panelFormulario.add(new JLabel("Email:"), gbc);
         gbc.gridx = 1;
         txtEmail = new JTextField(15);
         panelFormulario.add(txtEmail, gbc);
 
         // Estado
-        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         panelFormulario.add(new JLabel("Activo:"), gbc);
         gbc.gridx = 1;
         chkEstado = new JCheckBox();
@@ -110,7 +119,9 @@ public class FormularioEntrenador extends JFrame {
         panelBotones.add(btnCancelar);
         panelBotones.add(btnGuardar);
 
-        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
         panelFormulario.add(panelBotones, gbc);
 
         panelPrincipal.add(panelFormulario, BorderLayout.WEST);
@@ -118,7 +129,10 @@ public class FormularioEntrenador extends JFrame {
         // Tabla de entrenadores (Center)
         String[] columnas = {"Nombre", "Apellido", "Especialidad", "Teléfono", "Email", "Activo"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
-            @Override public boolean isCellEditable(int row, int column) { return false; }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
         tablaEntrenadores = new JTable(modeloTabla);
         tablaEntrenadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -130,7 +144,7 @@ public class FormularioEntrenador extends JFrame {
             if (!e.getValueIsAdjusting()) {
                 filaSeleccionada = tablaEntrenadores.getSelectedRow();
                 if (filaSeleccionada != -1) {
-                    cargarFormulario(filaSeleccionada);
+                    controller.cargarEntrenadorParaEditar(filaSeleccionada); // Llama al controlador
                 }
             }
         });
@@ -144,6 +158,49 @@ public class FormularioEntrenador extends JFrame {
             new MenuPrincipal().setVisible(true);
         });
         btnEliminar.addActionListener(e -> eliminarSeleccionado());
+    }
+
+    // Método para establecer el controlador
+    public void setController(EntrenadorController controller) {
+        this.controller = controller;
+    }
+
+    // Método para mostrar mensajes
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para mostrar errores
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // Método para limpiar el formulario
+    public void limpiarFormulario() {
+        txtNombre.setText("");
+        txtApellido.setText("");
+        comboEspecialidad.setSelectedIndex(0);
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        chkEstado.setSelected(false);
+        tablaEntrenadores.clearSelection();
+        filaSeleccionada = -1;
+    }
+
+    // Método para cargar los datos de un entrenador en el formulario
+    public void cargarDatosFormulario(Entrenador entrenador) { // Recibe un Entrenador
+        txtNombre.setText(entrenador.getNombre());
+        txtApellido.setText(entrenador.getApellido());
+        comboEspecialidad.setSelectedItem(entrenador.getEspecialidad());
+        txtTelefono.setText(entrenador.getTelefono());
+        txtEmail.setText(entrenador.getEmail());
+        chkEstado.setSelected(entrenador.isActivo());
+        filaSeleccionada = tablaEntrenadores.getSelectedRow();
+    }
+
+    // Método para obtener el modelo de la tabla
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
     }
 
     private void guardarOActualizar() {
@@ -161,25 +218,13 @@ public class FormularioEntrenador extends JFrame {
         }
 
         if (filaSeleccionada == -1) {
-            // Crear
-            Entrenador e = new Entrenador(nombre, apellido, especialidad, telefono, email, activo);
-            entrenadores.add(e);
-            modeloTabla.addRow(new Object[]{nombre, apellido, especialidad, telefono, email, activo});
+            // Nuevo entrenador
+            controller.guardarEntrenador(nombre, apellido, especialidad, telefono, email, activo);
         } else {
-            // Actualizar
-            Entrenador e = entrenadores.get(filaSeleccionada);
-            e.setNombre(nombre); e.setApellido(apellido);
-            e.setEspecialidad(especialidad); e.setTelefono(telefono);
-            e.setEmail(email); e.setActivo(activo);
-
-            modeloTabla.setValueAt(nombre, filaSeleccionada, 0);
-            modeloTabla.setValueAt(apellido, filaSeleccionada, 1);
-            modeloTabla.setValueAt(especialidad, filaSeleccionada, 2);
-            modeloTabla.setValueAt(telefono, filaSeleccionada, 3);
-            modeloTabla.setValueAt(email, filaSeleccionada, 4);
-            modeloTabla.setValueAt(activo, filaSeleccionada, 5);
+            // Actualizar entrenador existente
+            int id = obtenerIdEntrenador(filaSeleccionada); // Debes obtener el ID de la fila seleccionada
+            controller.actualizarEntrenador(id, nombre, apellido, especialidad, telefono, email, activo);
         }
-        limpiarFormulario();
     }
 
     private void eliminarSeleccionado() {
@@ -188,9 +233,8 @@ public class FormularioEntrenador extends JFrame {
                     "¿Eliminar entrenador seleccionado?",
                     "Confirmar", JOptionPane.YES_NO_OPTION);
             if (resp == JOptionPane.YES_OPTION) {
-                entrenadores.remove(filaSeleccionada);
-                modeloTabla.removeRow(filaSeleccionada);
-                limpiarFormulario();
+                int id = obtenerIdEntrenador(filaSeleccionada); // Obtener el ID del entrenador a eliminar
+                controller.eliminarEntrenador(id);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un entrenador para eliminar.",
@@ -198,49 +242,20 @@ public class FormularioEntrenador extends JFrame {
         }
     }
 
-    private void cargarFormulario(int fila) {
-        Entrenador e = entrenadores.get(fila);
-        txtNombre.setText(e.getNombre());
-        txtApellido.setText(e.getApellido());
-        comboEspecialidad.setSelectedItem(e.getEspecialidad());
-        txtTelefono.setText(e.getTelefono());
-        txtEmail.setText(e.getEmail());
-        chkEstado.setSelected(e.isActivo());
+    private int obtenerIdEntrenador(int fila) {
+        // Asumiendo que la primera columna de tu tabla es el ID.
+        // Si no lo es, ajusta el índice de la columna (0 en este caso)
+        return (int) modeloTabla.getValueAt(fila, 0);
     }
 
-    private void limpiarFormulario() {
-        txtNombre.setText("");
-        txtApellido.setText("");
-        comboEspecialidad.setSelectedIndex(0);
-        txtTelefono.setText("");
-        txtEmail.setText("");
-        chkEstado.setSelected(false);
-        tablaEntrenadores.clearSelection();
-        filaSeleccionada = -1;
-    }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FormularioEntrenador().setVisible(true));
-    }
-
-    // Clase interna para modelar un entrenador
-    private static class Entrenador {
-        private String nombre, apellido, especialidad, telefono, email;
-        private boolean activo;
-        public Entrenador(String n, String a, String esp, String t, String e, boolean ac) {
-            nombre=n; apellido=a; especialidad=esp; telefono=t; email=e; activo=ac;
-        }
-        public String getNombre() { return nombre; }
-        public void setNombre(String n) { nombre = n; }
-        public String getApellido() { return apellido; }
-        public void setApellido(String a) { apellido = a; }
-        public String getEspecialidad() { return especialidad; }
-        public void setEspecialidad(String s) { especialidad = s; }
-        public String getTelefono() { return telefono; }
-        public void setTelefono(String t) { telefono = t; }
-        public String getEmail() { return email; }
-        public void setEmail(String e) { email = e; }
-        public boolean isActivo() { return activo; }
-        public void setActivo(boolean a) { activo = a; }
+        SwingUtilities.invokeLater(() -> {
+            FormularioEntrenador formulario = new FormularioEntrenador();
+            // Crear el controlador y pasar la vista
+            EntrenadorController controller = new EntrenadorController(formulario);
+            formulario.setController(controller); // Establecer el controlador en la vista
+            formulario.setVisible(true);
+        });
     }
 }
