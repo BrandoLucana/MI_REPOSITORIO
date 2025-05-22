@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios - Pasión por el Voley</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="{{ url_for('static', filename='css/lista_usuarios.css') }}" rel="stylesheet">
+</head>
+<body class="voley-admin-body">
+    <!-- Header -->
+    <header class="voley-admin-header">
+        <div class="header-container">
+            <div class="logo-title">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" 
+                     alt="Pasión por el Voley">
+                <h1>Administración de Usuarios</h1>
+            </div>
+            <nav>
+                <a href="/formulario" class="voley-admin-btn new-user-btn">
+                    <i class="fas fa-user-plus"></i> Nuevo Registro
+                </a>
+                <a href="/" class="voley-admin-btn home-btn">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="voley-admin-main">
+        <!-- Sección de Filtros -->
+        <section class="filter-section">
+            <div class="section-header">
+                <i class="fas fa-filter"></i>
+                <h2>Filtros de Búsqueda</h2>
+            </div>
+            
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Buscar por nombre:</label>
+                    <input type="text" id="filtro-nombre" placeholder="Nombre...">
+                </div>
+                
+                <div class="filter-group">
+                    <label>Filtrar por nivel:</label>
+                    <select id="filtro-nivel">
+                        <option value="">Todos los niveles</option>
+                        <option value="Principiante">Principiante</option>
+                        <option value="Intermedio">Intermedio</option>
+                        <option value="Avanzado">Avanzado</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="btn-buscar" class="search-btn">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                    <button id="btn-reset" class="reset-btn">
+                        <i class="fas fa-undo"></i> Resetear
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mensajes del sistema -->
+        <div id="mensaje" class="system-message hidden"></div>
+
+        <!-- Tabla de usuarios -->
+        <section class="users-table-section">
+            <div class="section-header">
+                <i class="fas fa-users"></i>
+                <h2>Usuarios Registrados</h2>
+            </div>
+            
+            <div class="table-container">
+                <table id="tabla-usuarios">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Email</th>
+                            <th>Apoderado</th>
+                            <th>Teléfono</th>
+                            <th>Nivel</th>
+                            <th>Posición</th>
+                            <th>Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datos dinámicos se insertarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="{{ url_for('static', filename='js/lista_usuarios.js') }}"></script>
+    
+</body>
+</html>

@@ -1,0 +1,65 @@
+.inscripcion-btn {
+    background-color: white;
+    color: red;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.inscripcion-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+.inscripcion-btn:active {
+    background-color: darkred;
+    color: white;
+}
+
+.group:hover .absolute {
+    display: block;
+    z-index: 50;
+}
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.absolute {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.absolute a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+}
+
+.absolute a:hover {
+    background-color: #f0f0f0;
+}
+
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition: opacity .6s ease-in-out;
+}
+
+.carousel-fade .carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-fade .carousel-item-next,
+.carousel-fade .carousel-item-prev {
+    opacity: 0;
+    z-index: -1;
+}
+
+.carousel-fade .carousel-item-start.active,
+.carousel-fade .carousel-item-end.active {
+    z-index: 1;
+    opacity: 1;
+}

@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios - Pasión por el Voley</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
+    <link href="{{ url_for('static', filename='css/horarios.css') }}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- CABECERA -->
+    <header style="background-color: #DC2626;" class="text-white">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <a href="/" class="flex items-center">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Logo" class="h-16 w-auto mr-4">
+                <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4">
+                    <li><a href="/" class="hover:text-gray-300 font-bold">Inicio</a></li>
+                    <li><a href="/formulario" class="hover:text-gray-300 font-bold">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:text-gray-300 font-bold">Horarios</a></li>
+                    <li><a href="/donde_estamos" class="hover:text-gray-300 font-bold">Dónde Estamos</a></li>
+                    <li><a href="/contactanos" class="hover:text-gray-300 font-bold">Contáctanos</a></li>
+                    <li class="relative group">
+                        <a href="/mas" class="dropbtn hover:text-gray-300 font-bold">Más</a>
+                        <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <button id="menuBtn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z"/>
+                </svg>
+            </button>
+        </div>
+        <div id="menuMobile" class="hidden md:hidden absolute top-full left-0 w-full bg-red-700 shadow-md z-10">
+            <ul class="py-2 flex flex-col items-center">
+                <li><a href="/formulario" class="block py-2 px-4 hover:bg-red-800 font-bold">Inscripciones</a></li>
+                <li><a href="/horarios" class="block py-2 px-4 hover:bg-red-800 font-bold">Horarios</a></li>
+                <li><a href="/donde_estamos" class="block py-2 px-4 hover:bg-red-800 font-bold">Dónde Estamos</a></li>
+                <li><a href="/contactanos" class="block py-2 px-4 hover:bg-red-800 font-bold">Contáctanos</a></li>
+                <li class="relative group w-full text-center">
+                    <a href="/mas" class="block py-2 px-4 hover:bg-red-800 font-bold">Más</a>
+                    <div class="hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 absolute left-1/2 transform -translate-x-1/2 text-gray-800">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <div class="container mx-auto py-8">
+        <h2 class="text-2xl font-bold mb-4">Nuestros Horarios de Entrenamiento</h2>
+        <p class="mb-4">Aquí podrás encontrar los horarios de entrenamiento para las diferentes categorías. ¡Te esperamos!</p>
+
+        <table class="horario-tabla">
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Hora</th>
+                    <th>Categoría</th>
+                    <th>Lugar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Lunes</td><td>4:00 PM - 6:00 PM</td><td>Infantil</td><td>Polideportivo Municipal</td></tr>
+                <tr><td>Martes</td><td>6:30 PM - 8:30 PM</td><td>Juvenil</td><td>Coliseo Cerrado</td></tr>
+                <tr><td>Miércoles</td><td>4:00 PM - 6:00 PM</td><td>Infantil</td><td>Polideportivo Municipal</td></tr>
+                <tr><td>Jueves</td><td>6:30 PM - 8:30 PM</td><td>Adulto</td><td>Coliseo Cerrado</td></tr>
+                <tr><td>Viernes</td><td>5:00 PM - 7:00 PM</td><td>Juvenil</td><td>Polideportivo Municipal</td></tr>
+                <tr><td>Sábado</td><td>9:00 AM - 11:00 AM</td><td>Infantil</td><td>Coliseo Cerrado</td></tr>
+                <tr><td>Sábado</td><td>11:30 AM - 1:30 PM</td><td>Adulto</td><td>Polideportivo Municipal</td></tr>
+                <tr><td>Domingo</td><td>10:00 AM - 12:00 PM</td><td>Entrenamiento Libre (Todas las edades)</td><td>Coliseo Cerrado</td></tr>
+            </tbody>
+        </table>
+
+        <p class="mt-8 text-sm text-gray-600">Nota: Los horarios pueden estar sujetos a cambios. Por favor, consulta nuestras redes o contáctanos.</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" class="hover:text-gray-300">📘</a>
+                    <a href="#" class="hover:text-gray-300">📸</a>
+                    <a href="#" class="hover:text-gray-300">📺</a>
+                    <a href="#" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>&copy; 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('menuMobile').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

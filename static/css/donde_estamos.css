@@ -1,0 +1,6 @@
+.map-container {
+    width: 100%;
+    height: 400px; /* Ajusta la altura según necesites */
+    margin-top: 20px;
+    border: 1px solid #ccc;
+}
