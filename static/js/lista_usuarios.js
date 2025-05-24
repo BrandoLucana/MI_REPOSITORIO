@@ -51,9 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${usuario.posicion || ''}</td>
                 <td>${new Date(usuario.fecha_registro).toLocaleDateString()}</td>
                 <td class="actions-cell">
-                    <button class="action-btn edit-btn" data-id="${usuario.id}">
-                        <i class="fas fa-edit"></i>
-                    </button>
                     <button class="action-btn delete-btn" data-id="${usuario.id}">
                         <i class="fas fa-trash-alt"></i>
                     </button>
@@ -111,14 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Event delegation para botones de acciones
+    // Event delegation para botones de acciones (solo eliminación)
     tbody.addEventListener('click', async function(e) {
-        if (e.target.closest('.edit-btn')) {
-            const id = e.target.closest('.edit-btn').dataset.id;
-            // Redirigir a página de edición
-            window.location.href = `/editar_usuario/${id}`;
-        }
-        
         if (e.target.closest('.delete-btn')) {
             const id = e.target.closest('.delete-btn').dataset.id;
             const usuario = usuarios.find(u => u.id == id);

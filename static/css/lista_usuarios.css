@@ -1,4 +1,4 @@
-/* Variables de color basadas en la imagen */
+/* Variables de color */
 :root {
     --voley-primary: #D10000;
     --voley-primary-dark: #9D0000;
@@ -243,23 +243,24 @@ tr:hover {
     justify-content: center;
 }
 
-.edit-btn {
-    background-color: #FFC107;
-    color: #333;
-}
-
-.edit-btn:hover {
-    background-color: #FFA000;
+/* Mantén tus estilos actuales pero ajusta para la columna de acciones */
+.actions-cell {
+    width: 80px; /* Reducido ya que solo tendrá un botón */
 }
 
 .delete-btn {
-    background-color: #F44336;
+    background-color: #e53e3e;
     color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s;
 }
 
 .delete-btn:hover {
-    background-color: #D32F2F;
+    background-color: #c53030;
 }
+
+/* Elimina estilos relacionados con edit-btn */
 
 /* Mensajes del sistema */
 .system-message {
@@ -294,3 +295,4 @@ tr:hover {
         justify-content: flex-start;
     }
 }
+

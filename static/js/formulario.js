@@ -55,34 +55,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Validación en tiempo real para campos únicos
-    function setupUniqueValidation() {
-        const uniqueFields = form.querySelectorAll('[data-unique]');
+    // Mostrar modal de éxito
+    function showSuccessModal() {
+        // Crear el modal
+        const modal = document.createElement('div');
+        modal.className = 'voley-modal';
+        modal.innerHTML = `
+            <div class="voley-modal-content">
+                <div class="voley-modal-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>¡Registro Exitoso!</h3>
+                <p>El formulario se ha enviado correctamente.</p>
+                <button class="voley-modal-button">Aceptar</button>
+            </div>
+        `;
         
-        uniqueFields.forEach(field => {
-            field.addEventListener('blur', async function() {
-                const fieldName = this.name;
-                const fieldValue = this.value.trim();
-                
-                if (fieldValue) {
-                    try {
-                        const response = await fetch(`/verificar_campo?campo=${fieldName}&valor=${encodeURIComponent(fieldValue)}`);
-                        const result = await response.json();
-                        
-                        if (!result.disponible) {
-                            this.classList.add('error');
-                            const errorMsg = this.getAttribute(`data-error-${fieldName}`) || 'Este valor ya está registrado';
-                            showFieldError(this, errorMsg);
-                        } else {
-                            this.classList.remove('error');
-                            clearFieldError(this);
-                        }
-                    } catch (error) {
-                        console.error('Error al verificar campo único:', error);
-                    }
-                }
-            });
+        document.body.appendChild(modal);
+        
+        // Configurar el botón para redirigir
+        const button = modal.querySelector('.voley-modal-button');
+        button.addEventListener('click', function() {
+            window.location.href = '/'; // Redirigir a la página de inicio
         });
+        
+        // También redirigir automáticamente después de 3 segundos
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 3000);
     }
 
     // Event listeners para los botones Siguiente
@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         if (!formIsValid) {
-            alert('Por favor complete todos los campos requeridos correctamente');
             return;
         }
         
@@ -167,13 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData
             });
             
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            
             const result = await response.json();
             
             if (result.éxito) {
-                // Mostrar mensaje de éxito
-                alert('Registro exitoso!');
-                // Redirigir o reiniciar el formulario
-                window.location.href = '/registro-exitoso';
+                showSuccessModal();
             } else {
                 // Manejar errores del servidor
                 if (result.error === 'dato_duplicado') {
@@ -192,18 +192,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         showFieldError(inputField, result.mensaje);
                     }
                 } else {
-                    alert(result.mensaje || 'Error al procesar el registro');
+                    showNotification('Error: ' + (result.mensaje || 'Error al procesar el registro'), 'error');
                 }
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error de conexión con el servidor');
+            // Solo mostrar error si realmente hay un problema de conexión
+            if (error.message.includes('Failed to fetch')) {
+                showNotification('Error de conexión con el servidor', 'error');
+            }
         }
     });
 
-    // Configurar validación para campos únicos
-    setupUniqueValidation();
-    
     // Mostrar el primer paso al cargar la página
     showStep(currentStep);
 });
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `voley-notification ${type}`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}

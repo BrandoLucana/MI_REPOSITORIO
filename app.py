@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from flask import Flask, render_template, request, jsonify
 import mysql.connector
 from datetime import datetime
 
@@ -23,44 +23,6 @@ def index():
 def formulario():
     return render_template('formulario_unificado.html')
 
-@app.route('/formulario/<int:id>')
-def editar_formulario(id):
-    conn = None
-    cursor = None
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-        
-        # Obtener datos del usuario
-        cursor.execute("""
-            SELECT u.*, a.*, d.*
-            FROM usuarios u
-            LEFT JOIN apoderados a ON u.id = a.usuario_id
-            LEFT JOIN datos_deportivos d ON u.id = d.usuario_id
-            WHERE u.id = %s
-        """, (id,))
-        
-        usuario = cursor.fetchone()
-        
-        if not usuario:
-            flash('Usuario no encontrado', 'danger')
-            return redirect(url_for('lista_usuarios'))
-        
-        # Convertir valores para el formulario
-        usuario['practico_deporte'] = 'si' if usuario['practico_deporte'] else 'no'
-        usuario['seguro_medico'] = True if usuario['seguro_medico'] else False
-        
-        return render_template('formulario_unificado.html', usuario=usuario, edicion=True)
-        
-    except Exception as e:
-        flash(f'Error al cargar usuario para edición: {str(e)}', 'danger')
-        return redirect(url_for('lista_usuarios'))
-    finally:
-        if cursor:
-            cursor.close()
-        if conn:
-            conn.close()
-
 @app.route('/lista_usuarios')
 def lista_usuarios():
     return render_template('lista_usuarios.html')
@@ -73,11 +35,27 @@ def registrar_usuario():
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
-        # Determinar si es una edición
-        es_edicion = 'usuario_id' in request.form
-        usuario_id = request.form.get('usuario_id')
+        # Validar que no sea un intento de edición
+        if 'usuario_id' in request.form:
+            return jsonify({
+                "éxito": False,
+                "mensaje": "La edición de usuarios no está permitida por políticas de privacidad"
+            }), 403
         
-        # Procesar datos del formulario
+        # Validar campos requeridos
+        campos_requeridos = ['nombre', 'apellidos', 'fecha_nacimiento', 'edad', 'email', 
+                           'nombre_apoderado', 'telefono_apoderado', 'centro_salud', 
+                           'tipo_documento', 'numero_documento']
+        
+        for campo in campos_requeridos:
+            if not request.form.get(campo):
+                return jsonify({
+                    "éxito": False,
+                    "mensaje": f"El campo {campo.replace('_', ' ')} es requerido",
+                    "campo": campo
+                }), 400
+        
+        # Procesar datos del formulario (solo creación)
         datos_personales = {
             'nombre': request.form['nombre'],
             'apellidos': request.form['apellidos'],
@@ -85,27 +63,19 @@ def registrar_usuario():
             'edad': int(request.form['edad']),
             'email': request.form['email'],
             'direccion': request.form.get('direccion', ''),
-            'acepto_terminos': True
+            'acepto_terminos': True,
+            'fecha_registro': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
         
-        if es_edicion:
-            # Actualizar usuario existente
-            datos_personales['id'] = usuario_id
-            cursor.execute("""
-                UPDATE usuarios 
-                SET nombre = %(nombre)s, apellidos = %(apellidos)s, 
-                    fecha_nacimiento = %(fecha_nacimiento)s, edad = %(edad)s,
-                    email = %(email)s, direccion = %(direccion)s
-                WHERE id = %(id)s
-            """, datos_personales)
-        else:
-            # Insertar nuevo usuario
-            datos_personales['fecha_registro'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute("""
-                INSERT INTO usuarios (nombre, apellidos, fecha_nacimiento, edad, email, direccion, acepto_terminos, fecha_registro)
-                VALUES (%(nombre)s, %(apellidos)s, %(fecha_nacimiento)s, %(edad)s, %(email)s, %(direccion)s, %(acepto_terminos)s, %(fecha_registro)s)
-            """, datos_personales)
-            usuario_id = cursor.lastrowid
+        # Insertar nuevo usuario
+        cursor.execute("""
+            INSERT INTO usuarios (nombre, apellidos, fecha_nacimiento, edad, email, 
+                                direccion, acepto_terminos, fecha_registro)
+            VALUES (%(nombre)s, %(apellidos)s, %(fecha_nacimiento)s, %(edad)s, 
+                   %(email)s, %(direccion)s, %(acepto_terminos)s, %(fecha_registro)s)
+        """, datos_personales)
+        
+        usuario_id = cursor.lastrowid
         
         # Datos del apoderado
         datos_apoderado = {
@@ -118,24 +88,12 @@ def registrar_usuario():
             'numero_documento': request.form['numero_documento']
         }
         
-        if es_edicion:
-            cursor.execute("""
-                UPDATE apoderados 
-                SET nombre_apoderado = %(nombre_apoderado)s, 
-                    telefono_apoderado = %(telefono_apoderado)s,
-                    correo_apoderado = %(correo_apoderado)s,
-                    centro_salud = %(centro_salud)s,
-                    tipo_documento = %(tipo_documento)s,
-                    numero_documento = %(numero_documento)s
-                WHERE usuario_id = %(usuario_id)s
-            """, datos_apoderado)
-        else:
-            cursor.execute("""
-                INSERT INTO apoderados (usuario_id, nombre_apoderado, telefono_apoderado, correo_apoderado, 
-                                      centro_salud, tipo_documento, numero_documento)
-                VALUES (%(usuario_id)s, %(nombre_apoderado)s, %(telefono_apoderado)s, %(correo_apoderado)s, 
-                       %(centro_salud)s, %(tipo_documento)s, %(numero_documento)s)
-            """, datos_apoderado)
+        cursor.execute("""
+            INSERT INTO apoderados (usuario_id, nombre_apoderado, telefono_apoderado, 
+                                  correo_apoderado, centro_salud, tipo_documento, numero_documento)
+            VALUES (%(usuario_id)s, %(nombre_apoderado)s, %(telefono_apoderado)s, 
+                   %(correo_apoderado)s, %(centro_salud)s, %(tipo_documento)s, %(numero_documento)s)
+        """, datos_apoderado)
         
         # Datos deportivos
         datos_deportivos = {
@@ -146,30 +104,44 @@ def registrar_usuario():
             'seguro_medico': 1 if request.form.get('seguro_medico') else 0
         }
         
-        if es_edicion:
-            cursor.execute("""
-                UPDATE datos_deportivos 
-                SET nivel_actual = %(nivel_actual)s, 
-                    practico_deporte = %(practico_deporte)s,
-                    posicion = %(posicion)s,
-                    seguro_medico = %(seguro_medico)s
-                WHERE usuario_id = %(usuario_id)s
-            """, datos_deportivos)
-        else:
-            cursor.execute("""
-                INSERT INTO datos_deportivos (usuario_id, nivel_actual, practico_deporte, posicion, seguro_medico)
-                VALUES (%(usuario_id)s, %(nivel_actual)s, %(practico_deporte)s, %(posicion)s, %(seguro_medico)s)
-            """, datos_deportivos)
+        cursor.execute("""
+            INSERT INTO datos_deportivos (usuario_id, nivel_actual, practico_deporte, posicion, seguro_medico)
+            VALUES (%(usuario_id)s, %(nivel_actual)s, %(practico_deporte)s, %(posicion)s, %(seguro_medico)s)
+        """, datos_deportivos)
         
         conn.commit()
-        flash('Usuario ' + ('actualizado' if es_edicion else 'registrado') + ' exitosamente!', 'success')
-        return redirect(url_for('lista_usuarios'))
+        
+        return jsonify({
+            "éxito": True,
+            "mensaje": "Usuario registrado exitosamente!",
+            "redireccion": url_for('lista_usuarios')
+        })
+        
+    except mysql.connector.IntegrityError as e:
+        if conn:
+            conn.rollback()
+        
+        # Manejar errores de duplicados
+        if "Duplicate entry" in str(e):
+            campo = "email" if "email" in str(e) else "numero_documento"
+            return jsonify({
+                "éxito": False,
+                "mensaje": f"El {campo.replace('_', ' ')} ya está registrado",
+                "campo": campo
+            }), 400
+        
+        return jsonify({
+            "éxito": False,
+            "mensaje": f"Error de base de datos: {str(e)}"
+        }), 500
         
     except Exception as e:
         if conn:
             conn.rollback()
-        flash(f'Error al {"editar" if es_edicion else "registrar"} usuario: {str(e)}', 'danger')
-        return redirect(url_for('formulario'))
+        return jsonify({
+            "éxito": False,
+            "mensaje": f'Error al registrar usuario: {str(e)}'
+        }), 500
     finally:
         if cursor:
             cursor.close()
@@ -232,20 +204,25 @@ def eliminar_usuario(id):
         cursor.execute("DELETE FROM usuarios WHERE id = %s", (id,))
         
         conn.commit()
-        flash('Usuario eliminado exitosamente!', 'success')
-        return jsonify({'success': True})
+        return jsonify({
+            "éxito": True,
+            "mensaje": "Usuario eliminado exitosamente!"
+        })
         
     except Exception as e:
         if conn:
             conn.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({
+            "éxito": False,
+            "mensaje": f"Error al eliminar usuario: {str(e)}"
+        }), 500
     finally:
         if cursor:
             cursor.close()
         if conn:
             conn.close()
 
-# Nuevas rutas añadidas
+# Otras rutas de la página
 @app.route('/horarios')
 def horarios():
     return render_template('horarios.html')
