@@ -162,7 +162,7 @@ public class GestionTorneos extends JFrame {
                 if (fila != -1) {
                     txtNombre.setText(tabla.getValueAt(fila, 1).toString());
                     try {
-                        java.util.Date fecha = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(tabla.getValueAt(fila, 2).toString());
+                        java.util.Date fecha = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(tabla.getValueAt(fila, 2).toString());
                         spFecha.setValue(fecha);
                     } catch (Exception ex) {
                         ex.printStackTrace();

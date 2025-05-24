@@ -9,20 +9,20 @@ public class TorneoDAO {
 
     public List<Torneo> getAllTorneos() {
         List<Torneo> torneos = new ArrayList<>();
-        String sql = "SELECT * FROM torneos";
+        String sql = "SELECT * FROM tournament";
         try (Connection conn = ConexionMySQL.conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Torneo torneo = new Torneo(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getDate("fecha"),
-                        rs.getString("lugar"),
-                        rs.getString("nivel"),
-                        rs.getString("descripcion"),
-                        rs.getString("estado")
+                        rs.getInt("tournament_id"),
+                        rs.getString("name"),
+                        rs.getDate("date"),
+                        rs.getString("location"),
+                        rs.getString("level"),
+                        rs.getString("description"),
+                        rs.getString("status")
                 );
                 torneos.add(torneo);
             }
@@ -33,7 +33,7 @@ public class TorneoDAO {
     }
 
     public void addTorneo(Torneo torneo) {
-        String sql = "INSERT INTO torneos (nombre, fecha, lugar, nivel, descripcion, estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tournament (name, date, location, level, description, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -51,7 +51,7 @@ public class TorneoDAO {
 
     // Método para actualizar un torneo
     public void updateTorneo(Torneo torneo) {
-        String sql = "UPDATE torneos SET nombre = ?, fecha = ?, lugar = ?, nivel = ?, descripcion = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE tournament SET name = ?, date = ?, location = ?, level = ?, description = ?, status = ? WHERE tournament_id = ?";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -70,7 +70,7 @@ public class TorneoDAO {
 
     // Método para eliminar un torneo
     public void deleteTorneo(int id) {
-        String sql = "DELETE FROM torneos WHERE id = ?";
+        String sql = "DELETE FROM tournament WHERE tournament_id = ?";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

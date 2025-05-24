@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class ConexionMySQL {
-    private static final String URL = "jdbc:mysql://localhost:3306/appJava?useSSL=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/academia_volley?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "admin123";
 
