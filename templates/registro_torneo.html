@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro de Torneo - Pasión por el Vóley</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='css/registro_torneo.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- CABECERA -->
+    <header style="background-color: #DC2626;" class="text-white">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <a href="/" class="flex items-center">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Logo" class="h-16 w-auto mr-4">
+                <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4">
+                    <li><a href="/" class="hover:text-gray-300 font-bold">Inicio</a></li>
+                    <li><a href="/formulario" class="hover:text-gray-300 font-bold">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:text-gray-300 font-bold">Horarios</a></li>
+                    <li><a href="/donde_estamos" class="hover:text-gray-300 font-bold">Dónde Estamos</a></li>
+                    <li><a href="/contactanos" class="hover:text-gray-300 font-bold">Contáctanos</a></li>
+                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                    <li class="relative group">
+                        <a href="/mas" class="dropbtn hover:text-gray-300 font-bold">Más</a>
+                        <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <button id="menuBtn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z"/>
+                </svg>
+            </button>
+        </div>
+        <div id="menuMobile" class="hidden md:hidden absolute top-full left-0 w-full bg-red-700 shadow-md z-10">
+            <ul class="py-2 flex flex-col items-center">
+                <li><a href="/formulario" class="block py-2 px-4 hover:bg-red-800 font-bold">Inscripciones</a></li>
+                <li><a href="/horarios" class="block py-2 px-4 hover:bg-red-800 font-bold">Horarios</a></li>
+                <li><a href="/donde_estamos" class="block py-2 px-4 hover:bg-red-800 font-bold">Dónde Estamos</a></li>
+                <li><a href="/contactanos" class="block py-2 px-4 hover:bg-red-800 font-bold">Contáctanos</a></li>
+                <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                <li class="relative group w-full text-center">
+                    <a href="/mas" class="block py-2 px-4 hover:bg-red-800 font-bold">Más</a>
+                    <div class="hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 absolute left-1/2 transform -translate-x-1/2 text-gray-800">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+
+<body>
+  <div class="registro-torneo-container">
+    <h1>Registro de Torneo de Vóley</h1>
+    <form id="formTorneo" autocomplete="off">
+      <div class="form-group">
+        <label for="nombre">Nombre del Torneo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del torneo" required />
+      </div>
+
+      <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" name="fecha" required />
+      </div>
+
+      <div class="form-group">
+        <label for="lugar">Lugar</label>
+        <input type="text" id="lugar" name="lugar" placeholder="Ingrese el lugar del torneo" required />
+      </div>
+
+      <div class="form-group">
+        <label for="nivel">Nivel</label>
+        <select id="nivel" name="nivel" required>
+          <option value="">-- Seleccione un nivel --</option>
+          <option value="Aficionado">Aficionado</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" placeholder="Descripción del torneo"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado" required>
+          <option value="">-- Seleccione un estado --</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En Curso">En Curso</option>
+          <option value="Finalizado">Finalizado</option>
+        </select>
+      </div>
+
+      <div class="botones">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <button type="button" class="btn btn-warning">Modificar</button>
+        <button type="button" class="btn btn-danger">Eliminar</button>
+        <button type="reset" class="btn btn-secondary">Limpiar</button>
+      </div>
+    </form>
+    <h2 style="margin-top: 40px; color: #b30000;">Torneos Registrados</h2>
+<table id="tablaTorneos" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+  <thead>
+    <tr style="background-color: #b30000; color: white;">
+      <th style="padding: 10px; border: 1px solid #ddd;">Nombre</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Lugar</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Nivel</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Descripción</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+  </div>
+  <script>
+  const form = document.getElementById('formTorneo');
+  const tablaBody = document.querySelector('#tablaTorneos tbody');
+
+  let filaEditando = null; // Para saber qué fila estamos editando
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById('nombre').value.trim();
+    const fecha = document.getElementById('fecha').value;
+    const lugar = document.getElementById('lugar').value.trim();
+    const nivel = document.getElementById('nivel').value;
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const estado = document.getElementById('estado').value;
+
+    if (!nombre || !fecha || !lugar) {
+      alert('Por favor completa Nombre, Fecha y Lugar.');
+      return;
+    }
+
+    if (filaEditando) {
+      // Estamos editando una fila existente
+      filaEditando.cells[0].textContent = nombre;
+      filaEditando.cells[1].textContent = fecha;
+      filaEditando.cells[2].textContent = lugar;
+      filaEditando.cells[3].textContent = nivel;
+      filaEditando.cells[4].textContent = descripcion;
+      filaEditando.cells[5].textContent = estado;
+
+      filaEditando = null; // Reset
+      form.querySelector('button[type="submit"]').textContent = 'Registrar';
+    } else {
+      // Crear fila nueva
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+        <td style="padding: 8px; border: 1px solid #ddd;">${nombre}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${fecha}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${lugar}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${nivel}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${descripcion}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${estado}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">
+          <button class="btn-modificar" style="margin-right: 5px; background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Modificar</button>
+          <button class="btn-eliminar" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Eliminar</button>
+        </td>
+      `;
+      tablaBody.appendChild(fila);
+
+      // Agregar eventos a los botones
+      fila.querySelector('.btn-modificar').addEventListener('click', () => editarFila(fila));
+      fila.querySelector('.btn-eliminar').addEventListener('click', () => eliminarFila(fila));
+    }
+
+    form.reset();
+  });
+
+  function editarFila(fila) {
+    filaEditando = fila;
+    document.getElementById('nombre').value = fila.cells[0].textContent;
+    document.getElementById('fecha').value = fila.cells[1].textContent;
+    document.getElementById('lugar').value = fila.cells[2].textContent;
+    document.getElementById('nivel').value = fila.cells[3].textContent;
+    document.getElementById('descripcion').value = fila.cells[4].textContent;
+    document.getElementById('estado').value = fila.cells[5].textContent;
+
+    form.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
+  }
+
+  function eliminarFila(fila) {
+    if (confirm('¿Seguro quieres eliminar este torneo?')) {
+      if (filaEditando === fila) {
+        // Si estabas editando esta fila, cancelar edición
+        form.reset();
+        filaEditando = null;
+        form.querySelector('button[type="submit"]').textContent = 'Registrar';
+      }
+      fila.remove();
+    }
+  }
+</script>
+
+
+</body>
+
+    <script>
+        document.getElementById('registroTorneoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const torneo = {
+                nombre: this.nombre.value.trim(),
+                fecha: this.fecha.value,
+                lugar: this.lugar.value.trim(),
+                nivel: this.nivel.value,
+                descripcion: this.descripcion.value.trim(),
+                estado: this.estado.value,
+            };
+
+            if (!torneo.nombre || !torneo.lugar || !torneo.fecha) {
+                alert('Por favor, completa al menos el nombre, fecha y lugar.');
+                return;
+            }
+
+            console.log('Datos del torneo a registrar:', torneo);
+            alert('Torneo registrado correctamente (simulado).');
+
+            // Aquí iría el envío real a backend con fetch/AJAX
+            // fetch('/api/torneos', { method: 'POST', body: JSON.stringify(torneo), headers: {...} })
+
+            this.reset();
+        });
+    </script>
+
+<!-- FOOTER -->
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" class="hover:text-gray-300">📘</a>
+                    <a href="#" class="hover:text-gray-300">📸</a>
+                    <a href="#" class="hover:text-gray-300">📺</a>
+                    <a href="#" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>&copy; 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('menuMobile').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

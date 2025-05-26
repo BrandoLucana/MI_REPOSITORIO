@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import mysql.connector
 from datetime import datetime
 
@@ -235,7 +235,71 @@ def donde_estamos():
 def contactanos():
     return render_template('contactanos.html')
 
-@app.route('/mas')
+@app.route('/torneos')
+def torneos():
+    return render_template('torneo.html')
+
+@app.route('/inscripcion-torneo', methods=['GET', 'POST'])
+def inscripcion_torneo():
+    if request.method == 'POST':
+        nombre_equipo = request.form['nombre_equipo']
+        categoria = request.form['categoria']
+        delegado = request.form['delegado']
+        telefono = request.form['telefono']
+        email = request.form['email']
+        
+        # Aquí guardar en la base de datos o procesar la inscripción
+        
+        return redirect(url_for('torneos'))  # Luego rediriges a la lista de torneos o página de confirmación
+    
+    # Cuando es GET, mostrar el formulario para inscribirse al torneo
+    return render_template('inscripcion-torneo.html')
+
+@app.route('/registro-torneo', methods=['GET', 'POST'])
+def registro_torneo():
+    if request.method == 'POST':
+        nombre_torneo = request.form['nombre_torneo']
+        fecha = request.form['fecha']
+        lugar = request.form['lugar']
+        categoria = request.form['categoria']
+
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                INSERT INTO torneos (nombre_torneo, fecha, lugar, categoria)
+                VALUES (%s, %s, %s, %s)
+            """, (nombre_torneo, fecha, lugar, categoria))
+
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            flash('Torneo registrado exitosamente!', 'success')
+            return redirect(url_for('registro_torneo'))
+
+        except Exception as e:
+            flash(f'Error al registrar torneo: {str(e)}', 'error')
+            return redirect(url_for('registro_torneo'))
+
+    # GET: muestra el formulario
+    return render_template('registro_torneo.html')
+
+@app.route('/login-entrenador', methods=['POST'])
+def login_entrenador():
+    usuario = request.form['usuario']
+    contrasena = request.form['contrasena']
+
+    # Validación simple de ejemplo
+    if usuario == "admin" and contrasena == "1234":
+        # Si login ok, redirige a registro torneo
+        return redirect(url_for('registro_torneo'))
+    else:
+        flash("Usuario o contraseña incorrectos", "error")
+        return redirect(url_for('torneos'))  # Asumiendo que renders torneo.html desde 'torneo'
+
+
 def mas():
     return render_template('mas.html')
 

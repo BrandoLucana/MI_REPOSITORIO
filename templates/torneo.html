@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horarios - Pasión por el Voley</title>
+    <title>Torneos - Pasión por el Vóley</title>
     <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
-    <link href="{{ url_for('static', filename='css/horarios.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/torneos.css') }}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white text-gray-800">
@@ -61,34 +60,53 @@
         </div>
     </header>
 
-    <!-- CONTENIDO -->
-    <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-bold mb-4">Nuestros Horarios de Entrenamiento</h2>
-        <p class="mb-4">Aquí podrás encontrar los horarios de entrenamiento para las diferentes categorías. ¡Te esperamos!</p>
 
-        <table class="horario-tabla">
-            <thead>
-                <tr>
-                    <th>Día</th>
-                    <th>Hora</th>
-                    <th>Categoría</th>
-                    <th>Lugar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Lunes</td><td>4:00 PM - 6:00 PM</td><td>Infantil</td><td>Polideportivo Municipal</td></tr>
-                <tr><td>Martes</td><td>6:30 PM - 8:30 PM</td><td>Juvenil</td><td>Coliseo Cerrado</td></tr>
-                <tr><td>Miércoles</td><td>4:00 PM - 6:00 PM</td><td>Infantil</td><td>Polideportivo Municipal</td></tr>
-                <tr><td>Jueves</td><td>6:30 PM - 8:30 PM</td><td>Adulto</td><td>Coliseo Cerrado</td></tr>
-                <tr><td>Viernes</td><td>5:00 PM - 7:00 PM</td><td>Juvenil</td><td>Polideportivo Municipal</td></tr>
-                <tr><td>Sábado</td><td>9:00 AM - 11:00 AM</td><td>Infantil</td><td>Coliseo Cerrado</td></tr>
-                <tr><td>Sábado</td><td>11:30 AM - 1:30 PM</td><td>Adulto</td><td>Polideportivo Municipal</td></tr>
-                <tr><td>Domingo</td><td>10:00 AM - 12:00 PM</td><td>Entrenamiento Libre (Todas las edades)</td><td>Coliseo Cerrado</td></tr>
-            </tbody>
-        </table>
+    <!-- Sección: Opciones -->
+    <section class="text-center mt-10 mb-5">
+      <h2 class="text-3xl font-semibold text-red-800">Torneos</h2>
+      <p class="text-gray-700 mt-2">Elige cómo deseas participar</p>
+    </section>
 
-        <p class="mt-8 text-sm text-gray-600">Nota: Los horarios pueden estar sujetos a cambios. Por favor, consulta nuestras redes o contáctanos.</p>
-    </div>
+    <!-- Opción 1: Participar en Torneos -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+      <img src="img/torneo1.jpg" alt="Torneo 1" class="rounded-xl object-cover h-64">
+      <div>
+        <h3 class="text-2xl font-bold text-red-700">Torneo Regional Sub 18</h3>
+        <p class="text-gray-700 mt-2">Participa en nuestro torneo anual donde compiten los mejores equipos del sur. Registra a tu equipo como delegado.</p>
+        <a href="/inscripcion-torneo" class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 inline-block text-center">Quiero participar</a>
+      </div>
+    </section>
+
+    <!-- Opción 2: Otro Torneo -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+      <div>
+        <h3 class="text-2xl font-bold text-red-700">Torneo Nacional Abierto</h3>
+        <p class="text-gray-700 mt-2">Abierto para todas las categorías. Registra a tu equipo antes del cierre de inscripciones.</p>
+        <a href="/inscripcion-torneo" class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 inline-block text-center">Quiero participar</a>
+      </div>
+      <img src="img/torneo2.jpg" alt="Torneo 2" class="rounded-xl object-cover h-64">
+    </section>
+
+    <!-- Opción 3: Torneo Mixto -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+      <img src="img/torneo3.jpg" alt="Torneo 3" class="rounded-xl object-cover h-64">
+      <div>
+        <h3 class="text-2xl font-bold text-red-700">Torneo Mixto Verano</h3>
+        <p class="text-gray-700 mt-2">Equipos mixtos, formato recreativo con premiación sorpresa. ¡Diversión asegurada!</p>
+        <a href="/inscripcion-torneo" class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 inline-block text-center">Quiero participar</a>
+      </div>
+    </section>
+
+    <!-- Sección: Ingreso Entrenadores (solo 1 formulario) -->
+    <section class="text-center bg-white p-10 shadow-inner">
+      <h2 class="text-2xl font-bold text-red-800">Entrenadores</h2>
+      <p class="text-gray-600 mb-5">Ingresa con tu usuario para registrar torneos</p>
+      <form action="/login-entrenador" method="POST" class="max-w-md mx-auto">
+        <input type="text" name="usuario" placeholder="Usuario" required class="w-full mb-3 p-2 border rounded">
+        <input type="password" name="contrasena" placeholder="Contraseña" required class="w-full mb-3 p-2 border rounded">
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full">Ingresar</button>
+      </form>
+    </section>
 
     <!-- FOOTER -->
     <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
@@ -105,7 +123,6 @@
                     <li><a href="/horarios" class="hover:underline">Horarios</a></li>
                     <li><a href="/mas" class="hover:underline">Galería</a></li>
                     <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
-                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
                 </ul>
             </div>
             <div>
