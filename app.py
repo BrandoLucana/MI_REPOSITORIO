@@ -1,18 +1,56 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import mysql.connector
 from datetime import datetime
+import logging
+
+# Configuración básica de logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = 'tu_clave_secreta_aqui'
 
-# Configuración de la base de datos
+# Configuración mejorada de la base de datos con manejo de errores
 def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="contra123",
-        database="pasion_por_el_voley"
-    )
+    try:
+        conn = mysql.connector.connect(
+            host="database-2.cbch08rjasxu.us-east-1.rds.amazonaws.com",
+            user="admin",
+            password="981837328rds",
+            database="pasion_por_el_voley",
+            connect_timeout=5
+        )
+        logger.info("Conexión a la base de datos establecida correctamente")
+        return conn
+    except mysql.connector.Error as err:
+        logger.error(f"Error de conexión a la base de datos: {err}")
+        return None
+
+# Ruta para probar la conexión a la base de datos
+@app.route('/test_db')
+def test_db():
+    try:
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"status": "error", "message": "No se pudo conectar a la base de datos"})
+        
+        cursor = conn.cursor()
+        cursor.execute("SHOW TABLES")
+        tables = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
+        return jsonify({
+            "status": "success",
+            "tables": tables,
+            "message": "Conexión exitosa a la base de datos"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
 
 # Rutas principales
 @app.route('/')
