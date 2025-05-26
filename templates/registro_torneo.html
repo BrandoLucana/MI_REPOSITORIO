@@ -128,6 +128,7 @@
 
   </tbody>
 </table>
+
   </div>
   <script>
   const form = document.getElementById('formTorneo');
@@ -211,9 +212,6 @@
   }
 </script>
 
-
-</body>
-
     <script>
         document.getElementById('registroTorneoForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -241,7 +239,6 @@
             this.reset();
         });
     </script>
-
 <!-- FOOTER -->
     <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -289,5 +286,6 @@
             document.getElementById('menuMobile').classList.toggle('hidden');
         });
     </script>
+    <script src="{{ url_for('static', filename='js/registro_torneo.js') }}"></script>
 </body>
 </html>
