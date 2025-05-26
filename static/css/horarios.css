@@ -1,14 +1,45 @@
-.horario-tabla {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.horario-card {
+  background-color: #FEE2E2;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  cursor: pointer;
 }
-.horario-tabla th, .horario-tabla td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+
+.horario-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
-.horario-tabla th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  background-color: #ffffff;
+  color: #333;
+  padding: 12px;
+  width: 220px;
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  z-index: 50;
+  white-space: normal;
+}
+
+.group:hover .tooltip {
+  display: block;
+}
+
+/* Responsive tooltip adjustment */
+@media (max-width: 640px) {
+  .tooltip {
+    width: 90vw;
+    left: 5%;
+    transform: none;
+  }
 }

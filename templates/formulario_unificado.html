@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if usuario and edicion %}Editar Usuario{% else %}Formulario de Inscripción{% endif %} - Pasión por el Voley</title>
+    <title>{% if usuario and edicion %}Editar Usuario{% else %}Formulario de Inscripción{% endif %} - Pasión por el
+        Voley</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="{{ url_for('static', filename='css/formulario.css') }}" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .tailwind-override {
-            /* Esto asegura que nuestros estilos tengan prioridad sobre Tailwind */
-        }
-    </style>
 </head>
+
 <body class="bg-gray-50">
+
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
     <!-- Header con logo -->
     <header class="voley-header">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <div class="flex items-center">
-                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" 
-                     alt="Pasión por el Voley" 
-                     class="h-16 mr-4">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Pasión por el Voley"
+                    class="h-16 mr-4">
                 <h1 class="text-2xl font-bold text-white">
                     {% if usuario and edicion %}Editar Usuario{% else %}Formulario de Inscripción{% endif %}
                 </h1>
@@ -46,55 +48,57 @@
             </div>
         </div>
 
-        <form id="registroForm" method="POST" action="{% if usuario and edicion %}/actualizar_usuario{% else %}/registrar_usuario{% endif %}" class="voley-form">
+        <form id="registroForm" method="POST"
+            action="{% if usuario and edicion %}/actualizar_usuario{% else %}/registrar_usuario{% endif %}"
+            class="voley-form">
             {% if usuario and edicion %}
             <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
             {% endif %}
-            
+
             <!-- Paso 1 -->
             <div class="voley-form-step active" data-step="1">
                 <h2 class="voley-form-title">
                     <i class="fas fa-user-circle mr-2"></i>Información Personal
                 </h2>
-                
+
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nombre</label>
-                        <input type="text" name="nombre" class="voley-input" required 
-                               value="{{ usuario.nombre if usuario and edicion else '' }}">
+                        <input type="text" name="nombre" class="voley-input" required
+                            value="{{ usuario.nombre if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Apellidos</label>
                         <input type="text" name="apellidos" class="voley-input" required
-                               value="{{ usuario.apellidos if usuario and edicion else '' }}">
+                            value="{{ usuario.apellidos if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Fecha de Nacimiento</label>
                         <input type="date" name="fecha_nacimiento" class="voley-input" required
-                               value="{{ usuario.fecha_nacimiento if usuario and edicion else '' }}">
+                            value="{{ usuario.fecha_nacimiento if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Edad</label>
                         <input type="number" name="edad" class="voley-input" required
-                               value="{{ usuario.edad if usuario and edicion else '' }}">
+                            value="{{ usuario.edad if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Correo Electrónico</label>
                         <input type="email" name="email" class="voley-input" required
-                               value="{{ usuario.email if usuario and edicion else '' }}">
+                            value="{{ usuario.email if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Dirección</label>
                         <input type="text" name="direccion" class="voley-input"
-                               value="{{ usuario.direccion if usuario and edicion else '' }}">
+                            value="{{ usuario.direccion if usuario and edicion else '' }}">
                     </div>
                 </div>
-                
+
                 <div class="voley-form-navigation">
                     <button type="button" class="voley-next-btn">
                         Siguiente <i class="fas fa-arrow-right ml-2"></i>
@@ -107,48 +111,50 @@
                 <h2 class="voley-form-title">
                     <i class="fas fa-user-shield mr-2"></i>Datos del Apoderado
                 </h2>
-                
+
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nombre del Apoderado</label>
                         <input type="text" name="nombre_apoderado" class="voley-input" required
-                               value="{{ usuario.nombre_apoderado if usuario and edicion else '' }}">
+                            value="{{ usuario.nombre_apoderado if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Teléfono</label>
                         <input type="tel" name="telefono_apoderado" class="voley-input" required
-                               value="{{ usuario.telefono_apoderado if usuario and edicion else '' }}">
+                            value="{{ usuario.telefono_apoderado if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Correo Electrónico</label>
                         <input type="email" name="correo_apoderado" class="voley-input"
-                               value="{{ usuario.correo_apoderado if usuario and edicion else '' }}">
+                            value="{{ usuario.correo_apoderado if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Centro de Salud</label>
                         <input type="text" name="centro_salud" class="voley-input" required
-                               value="{{ usuario.centro_salud if usuario and edicion else '' }}">
+                            value="{{ usuario.centro_salud if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Tipo de Documento</label>
                         <select name="tipo_documento" class="voley-input" required>
                             <option value="">Seleccionar</option>
-                            <option value="DNI" {% if usuario and edicion and usuario.tipo_documento == 'DNI' %}selected{% endif %}>DNI</option>
-                            <option value="CE" {% if usuario and edicion and usuario.tipo_documento == 'CE' %}selected{% endif %}>Carnet de Extranjería</option>
+                            <option value="DNI" {% if usuario and edicion and usuario.tipo_documento=='DNI' %}selected{%
+                                endif %}>DNI</option>
+                            <option value="CE" {% if usuario and edicion and usuario.tipo_documento=='CE' %}selected{%
+                                endif %}>Carnet de Extranjería</option>
                         </select>
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Número de Documento</label>
                         <input type="text" name="numero_documento" class="voley-input" required
-                               value="{{ usuario.numero_documento if usuario and edicion else '' }}">
+                            value="{{ usuario.numero_documento if usuario and edicion else '' }}">
                     </div>
                 </div>
-                
+
                 <div class="voley-form-navigation">
                     <button type="button" class="voley-prev-btn">
                         <i class="fas fa-arrow-left mr-2"></i> Anterior
@@ -164,62 +170,67 @@
                 <h2 class="voley-form-title">
                     <i class="fas fa-volleyball-ball mr-2"></i>Datos Deportivos
                 </h2>
-                
+
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nivel Actual</label>
                         <select name="nivel_actual" class="voley-input">
                             <option value="">Seleccionar</option>
-                            <option value="Principiante" {% if usuario and edicion and usuario.nivel_actual == 'Principiante' %}selected{% endif %}>Principiante</option>
-                            <option value="Intermedio" {% if usuario and edicion and usuario.nivel_actual == 'Intermedio' %}selected{% endif %}>Intermedio</option>
-                            <option value="Avanzado" {% if usuario and edicion and usuario.nivel_actual == 'Avanzado' %}selected{% endif %}>Avanzado</option>
+                            <option value="Principiante" {% if usuario and edicion and
+                                usuario.nivel_actual=='Principiante' %}selected{% endif %}>Principiante</option>
+                            <option value="Intermedio" {% if usuario and edicion and usuario.nivel_actual=='Intermedio'
+                                %}selected{% endif %}>Intermedio</option>
+                            <option value="Avanzado" {% if usuario and edicion and usuario.nivel_actual=='Avanzado'
+                                %}selected{% endif %}>Avanzado</option>
                         </select>
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">¿Practicó este deporte antes?</label>
                         <div class="voley-radio-group">
                             <label class="voley-radio-label">
-                                <input type="radio" name="practico_deporte" value="si" class="voley-radio"
-                                       {% if usuario and edicion and usuario.practico_deporte == 'si' %}checked{% endif %}>
+                                <input type="radio" name="practico_deporte" value="si" class="voley-radio" {% if usuario
+                                    and edicion and usuario.practico_deporte=='si' %}checked{% endif %}>
                                 <span>Sí</span>
                             </label>
                             <label class="voley-radio-label">
-                                <input type="radio" name="practico_deporte" value="no" class="voley-radio"
-                                       {% if usuario and edicion and usuario.practico_deporte == 'no' %}checked{% endif %}>
+                                <input type="radio" name="practico_deporte" value="no" class="voley-radio" {% if usuario
+                                    and edicion and usuario.practico_deporte=='no' %}checked{% endif %}>
                                 <span>No</span>
                             </label>
                         </div>
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-label">Posición preferida</label>
                         <input type="text" name="posicion" class="voley-input"
-                               value="{{ usuario.posicion if usuario and edicion else '' }}">
+                            value="{{ usuario.posicion if usuario and edicion else '' }}">
                     </div>
-                    
+
                     <div class="voley-input-group">
                         <label class="voley-checkbox-label">
-                            <input type="checkbox" name="seguro_medico" class="voley-checkbox"
-                                   {% if usuario and edicion and usuario.seguro_medico %}checked{% endif %}>
+                            <input type="checkbox" name="seguro_medico" class="voley-checkbox" {% if usuario and edicion
+                                and usuario.seguro_medico %}checked{% endif %}>
                             <span>¿Tiene seguro médico?</span>
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="voley-form-navigation">
                     <button type="button" class="voley-prev-btn">
                         <i class="fas fa-arrow-left mr-2"></i> Anterior
                     </button>
                     <button type="submit" class="voley-submit-btn">
-                        <i class="fas fa-paper-plane mr-2"></i> 
+                        <i class="fas fa-paper-plane mr-2"></i>
                         {% if usuario and edicion %}Actualizar Usuario{% else %}Enviar Registro{% endif %}
                     </button>
                 </div>
             </div>
-        </form> 
+        </form>
     </div>
 
     <script src="{{ url_for('static', filename='js/formulario.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
 </body>
+
 </html>

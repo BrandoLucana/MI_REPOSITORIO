@@ -1,8 +1,325 @@
 .inscripcion-btn {
+    background-color: white;
+    color: red;
     transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
 }
 
 .inscripcion-btn:hover {
-    background-color: white;
-    color: red;
+    background-color: red;
+    color: white;
 }
+
+.inscripcion-btn:active {
+    background-color: darkred;
+    color: white;
+}
+
+/* Dropdown */
+.group:hover .absolute {
+    display: block;
+    z-index: 50;
+}
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.absolute {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.absolute a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+}
+
+.absolute a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Carrusel con fade */
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.carousel-fade .carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-fade .carousel-item-next,
+.carousel-fade .carousel-item-prev {
+    opacity: 0;
+    z-index: -1;
+}
+
+.carousel-fade .carousel-item-start.active,
+.carousel-fade .carousel-item-end.active {
+    z-index: 1;
+    opacity: 1;
+}
+
+/* From Uiverse.io by MikeAndrewDesigner */ 
+/* From Uiverse.io by MikeAndrewDesigner */ 
+.e-card {
+  margin: 100px auto;
+  background: transparent;
+  box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
+  position: relative;
+  width: 240px;
+  height: 330px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  width: 540px;
+  height: 700px;
+  opacity: 0.6;
+  left: 0;
+  top: 0;
+  margin-left: -50%;
+  margin-top: -70%;
+  background: linear-gradient(744deg,#ff4d4d,#ff1a1a 60%,#cc0000);
+}
+
+.icon {
+  width: 3em;
+  margin-top: -1em;
+  padding-bottom: 1em;
+}
+
+.icon-nivel {
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  fill: white;
+  margin-bottom: 0.5em;
+}
+
+.infotop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centrado vertical */
+  font-size: 20px;
+  text-align: center;
+  padding: 1em;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 100;
+  position: relative;
+  top: 1em;
+  text-transform: lowercase;
+}
+
+.wave:nth-child(2),
+.wave:nth-child(3) {
+  top: 210px;
+}
+
+.playing .wave {
+  border-radius: 40%;
+  animation: wave 3000ms infinite linear;
+}
+
+.wave {
+  border-radius: 40%;
+  animation: wave 55s infinite linear;
+}
+
+.playing .wave:nth-child(2) {
+  animation-duration: 4000ms;
+}
+
+.wave:nth-child(2) {
+  animation-duration: 50s;
+}
+
+.playing .wave:nth-child(3) {
+  animation-duration: 5000ms;
+}
+
+.wave:nth-child(3) {
+  animation-duration: 45s;
+}
+
+/* Animación al pasar el mouse */
+.e-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.e-card:hover {
+  transform: scale(1.05);
+}
+
+.e-card.playing:last-child .infotop strong {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.price {
+  font-size: 1.6em;
+  font-weight: 800;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: #ffffff;
+  background-color: #ff3b3b;
+  padding: 5px 20px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.btn-inscribirse {
+  background-color: #ff3b3b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-inscribirse:hover {
+  background-color: #d63232;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.tarifas-section {
+  position: relative;
+  background: white; /* o el color que uses de fondo */
+  overflow: hidden; /* Asegura que los elementos posicionados no se salgan si son muy grandes */
+}
+
+/* Estilos para "ÚNETE" - El texto grande detrás del título principal */
+.titulo-fondo-unete {
+  font-size: 7rem; /* Puedes ajustar el tamaño para que se vea bien */
+  font-weight: 900;
+  color: #ff4d4d; /* Un rojo que contrasta bien, ajusta a tu gusto */
+  position: absolute;
+  top: -20px; /* Sube un poco para que sea más prominente en la parte superior */
+  left: 50%;
+  transform: translateX(-50%);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: 12px;
+  z-index: 0; /* Por debajo del título principal */
+  opacity: 0.25; /* Sube un poco la opacidad */
+  font-family: 'Arial Black', Arial, sans-serif;
+  margin: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+
+/* Estilos para el título principal "TARIFAS Y PAQUETES" */
+.titulo-principal {
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #000;
+  z-index: 1; /* Por encima de 'ÚNETE' */
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  margin-top: 1rem; /* Asegura que el título principal no quede pegado a "ÚNETE" */
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+/* Estilos para el fondo de la empresa (PASIÓN POR EL VOLEY / Logo) */
+.fondo-empresa {
+  position: absolute;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta el centrado real */
+  width: 100%; /* Opcional: ajusta el ancho si es una imagen */
+  height: 100%; /* Opcional: ajusta el alto si es una imagen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1; /* ¡MUY IMPORTANTE! Lo pone detrás de todo */
+  pointer-events: none; /* Permite hacer clic a través de él */
+}
+
+.fondo-empresa span {
+  font-size: 15rem; /* Tamaño muy grande para el texto de fondo */
+  font-weight: 900;
+  background-image: linear-gradient(to right, #f8d7da, #fce4e4); /* Degradado rojo muy sutil */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Fallback */
+  opacity: 0.05; /* Muy baja opacidad para que sea un patrón sutil */
+  user-select: none;
+  text-transform: uppercase;
+  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+.fondo-empresa img {
+    max-width: 80%; /* Ajusta el tamaño máximo del logo */
+    max-height: 80%;
+    object-fit: contain; /* Asegura que la imagen se ajuste sin distorsionarse */
+    opacity: 0.05; /* Baja opacidad para el logo */
+}
+
+/* Aseguramos que el contenedor de las tarjetas tenga un z-index superior al fondo de empresa */
+.flex.flex-wrap.justify-center.items-center.gap-2.py-8 {
+  position: relative;
+  z-index: 10; /* Un z-index alto para que las tarjetas estén siempre visibles */
+}
+
+/* Animacion e Sección de profesor Edward 
+/* Animación de entrada suave desde abajo */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clase para aplicar la animación */
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out both;
+}
+
+/* Transición de la imagen al hacer hover */
+.img-hover-zoom {
+  transition: transform 0.5s ease;
+}
+
+.img-hover-zoom:hover {
+  transform: scale(1.05);
+}
+

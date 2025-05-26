@@ -337,7 +337,7 @@ def login_entrenador():
         flash("Usuario o contraseña incorrectos", "error")
         return redirect(url_for('torneos'))  # Asumiendo que renders torneo.html desde 'torneo'
 
-
+@app.route("/mas")
 def mas():
     return render_template('mas.html')
 
