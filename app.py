@@ -293,6 +293,8 @@ def inscripcion_torneo():
     # Cuando es GET, mostrar el formulario para inscribirse al torneo
     return render_template('inscripcion-torneo.html')
 
+
+
 @app.route('/registro-torneo', methods=['GET', 'POST'])
 def registro_torneo():
     if request.method == 'POST':
