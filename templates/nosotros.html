@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Más - Pasión por el Voley</title>
+    <title>Nosotros - Pasión por el Voley</title>
     <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
     <link href="../static/css/style.css" rel="stylesheet">
     <link href="../static/css/loader.css" rel="stylesheet">
@@ -27,6 +27,7 @@
                     </div>
                 </a>
             </div>
+
             <nav class="hidden md:block">
                 <ul class="flex space-x-4 font-bold">
                     <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
@@ -45,42 +46,80 @@
                     </li>
                 </ul>
             </nav>
+
         </div>
     </header>
 
-    <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-bold mb-4">Explora Más</h2>
-        <p class="mb-6">Descubre más sobre nuestra academia y el mundo del voley.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/galeria_placeholder.jpg" alt="Galería" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Galería de Fotos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Echa un vistazo a nuestros mejores momentos en entrenamientos y partidos.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Galería</a>
-                </div>
-            </div>
-
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/eventos_placeholder.jpg" alt="Eventos" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Próximos Eventos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Mantente al día con nuestros torneos, clínicas y otras actividades.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Eventos</a>
-                </div>
-            </div>
-
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/noticias_placeholder.jpg" alt="Noticias" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Noticias del Voley</h3>
-                    <p class="text-gray-700 text-sm mb-2">Entérate de las últimas novedades del mundo del voleibol y de nuestra academia.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Leer Noticias</a>
-                </div>
-            </div>
+    <!-- Sección de presentación -->
+    <section class="bg-gradient-to-r from-red-800 via-red-600 to-pink-400 text-white py-20 px-6 rounded-xl shadow-xl">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+        <div class="animate-fadeInLeft">
+        <h1 class="text-5xl font-extrabold mb-4">¿Quiénes Somos?</h1>
+        <p class="text-lg font-light">Una academia que forma campeonas con pasión, esfuerzo y disciplina.</p>
+        </div>
+        <div class="relative">
+        <img src="../static/img/quienes_somos.jpg" alt="Academia de vóley" class="rounded-xl shadow-2xl animate-fadeInRight">
         </div>
     </div>
+    </section>
+
+    <!-- Misión, Visión y Valores -->
+    <section class="py-16 px-6 bg-white">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+        <div class="bg-gray-100 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-bold text-red-800 mb-2">Nuestra Misión</h3>
+        <p class="text-gray-700">Fomentar el vóley como disciplina de vida en niñas y jóvenes, desarrollando su talento físico y personal.</p>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-bold text-red-700 mb-2">Nuestra Visión</h3>
+        <p class="text-gray-700">Ser reconocidos como una de las academias más sólidas y competitivas del Perú.</p>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h3 class="text-2xl font-bold text-pink-700 mb-2">Nuestros Valores</h3>
+        <p class="text-gray-700">Disciplina, respeto, trabajo en equipo y pasión por el deporte.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- Equipo técnico -->
+    <section class="py-20 px-6 bg-gradient-to-br from-pink-100 via-white to-purple-100">
+    <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-10 text-gray-800">Conoce a Nuestro Equipo</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <img src="../static/img/entrenador1.jpg" alt="Entrenador" class="mx-auto rounded-full h-32 w-32 object-cover mb-4">
+            <h3 class="text-xl font-bold text-red-600">Entrenador Edward Bautista</h3>
+            <p class="text-gray-600">Especialista en técnica avanzada y formación de juveniles.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <img src="../static/img/entrenador2.jpg" alt="Entrenador" class="mx-auto rounded-full h-32 w-32 object-cover mb-4">
+            <h3 class="text-xl font-bold text-pink-700">Entrenador Gerson Bautista</h3>
+            <p class="text-gray-600">Jugador con experiencia. Estrategias y tácticas en competencia.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <img src="../static/img/psicologa.jpg" alt="Psicóloga" class="mx-auto rounded-full h-32 w-32 object-cover mb-4">
+            <h3 class="text-xl font-bold text-pink-600">Lic. Andrea Ruiz Tacsa</h3>
+            <p class="text-gray-600">Psicóloga deportiva. Motiva y fortalece la mente ganadora.</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Frase inspiradora -->
+    <section class="relative py-24 text-white text-center">
+    <!-- Imagen de fondo -->
+    <img src="../static/img/comunida.jpg" alt="Frase motivadora" class="absolute inset-0 w-full h-full object-cover opacity-50">
+    <!-- Sombreado oscuro -->
+    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+    <!-- Contenido -->
+    <div class="relative z-10 px-6">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 italic">"Donde hay pasión y disciplina, florecen las campeonas."</h2>
+        <p class="text-lg text-gray-300">— Academia Pasión por el Vóley</p>
+    </div>
+    </section>
+
+
 
     <footer class="text-white py-10 mt-8 no-border">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -127,6 +166,7 @@
     <script src="../static/js/loading.js"></script>
     <script src="../static/js/mas.js"></script>
     <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/mision.js"></script>
 </body>
 
 </html>

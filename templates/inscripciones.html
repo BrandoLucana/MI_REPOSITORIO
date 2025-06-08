@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Más - Pasión por el Voley</title>
+    <title>Galería - Pasión por el Voley</title>
     <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
     <link href="../static/css/style.css" rel="stylesheet">
     <link href="../static/css/loader.css" rel="stylesheet">
@@ -48,39 +48,49 @@
         </div>
     </header>
 
-    <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-bold mb-4">Explora Más</h2>
-        <p class="mb-6">Descubre más sobre nuestra academia y el mundo del voley.</p>
+    <!-- Sección de presentación mejorada -->
+    <section class="relative bg-cover bg-center py-32 px-6 text-white rounded-xl shadow-xl" style="background-image: url('../static/img/entrenamiento.jpg');">
+    <div class="absolute inset-0 bg-gradient-to-r from-red-700/80 via-pink-600/60 to-yellow-500/50 rounded-xl"></div>
+    <div class="relative max-w-3xl mx-auto text-center z-10">
+        <h1 class="text-5xl font-extrabold mb-4 drop-shadow-md">¡Inscríbete Hoy!</h1>
+        <p class="text-lg mb-6 font-medium drop-shadow">Forma parte de la mejor academia de vóley del sur de Lima. Entrena, crece y compite junto a los mejores.</p>
+        <a href="/formulario" class="bg-white text-red-600 font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-100 transition">
+        Ir al formulario de inscripción
+        </a>
+    </div>
+    </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/galeria_placeholder.jpg" alt="Galería" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Galería de Fotos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Echa un vistazo a nuestros mejores momentos en entrenamientos y partidos.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Galería</a>
-                </div>
-            </div>
 
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/eventos_placeholder.jpg" alt="Eventos" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Próximos Eventos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Mantente al día con nuestros torneos, clínicas y otras actividades.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Eventos</a>
-                </div>
-            </div>
-
-            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
-                <img src="../static/img/noticias_placeholder.jpg" alt="Noticias" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-2">Noticias del Voley</h3>
-                    <p class="text-gray-700 text-sm mb-2">Entérate de las últimas novedades del mundo del voleibol y de nuestra academia.</p>
-                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Leer Noticias</a>
-                </div>
-            </div>
+    <!-- Beneficios de inscribirse -->
+    <section class="py-16 px-6 bg-gray-100">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="../static/img/icon-entre.png" alt="Entrenamiento" class="mx-auto mb-4 h-16">
+        <h3 class="text-xl font-bold mb-2">Entrenamiento profesional</h3>
+        <p class="text-gray-600 text-sm">Con entrenadores certificados y planes personalizados por niveles.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="../static/img/icon-competencia.png" alt="Competencias" class="mx-auto mb-4 h-16">
+        <h3 class="text-xl font-bold mb-2">Participación en torneos</h3>
+        <p class="text-gray-600 text-sm">Compite a nivel local, regional y nacional representando a la academia.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="../static/img/icon-comunidad.webp" alt="Comunidad" class="mx-auto mb-4 h-16">
+        <h3 class="text-xl font-bold mb-2">Ambiente motivador</h3>
+        <p class="text-gray-600 text-sm">Haz nuevas amistades, fortalece tu disciplina y vive el vóley con pasión.</p>
         </div>
     </div>
+    </section>
+
+    <!-- Llamado a la acción final con degradado oscuro -->
+    <section class="py-20 px-6 bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white text-center">
+    <h2 class="text-4xl font-extrabold mb-4 drop-shadow-lg">¿List@ para empezar?</h2>
+    <p class="mb-6 text-lg font-medium drop-shadow">Solo necesitas dar el primer paso. ¡Te esperamos con los brazos abiertos!</p>
+    <a href="/formulario" class="bg-white text-gray-900 font-semibold px-6 py-3 rounded-lg hover:bg-gray-200 transition shadow-md">
+        Completa tu inscripción aquí
+    </a>
+    </section>
+
 
     <footer class="text-white py-10 mt-8 no-border">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -126,7 +136,9 @@
 
     <script src="../static/js/loading.js"></script>
     <script src="../static/js/mas.js"></script>
-    <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/galeria.js"></script>
+        <script src="../static/js/nosotros.js"></script>
+
 </body>
 
 </html>

@@ -1,22 +1,42 @@
-/* Estilos personalizados para la página Más */
-
-header {
-    background-color: #DC2626;
+/* === Animación Fade In para tarjetas === */
+.fade-in {
+  animation: fadeIn ease 1.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === Animación Pulse para botón de formulario === */
+.animate-pulse-custom {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* === Eliminar borde inferior del footer si aparece blanco === */
 footer {
-    background-color: #DC2626;
+  background-color: #DC2626 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
 }
 
-footer .text-white {
-    color: white;
-}
-
-button[type="submit"] {
-    background-color: #DC2626;
-    color: white;
-}
-
-button[type="submit"]:hover {
-    background-color: #B91C1C;
+/* === Arreglo visual para todo el fondo de la página === */
+body {
+  background-color: #fff !important;
+  margin: 0;
+  padding: 0;
 }

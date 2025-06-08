@@ -26,13 +26,21 @@
                 <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
             </a>
             <nav class="hidden md:block">
-                <ul class="flex space-x-4">
-                    <li><a href="/" class="hover:text-gray-300 font-bold">Inicio</a></li>
-                    <li><a href="/formulario" class="hover:text-gray-300 font-bold">Inscripciones</a></li>
-                    <li><a href="/horarios" class="hover:text-gray-300 font-bold">Horarios</a></li>
-                    <li><a href="/donde_estamos" class="hover:text-gray-300 font-bold">Dónde Estamos</a></li>
-                    <li><a href="/contactanos" class="hover:text-gray-300 font-bold">Contáctanos</a></li>
-                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                <ul class="flex space-x-4 font-bold">
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                    </div>
+                    </li>
                 </ul>
             </nav>
             <button id="menuBtn" class="md:hidden focus:outline-none">
@@ -157,6 +165,7 @@
     </script>
 
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+        <script src="../static/js/nosotros.js"></script>
 </body>
 
 </html>

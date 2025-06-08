@@ -343,5 +343,25 @@ def login_entrenador():
 def mas():
     return render_template('mas.html')
 
+@app.route("/galeria")
+def galeria():
+    return render_template('galeria.html')
+
+@app.route("/eventos")
+def eventos():
+    return render_template('eventos.html')
+
+@app.route("/noticias")
+def noticias():
+    return render_template('noticias.html')
+
+@app.route("/inscripciones")
+def inscripciones():
+    return render_template('inscripciones.html')
+
+@app.route("/nosotros")
+def nosotros():
+    return render_template('nosotros.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
