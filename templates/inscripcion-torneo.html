@@ -104,11 +104,18 @@
                     placeholder="ejemplo@correo.com" />
             </div>
 
-            <div class="text-center">
+            <div class="flex justify-center gap-4 mt-6">
+                <!-- Botón Enviar -->
                 <button type="submit"
                     class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded-full transition duration-300">
                     Enviar inscripción
                 </button>
+
+                <!-- Botón Atrás -->
+                <a href="/torneos"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-8 py-3 rounded-full transition duration-300">
+                    Atrás
+                </a>
             </div>
         </form>
     </section>
@@ -156,16 +163,9 @@
         </div>
     </footer>
 
-    <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const menuMobile = document.getElementById('menuMobile');
-        menuBtn.addEventListener('click', () => {
-            menuMobile.classList.toggle('hidden');
-        });
-    </script>
-
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
-        <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/inscripcion_torneo.js"></script>
 </body>
 <!-- Botón flotante de WhatsApp -->
 <a href="https://wa.me/51987654321" target="_blank"
