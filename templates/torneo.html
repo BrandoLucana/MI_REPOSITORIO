@@ -127,12 +127,19 @@
         </div>
     </section>
 
-
-    <!-- Botón flotante tipo burbuja -->
-    <button id="btnAbrirModal"
-        class="fixed bottom-5 right-5 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-lg z-50">
-        👨‍🏫 Entrenadores
-    </button>
+    
+    <!-- Botón flotante expandible -->
+    <div class="fixed bottom-24 right-5 z-50">
+    <div class="group relative">
+        <button id="btnAbrirModal"
+        class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-4 pr-5 rounded-full shadow-lg transition-all duration-300 overflow-hidden w-12 group-hover:w-48">
+        <span class="text-xl">👨‍🏫</span>
+        <span class="whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Entrenadores
+        </span>
+        </button>
+    </div>
+    </div>
 
     <!-- Modal oculto -->
     <div id="modalLogin" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
