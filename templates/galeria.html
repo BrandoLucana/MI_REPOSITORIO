@@ -48,6 +48,32 @@
         </div>
     </header>
 
+    <section class="py-10 bg-gray-100">
+    <h2 class="text-3xl font-bold text-center text-red-600 mb-6">Todos Nuestros Momentos</h2>
+
+    <!-- Carrusel que ocupa todo el ancho -->
+    <div class="w-full relative rounded-xl overflow-hidden shadow-lg">
+        <img
+        id="carruselImagen"
+        src="../static/img/galeria1.jpg"
+        alt="Nivel Inicial"
+        class="w-full h-[600px] object-cover rounded-xl transition-opacity duration-500 ease-in-out opacity-100">
+    </div>
+
+    <!-- Botones debajo -->
+    <div class="flex justify-center gap-3 mt-4">
+        <button onclick="cambiarImagen(0)" class="w-4 h-4 rounded-full bg-red-600 hover:bg-red-800"></button>
+        <button onclick="cambiarImagen(1)" class="w-4 h-4 rounded-full bg-red-600 hover:bg-red-800"></button>
+        <button onclick="cambiarImagen(2)" class="w-4 h-4 rounded-full bg-red-600 hover:bg-red-800"></button>
+        <button onclick="cambiarImagen(3)" class="w-4 h-4 rounded-full bg-red-600 hover:bg-red-800"></button>
+    </div>
+
+    <!-- Título debajo -->
+    <div class="text-center mt-3">
+        <p id="tituloImagen" class="text-lg font-semibold text-gray-800">Entrenamiento Juvenil</p>
+    </div>
+    </section>
+
     <section class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl">
         <img src="../static/img/galeria1.jpg" alt="Imagen 1" class="w-full h-60 object-cover">
@@ -135,6 +161,7 @@
     <script src="../static/js/loading.js"></script>
     <script src="../static/js/mas.js"></script>
     <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/galeria.js"></script>
     
 </body>
 <!-- Botón flotante de WhatsApp -->
