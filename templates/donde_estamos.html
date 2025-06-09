@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dónde Estamos - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
+    <link href="../static/css/donde_estamos.css" rel="stylesheet" />
+     <link href="../static/css/loader.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+
+    <header style="background-color: #DC2626;" class="text-white fixed w-full top-0 z-50 shadow-md">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo"
+                        class="h-12 md:h-16 w-auto mr-3 md:mr-4" />
+                    <h1 class="text-lg md:text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+                </a>
+            </div>
+
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold">
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                    </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button id="menuBtn" class="md:hidden focus:outline-none z-50">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
+                </svg>
+            </button>
+
+            <!-- Menú móvil -->
+            <div id="menuMobile"
+                class="hidden fixed inset-0 bg-red-700 bg-opacity-95 backdrop-blur-sm flex flex-col items-center justify-start pt-24 space-y-4 text-white text-lg z-40">
+                <a href="/inscripciones" class="w-full text-center py-3 hover:bg-red-800 font-bold">Inscripciones</a>
+                <a href="/horarios" class="w-full text-center py-3 hover:bg-red-800 font-bold">Horarios</a>
+                <a href="/donde_estamos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Dónde Estamos</a>
+                <a href="/contactanos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Contáctanos</a>
+                <a href="/torneos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Torneos</a>
+                <div class="relative w-full text-center group">
+                    <button
+                        class="w-full py-3 hover:bg-red-800 font-bold flex justify-center items-center space-x-1 focus:outline-none">
+                        <span>Más</span>
+                        <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div
+                        class="hidden group-focus:block bg-white shadow-md rounded mt-2 w-full text-gray-800 absolute left-0 z-50 flex flex-col">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-28 pb-16">
+        <h2 class="text-2xl font-bold mb-4">¿Dónde nos encontramos?</h2>
+        <p class="mb-4">Visítanos en nuestra sede principal para inscripciones y más información.</p>
+
+        <section class="mb-6">
+            <h3 class="text-xl font-semibold mb-2">Nuestra Sede Principal</h3>
+            <p>Polideportivo Municipal de San Vicente de Cañete</p>
+            <p>Av. Augusto B. Leguía s/n, San Vicente de Cañete, Perú</p>
+        </section>
+
+        <section class="map-container w-full aspect-[16/9] rounded overflow-hidden shadow-md">
+            <!-- Mantiene proporción 16:9 -->
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.885939309378!2d-76.3834288257774!3d-13.07088889137851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91128c4891e7a9b1%3A0x89944494c9b7b2e4!2sPolideportivo%20Municipal%20de%20San%20Vicente!5e0!3m2!1ses-419!2spe!4v1712433600000!5m2!1ses-419!2spe"
+                class="w-full h-full border-0" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+
+        <p class="mt-6 text-sm text-gray-600">Puedes hacer clic en el mapa para obtener indicaciones detalladas.</p>
+    </main>
+
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800" />
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit"
+                        class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" aria-label="Facebook" class="hover:text-gray-300">📘</a>
+                    <a href="#" aria-label="Instagram" class="hover:text-gray-300">📸</a>
+                    <a href="#" aria-label="YouTube" class="hover:text-gray-300">📺</a>
+                    <a href="#" aria-label="WhatsApp" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> |
+                <a href="#" class="underline hover:text-gray-300">Política de privacidad</a>
+            </p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const menuMobile = document.getElementById('menuMobile');
+
+        menuBtn.addEventListener('click', () => {
+            menuMobile.classList.toggle('hidden');
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="../static/js/nosotros.js"></script>
+</body>
+
+</html>

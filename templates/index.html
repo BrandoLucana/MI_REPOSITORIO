@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <link href="../static/css/entrenador.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+
+    <header style="background-color: #DC2626;" class="text-white fixed w-full top-0 left-0 z-50">
+        <div class="container mx-auto p-4 flex items-center justify-between relative">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" aria-label="Inicio - Pasión por el Voley" class="flex items-center">
+                    <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo Pasión por el Voley" class="h-16 w-auto mr-4" />
+                    <h1 class="text-xl font-bold whitespace-nowrap">PASIÓN POR EL VOLEY</h1>
+                </a>
+            </div>
+
+            <!-- Menú escritorio -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold items-center">
+                    <li id="btnLoginHeader">
+                        <button id="btnAbrirModalHeader" class="btn-entrenador hover:text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            Iniciar Sesión
+                        </button>
+                    </li>
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/formulario_unificado" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    
+
+
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li class="relative group">
+                        <button id="dropdown-button" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200 flex items-center focus:outline-none">
+                            Más <span class="ml-1">▾</span>
+                        </button>
+                        <div id="dropdown-menu" class="absolute left-1/2 transform -translate-x-1/2 bg-white shadow-md rounded mt-1 w-48 text-gray-800 z-50 hidden">
+                            <a href="/horarios" class="block px-4 py-2 hover:bg-gray-100">Horarios</a>
+                            <a href="/contactanos" class="block px-4 py-2 hover:bg-gray-100">Contáctanos</a>
+                            <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                            <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                            <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                            <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                            <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                        </div>
+                    </li>
+                    <li id="perfilEntrenador" class="perfil-entrenador">
+                        <div class="flex items-center space-x-2 cursor-pointer grupo-perfil">
+                            <span id="nombreEntrenador" class="font-bold"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="menu-perfil">
+                                <a href="#" id="btnCerrarSesion" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Cerrar sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Botón menú móvil -->
+            <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuMobile" class="md:hidden focus:outline-none z-60 relative">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
+                </svg>
+            </button>
+
+            <!-- Menú móvil overlay -->
+            <div id="menuMobile" class="fixed inset-0 bg-red-900 bg-opacity-95 backdrop-blur-sm hidden flex-col items-center justify-center space-y-6 text-white text-2xl font-bold z-50 p-8">
+                <button id="closeMenuBtn" aria-label="Cerrar menú" class="absolute top-6 right-6 text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <li id="btnLoginHeaderMobile">
+                    <button id="btnAbrirModalHeaderMobile" class="btn-entrenador hover:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        Iniciar Sesión
+                    </button>
+                </li>
+                <a href="/" class="block hover:text-gray-300">Inicio</a>
+                <a href="/formulario_unificado" class="block hover:text-gray-300">Inscripciones</a>
+
+               <!-- Lista Usuarios - móvil -->
+
+                <a href="/nosotros" class="block hover:text-gray-300">Nosotros</a>
+                <div class="relative group w-full text-center">
+                    <button id="submenuBtn" aria-haspopup="true" aria-expanded="false" class="block w-full py-2 hover:text-gray-300 focus:outline-none font-bold">Más ▼</button>
+                    <div id="submenuMobile" class="hidden flex-col bg-red-800 rounded mt-2 py-2 text-lg space-y-2 font-normal">
+                        <a href="/horarios" class="block px-4 py-2 hover:bg-red-700 rounded">Horarios</a>
+                        <a href="/contactanos" class="block px-4 py-2 hover:bg-red-700 rounded">Contáctanos</a>
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-red-700 rounded">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-red-700 rounded">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-red-700 rounded">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-red-700 rounded">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-red-700 rounded">Dónde Estamos</a>
+                    </div>
+                </div>
+                <li id="perfilEntrenadorMobile" class="perfil-entrenador">
+                    <div class="flex items-center space-x-2 cursor-pointer grupo-perfil">
+                        <span id="nombreEntrenadorMobile" class="font-bold"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="menu-perfil">
+                            <a href="#" id="btnCerrarSesionMobile" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </header>
+
+    <section id="main-content" class="relative min-h-screen flex flex-col justify-center items-center bg-black overflow-hidden px-4 text-center">
+        <div class="absolute inset-0 z-0">
+            <div id="carruselVoley" class="carousel slide carousel-fade h-full" data-bs-ride="carousel">
+                <div class="carousel-inner h-full">
+                    <div class="carousel-item active h-full">
+                        <img src="../static/img/carrusel1.jpg" class="d-block w-100 vh-100 object-cover brightness-50" alt="Entrenamiento 1">
+                    </div>
+                    <div class="carousel-item h-full">
+                        <img src="../static/img/carrusel2.jpg" class="d-block w-100 vh-100 object-cover brightness-50" alt="Entrenamiento 2">
+                    </div>
+                    <div class="carousel-item h-full">
+                        <img src="../static/img/carrusel3.jpg" class="d-block w-100 vh-100 object-cover brightness-50" alt="Partido">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carruselVoley" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carruselVoley" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+        <div class="relative z-10 text-white max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">¡VEN Y ÚNETE A LA PASIÓN POR EL VOLEY!</h2>
+            <p class="text-lg md:text-xl mb-4">Forjando Campeones, Construyendo Futuros!</p>
+            <p class="text-lg md:text-xl mb-4">El Poder está en tu Salto, la Gloria en tu Determinación</p>
+            <p class="text-lg md:text-xl mb-8 font-bold">Únete a la Elite del Voleibol</p>
+            <a href="/formulario_unificado">
+                <button class="inscripcion-btn font-bold py-3 px-6 rounded-full text-lg md:text-xl shadow-md hover:shadow-lg transition duration-300">
+                    ¡INSCRÍBETE AHORA!
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Modal de Login para Entrenadores -->
+    <div id="modalLogin" class="modal-entrenador">
+        <div class="contenido-modal">
+            <button id="btnCerrarModal" class="cerrar-modal">×</button>
+            <h2>Acceso Entrenadores</h2>
+            <form id="loginForm">
+                <div class="grupo-formulario">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" required>
+                </div>
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="py-12 animate-on-scroll" data-animation-class="fade-in-up">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <div class="flex flex-col items-center mb-8">
+                <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo de la Academia" class="h-24 w-auto rounded-full shadow-md">
+                <p class="mt-2 text-lg font-semibold text-gray-700">Pasión por el Voley</p>
+            </div>
+            <div class="text-left">
+                <h3 class="text-3xl font-bold text-red-700 mb-4">NUESTRO COMPROMISO</h3>
+                <p class="text-gray-700">
+                    En la esencia de nuestra academia reside un profundo compromiso con el crecimiento de cada
+                    individuo. No nos limitamos a ser un espacio donde se perfeccionan habilidades deportivas; somos un crisol
+                    donde se forjan caracteres. Nuestra metodología se centra en un enfoque holístico, que busca desarrollar a deportistas
+                    excepcionales y, simultáneamente, a personas íntegras. A través de cada entrenamiento, cada partido y cada interacción,
+                    inculcamos activamente valores esenciales como la responsabilidad, la resiliencia, la disciplina y el compañerismo.
+                    Creemos firmemente que la verdadera victoria no solo se mide en puntos o medallas, sino en la calidad humana y el
+                    impacto positivo que nuestros jóvenes tienen en la sociedad. Este es nuestro propósito, y lo abordamos con dedicación total.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-gray-100 px-4 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="text-left">
+                <h3 class="text-3xl font-bold text-red-700 mb-4">¿QUÉ NOS HACE DIFERENTES?</h3>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li class="mb-2">
+                        Metodología de Entrenamiento Innovadora: Entrenamientos Dinámicos y Entretenidos, diseñados para optimizar
+                        el aprendizaje y el rendimiento en cada sesión.
+                    </li>
+                    <li class="mb-2">
+                        Desarrollo Integral del Atleta: Fomentamos no solo las habilidades técnicas del voleibol, sino también
+                        valores esenciales como la Constancia, la Disciplina, el Trabajo en equipo y el Respeto.
+                    </li>
+                    <li class="mb-2">
+                        Instructores: Contamos con un equipo de entrenadores calificados, con experiencia en formación de talentos
+                        y pasión por el voleibol.
+                    </li>
+                    <li class="mb-2">
+                        Ambiente Familiar y de Apoyo: Creamos una comunidad donde todos se sienten bienvenidos, promoviendo un
+                        entorno positivo para el crecimiento personal y deportivo.
+                    </li>
+                    <li class="mb-2">
+                        Proyección Deportiva: Preparamos a nuestros atletas para alcanzar sus metas, desde mejorar su juego
+                        recreativo hasta competir a niveles más avanzados.
+                    </li>
+                    <li class="mb-2">
+                        Instalaciones Optimizadas: Disfruta de un espacio adecuado y seguro, diseñado para el entrenamiento efectivo
+                        del voleibol.
+                    </li>
+                </ul>
+            </div>
+            <img src="../static/img/PASION POR EL VOLEY3.jpg" alt="Foto de Grupo" class="rounded-md shadow-md">
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 py-12 px-6">
+        <div class="p-8 bg-red-600 text-white rounded-xl shadow-lg hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Nivel Básico</h3>
+            <p>Participación en torneos oficiales y competencias regionales.</p>
+        </div>
+        <div class="p-8 bg-gray-800 text-white rounded-xl shadow-lg hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Nivel Intermedio</h3>
+            <p>Formación desde las bases con enfoque técnico y valores.</p>
+        </div>
+        <div class="p-8 bg-red-800 text-white rounded-xl shadow-lg hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Nivel Avanzado</h3>
+            <p>Espacios dedicados al desarrollo integral de nuestras deportistas.</p>
+        </div>
+    </section>
+
+    <section class="bg-white py-16 px-6 md:px-20 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-10 animate-fade-in-up">
+            <div class="w-full md:w-1/2 flex justify-center">
+                <img src="../static/img/Edward.jpg" alt="Profesor de vóley" class="rounded-3xl shadow-lg w-80 h-auto object-cover img-hover-zoom">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold text-red-700 mb-4">¡Bienvenidos a Pasión por el Vóley!</h2>
+                <p class="text-gray-700 text-lg mb-6">
+                    Soy el Prof. Edward, y junto a nuestro equipo de entrenadores,
+                    estamos comprometidos a impulsar tu crecimiento deportivo, disciplina
+                    y pasión por el vóley. Aquí no solo formamos atletas, ¡formamos personas con valores!
+                </p>
+                <p class="text-gray-600 italic">"El esfuerzo constante siempre supera al talento sin disciplina."</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative bg-fixed bg-center bg-cover text-white py-20 px-6" style="background-image: url('../static/img/filiales_bg.jpg')">
+        <div class="bg-transparent p-10 rounded-lg max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Nuestras Filiales</h2>
+            <p class="text-lg mb-6">Descubre nuestras sedes en distintas regiones y sé parte de la expansión del vóley nacional.</p>
+            <a href="/donde_estamos" class="bg-transparent border border-white text-white font-bold py-3 px-6 rounded hover:bg-white hover:text-red-700 transition">CONOCE NUESTRAS FILIALES</a>
+        </div>
+    </section>
+
+    <section class="tarifas-section py-16 bg-gray-100 px-4 max-w-7xl mx-auto">
+        <div class="container mx-auto px-4 text-center relative">
+            <h2 class="titulo-fondo-unete">ÚNETE</h2>
+            <h1 class="titulo-principal">TARIFAS Y PAQUETES</h1>
+            <div class="fondo-empresa">
+                <span>PASIÓN POR EL VOLEY</span>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-2 py-8 relative z-10">
+                <div class="e-card playing">
+                    <div class="image"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="infotop">
+                        <strong>Nivel Infantil</strong>
+                        <div class="price">S/ 40</div>
+                        <a href="/horarios" class="btn-inscribirse inline-block text-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Saber Más</a>
+                        <div class="name">Pasión por el Vóley</div>
+                    </div>
+                </div>
+                <div class="e-card playing">
+                    <div class="image"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="infotop">
+                        <strong>Nivel Juvenil</strong>
+                        <div class="price">S/ 50</div>
+                        <a href="/horarios" class="btn-inscribirse inline-block text-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Saber Más</a>
+                        <div class="name">Pasión por el Vóley</div>
+                    </div>
+                </div>
+                <div class="e-card playing">
+                    <div class="image"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="infotop">
+                        <strong>Nivel Adulto</strong>
+                        <div class="price">S/ 60</div>
+                        <a href="/horarios" class="btn-inscribirse inline-block text-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Saber Más</a>
+                        <div class="name">Pasión por el Vóley</div>
+                    </div>
+                </div>
+                <div class="e-card playing">
+                    <div class="image"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="infotop text-center">
+                        <strong class="text-center block w-full">Entrenamiento Libre</strong>
+                        <div class="price">S/ 30</div>
+                        <a href="/horarios" class="btn-inscribirse inline-block text-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Saber Más</a>
+                        <div class="name">Pasión por el Vóley</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto mb-6">
+            <h2 class="text-4xl font-bold text-center text-red-700">Noticias Destacadas</h2>
+        </div>
+        <div class="row gx-4" data-masonry='{"percentPosition": true }'>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card shadow-lg">
+                    <img src="../static/img/noticia1.jpg" alt="Entrenamiento intensivo" class="w-full h-48 object-cover rounded-t-xl mb-4">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold text-black-700 mb-2">¡Nuevo entrenamiento intensivo!</h3>
+                        <p class="text-sm text-gray-600">Publicado: 05 junio 2025</p>
+                        <p class="mt-3 text-sm text-gray-700">Inscríbete en nuestro nuevo programa de mejora intensiva para jugadores avanzados. ¡Cupos limitados!</p>
+                        <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card shadow-lg">
+                    <img src="../static/img/noticia2.jpg" alt="Reconocimiento" class="w-full h-48 object-cover rounded-t-xl mb-4">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold text-black-700 mb-2">Reconocimiento regional a la academia</h3>
+                        <p class="text-sm text-gray-600">Publicado: 30 mayo 2025</p>
+                        <p class="mt-3 text-sm text-gray-700">Nuestra academia fue premiada por su gran contribución al deporte local en el sur de Lima.</p>
+                        <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card shadow-lg">
+                    <img src="../static/img/noticia4.jpg" alt="Alumna convocada" class="w-full h-48 object-cover rounded-t-xl mb-4">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold text-black-700 mb-2">Alumna convocada a la selección</h3>
+                        <p class="text-sm text-gray-600">Publicado: 25 mayo 2025</p>
+                        <p class="mt-3 text-sm text-gray-700">Nuestra jugadora Camila Rojas ha sido convocada para representar a Lima en los juegos escolares nacionales.</p>
+                        <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="max-w-4xl mx-auto text-center py-12 px-4 sm:px-6 md:px-8">
+            <h3 class="text-2xl sm:text-3xl font-bold text-red-700 mb-4">¿QUIERES SABER MÁS?</h3>
+            <p class="text-gray-700 mb-6 text-base sm:text-lg">
+                Contáctanos y descubre cómo podemos ayudarte a alcanzar tus metas deportivas.
+            </p>
+            <a href="/contactanos">
+                <button class="inscripcion-btn font-bold py-3 px-6 rounded-full text-base sm:text-lg md:text-xl shadow-md hover:shadow-lg transition duration-300">
+                    ¡CONTÁCTANOS!
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/formulario_unificado" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/galeria" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                    <li><a href="/torneos" class="hover:underline">Torneos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" class="hover:text-gray-300">📘</a>
+                    <a href="#" class="hover:text-gray-300">📸</a>
+                    <a href="#" class="hover:text-gray-300">📺</a>
+                    <a href="#" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
+    <script src="../static/js/menu-desplegable.js"></script>
+    <script src="../static/js/loading.js"></script>
+    <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/entrenador.js"></script>
+    <script src="../static/js/lista_usuarios.js"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const listaUsuariosMenu = document.getElementById("listaUsuariosMenu");
+  const listaUsuariosMenuMobile = document.getElementById("listaUsuariosMenuMobile");
+  const perfilEntrenador = document.getElementById("perfilEntrenador");
+  const perfilEntrenadorMobile = document.getElementById("perfilEntrenadorMobile");
+  const nombreEntrenador = document.getElementById("nombreEntrenador");
+  const nombreEntrenadorMobile = document.getElementById("nombreEntrenadorMobile");
+
+  const btnAbrirModalHeader = document.getElementById("btnAbrirModalHeader");
+  const btnAbrirModalHeaderMobile = document.getElementById("btnAbrirModalHeaderMobile");
+  const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+  const btnCerrarSesionMobile = document.getElementById("btnCerrarSesionMobile");
+
+  function actualizarUI() {
+    const entrenador = localStorage.getItem("entrenador");
+
+    if (entrenador) {
+      listaUsuariosMenu.style.display = "block";
+      listaUsuariosMenuMobile.style.display = "block";
+
+      perfilEntrenador.style.display = "flex";
+      perfilEntrenadorMobile.style.display = "flex";
+
+      nombreEntrenador.textContent = entrenador;
+      nombreEntrenadorMobile.textContent = entrenador;
+
+      btnAbrirModalHeader.style.display = "none";
+      btnAbrirModalHeaderMobile.style.display = "none";
+    } else {
+      listaUsuariosMenu.style.display = "none";
+      listaUsuariosMenuMobile.style.display = "none";
+
+      perfilEntrenador.style.display = "none";
+      perfilEntrenadorMobile.style.display = "none";
+
+      nombreEntrenador.textContent = "";
+      nombreEntrenadorMobile.textContent = "";
+
+      btnAbrirModalHeader.style.display = "inline-flex";
+      btnAbrirModalHeaderMobile.style.display = "inline-flex";
+    }
+  }
+
+  btnAbrirModalHeader.addEventListener("click", () => {
+    const nombre = prompt("Ingrese nombre de entrenador para iniciar sesión:");
+    if (nombre && nombre.trim() !== "") {
+      localStorage.setItem("entrenador", nombre.trim());
+      actualizarUI();
+    }
+  });
+
+  btnAbrirModalHeaderMobile.addEventListener("click", () => {
+    const nombre = prompt("Ingrese nombre de entrenador para iniciar sesión:");
+    if (nombre && nombre.trim() !== "") {
+      localStorage.setItem("entrenador", nombre.trim());
+      actualizarUI();
+    }
+  });
+
+  btnCerrarSesion.addEventListener("click", () => {
+    localStorage.removeItem("entrenador");
+    actualizarUI();
+  });
+
+  btnCerrarSesionMobile.addEventListener("click", () => {
+    localStorage.removeItem("entrenador");
+    actualizarUI();
+  });
+
+  actualizarUI();
+});
+</script>
+
+</body>
+</html>

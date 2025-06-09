@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <link href="../static/css/mas.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+    <header class="bg-red-600 text-white shadow-md z-50">
+
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/">
+                    <div class="flex items-center">
+                        <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo" class="h-16 w-auto mr-4">
+                        <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+                    </div>
+                </a>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold">
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                    </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- Tarjeta 1 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Copa Verano 2025</h3>
+        <p class="text-sm text-gray-600">📅 20 Julio 2025</p>
+        <p class="text-sm text-gray-600">📍 Coliseo Municipal de Cañete</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Un torneo emocionante con equipos de toda la región, ideal para todas las categorías.</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+
+    <!-- Tarjeta 2 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Torneo Relámpago</h3>
+        <p class="text-sm text-gray-600">📅 05 Agosto 2025</p>
+        <p class="text-sm text-gray-600">📍 Cancha San Luis</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Competencia rápida de un solo día, ideal para equipos listos para darlo todo.</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Liga Escolar 2025</h3>
+        <p class="text-sm text-gray-600">📅 10 Septiembre 2025</p>
+        <p class="text-sm text-gray-600">📍 Complejo Santa María</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Concurso dirigido a colegios de toda la provincia. Participación gratuita y premios institucionales.</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+
+    <!-- Tarjeta 4 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Copa Primavera</h3>
+        <p class="text-sm text-gray-600">📅 25 Septiembre 2025</p>
+        <p class="text-sm text-gray-600">📍 Estadio La Unión</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Torneo amistoso con premiación especial para equipos femeninos juveniles.</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+
+    <!-- Tarjeta 5 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Interdistrital 2025</h3>
+        <p class="text-sm text-gray-600">📅 12 Octubre 2025</p>
+        <p class="text-sm text-gray-600">📍 Plaza Deportiva Imperial</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Equipos de diferentes distritos compiten por la copa regional. ¡No te lo pierdas!</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+
+    <!-- Tarjeta 6 -->
+    <div class="bg-white rounded-xl shadow-lg p-5 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <h3 class="text-xl font-bold text-black-700 mb-2">Gran Final Regional</h3>
+        <p class="text-sm text-gray-600">📅 30 Noviembre 2025</p>
+        <p class="text-sm text-gray-600">📍 Coliseo Arena Cañete</p>
+        <button onclick="toggleInfo(this)" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Ver más</button>
+        <div class="hidden mt-4 text-sm text-gray-700 animate-fade-in">
+        <p>Final de temporada con los mejores equipos del año. Show en vivo y premiaciones.</p>
+        <a href="/inscripcion-torneo" class="mt-3 inline-block bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">Inscribe a tu equipo ahora</a>
+        </div>
+    </div>
+    </section>
+
+    <style>
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.4s ease-out;
+    }
+    </style>
+
+
+
+
+
+    <footer class="text-white py-10 mt-8 no-border">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100 animate-pulse-custom">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" aria-label="Facebook" class="hover:text-gray-300">📘</a>
+                    <a href="#" aria-label="Instagram" class="hover:text-gray-300">📸</a>
+                    <a href="#" aria-label="YouTube" class="hover:text-gray-300">📺</a>
+                    <a href="#" aria-label="WhatsApp" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 text-center text-xs">
+            <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script src="../static/js/loading.js"></script>
+    <script src="../static/js/mas.js"></script>
+    <script src="../static/js/galeria.js"></script>
+    <script src="../static/js/nosotros.js"></script>
+
+</body>
+
+</html>

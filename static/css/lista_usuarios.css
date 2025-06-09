@@ -1,0 +1,298 @@
+/* Variables de color */
+:root {
+    --voley-primary: #D10000;
+    --voley-primary-dark: #9D0000;
+    --voley-secondary: #2E7D32;
+    --voley-secondary-dark: #1B5E20;
+    --voley-light: #F8FAFC;
+    --voley-white: #FFFFFF;
+    --voley-text: #333333;
+    --voley-border: #E0E0E0;
+    --voley-gray: #F5F5F5;
+    --voley-card-bg: #FFFFFF;
+    --voley-checkbox: #D10000;
+}
+
+/* Estilos generales */
+.voley-admin-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--voley-light);
+    color: var(--voley-text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Header */
+.voley-admin-header {
+    background: linear-gradient(to right, var(--voley-primary), var(--voley-primary-dark));
+    color: var(--voley-white);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-title img {
+    height: 50px;
+    border-radius: 4px;
+}
+
+.logo-title h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Botones del header */
+.voley-admin-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-left: 1rem;
+}
+
+.new-user-btn {
+    background-color: var(--voley-secondary);
+    color: var(--voley-white);
+    border: none;
+}
+
+.new-user-btn:hover {
+    background-color: var(--voley-secondary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+}
+
+.home-btn {
+    background-color: transparent;
+    color: var(--voley-white);
+    border: 2px solid var(--voley-white);
+}
+
+.home-btn:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Main content */
+.voley-admin-main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 2rem;
+}
+
+/* Secciones */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--voley-primary);
+}
+
+.section-header i {
+    font-size: 1.2rem;
+}
+
+/* Sección de filtros */
+.filter-section {
+    background-color: var(--voley-card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--voley-primary);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: var(--voley-primary);
+}
+
+.filter-group input,
+.filter-group select {
+    padding: 0.6rem;
+    border: 1px solid var(--voley-border);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.filter-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.search-btn, .reset-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn {
+    background-color: var(--voley-primary);
+    color: var(--voley-white);
+    border: none;
+}
+
+.search-btn:hover {
+    background-color: var(--voley-primary-dark);
+}
+
+.reset-btn {
+    background-color: var(--voley-gray);
+    color: var(--voley-text);
+    border: 1px solid var(--voley-border);
+}
+
+.reset-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Tabla de usuarios */
+.users-table-section {
+    background-color: var(--voley-card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--voley-secondary);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--voley-border);
+}
+
+th {
+    background-color: var(--voley-primary);
+    color: var(--voley-white);
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: var(--voley-gray);
+}
+
+tr:hover {
+    background-color: #f0f0f0;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    padding: 0.4rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mantén tus estilos actuales pero ajusta para la columna de acciones */
+.actions-cell {
+    width: 80px; /* Reducido ya que solo tendrá un botón */
+}
+
+.delete-btn {
+    background-color: #e53e3e;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #c53030;
+}
+
+/* Elimina estilos relacionados con edit-btn */
+
+/* Mensajes del sistema */
+.system-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    display: none;
+}
+
+.system-message.success {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border-left: 4px solid #2E7D32;
+    display: block;
+}
+
+.system-message.error {
+    background-color: #FFEBEE;
+    color: #C62828;
+    border-left: 4px solid #C62828;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .filter-actions {
+        justify-content: flex-start;
+    }
+}
+

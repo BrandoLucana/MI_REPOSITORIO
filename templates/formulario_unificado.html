@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Inscripción - Pasión por el Voley</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="{{ url_for('static', filename='css/formulario.css') }}" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+    
+    <header class="voley-header">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="flex items-center">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Pasión por el Voley" class="h-16 mr-4">
+                <h1 class="text-2xl font-bold text-white">Formulario de Inscripción</h1>
+            </div>
+            <nav>
+                <a href="/" class="text-white hover:text-gray-200">
+                    <i class="fas fa-home mr-1"></i> Volver al Inicio
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="voley-form-container">
+        <div class="voley-progress-bar">
+            <div class="voley-step active" data-step="1">
+                <i class="fas fa-user mr-2"></i>Datos Personales
+            </div>
+            <div class="voley-step" data-step="2">
+                <i class="fas fa-user-shield mr-2"></i>Apoderado
+            </div>
+            <div class="voley-step" data-step="3">
+                <i class="fas fa-volleyball-ball mr-2"></i>Datos Deportivos
+            </div>
+        </div>
+
+        <form id="registroForm" method="POST" action="/registrar_usuario" class="voley-form">
+            <!-- Paso 1 -->
+            <div class="voley-form-step active" data-step="1">
+                <h2 class="voley-form-title">
+                    <i class="fas fa-user-circle mr-2"></i>Información Personal
+                </h2>
+
+                <div class="voley-form-grid">
+                    <div class="voley-input-group">
+                        <label class="voley-label">Nombre</label>
+                        <input type="text" name="nombre" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Apellidos</label>
+                        <input type="text" name="apellidos" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Fecha de Nacimiento</label>
+                        <input type="date" name="fecha_nacimiento" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Edad</label>
+                        <input type="number" name="edad" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Correo Electrónico</label>
+                        <input type="email" name="email" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Dirección</label>
+                        <input type="text" name="direccion" class="voley-input">
+                    </div>
+                </div>
+
+                <div class="voley-form-navigation">
+                    <button type="button" class="voley-next-btn">
+                        Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="voley-form-step" data-step="2">
+                <h2 class="voley-form-title">
+                    <i class="fas fa-user-shield mr-2"></i>Datos del Apoderado
+                </h2>
+
+                <div class="voley-form-grid">
+                    <div class="voley-input-group">
+                        <label class="voley-label">Nombre del Apoderado</label>
+                        <input type="text" name="nombre_apoderado" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Teléfono</label>
+                        <input type="tel" name="telefono_apoderado" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Correo Electrónico</label>
+                        <input type="email" name="correo_apoderado" class="voley-input">
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Centro de Salud</label>
+                        <input type="text" name="centro_salud" class="voley-input" required>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Tipo de Documento</label>
+                        <select name="tipo_documento" class="voley-input" required>
+                            <option value="">Seleccionar</option>
+                            <option value="DNI">DNI</option>
+                            <option value="CE">Carnet de Extranjería</option>
+                        </select>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Número de Documento</label>
+                        <input type="text" name="numero_documento" class="voley-input" required>
+                    </div>
+                </div>
+
+                <div class="voley-form-navigation">
+                    <button type="button" class="voley-prev-btn">
+                        <i class="fas fa-arrow-left mr-2"></i> Anterior
+                    </button>
+                    <button type="button" class="voley-next-btn">
+                        Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="voley-form-step" data-step="3">
+                <h2 class="voley-form-title">
+                    <i class="fas fa-volleyball-ball mr-2"></i>Datos Deportivos
+                </h2>
+
+                <div class="voley-form-grid">
+                    <div class="voley-input-group">
+                        <label class="voley-label">Nivel Actual</label>
+                        <select name="nivel_actual" class="voley-input">
+                            <option value="">Seleccionar</option>
+                            <option value="Principiante">Principiante</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzado">Avanzado</option>
+                        </select>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">¿Practicó este deporte antes?</label>
+                        <div class="voley-radio-group">
+                            <label class="voley-radio-label">
+                                <input type="radio" name="practico_deporte" value="si" class="voley-radio">
+                                <span>Sí</span>
+                            </label>
+                            <label class="voley-radio-label">
+                                <input type="radio" name="practico_deporte" value="no" class="voley-radio">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-label">Posición preferida</label>
+                        <input type="text" name="posicion" class="voley-input">
+                    </div>
+
+                    <div class="voley-input-group">
+                        <label class="voley-checkbox-label">
+                            <input type="checkbox" name="seguro_medico" class="voley-checkbox">
+                            <span>¿Tiene seguro médico?</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="voley-form-navigation">
+                    <button type="button" class="voley-prev-btn">
+                        <i class="fas fa-arrow-left mr-2"></i> Anterior
+                    </button>
+                    <button type="submit" class="voley-submit-btn">
+                        <i class="fas fa-paper-plane mr-2"></i> Enviar Registro
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/formulario.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+</body>
+</html>

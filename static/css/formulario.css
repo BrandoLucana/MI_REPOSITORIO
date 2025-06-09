@@ -1,0 +1,318 @@
+:root {
+    --voley-red: #D10000;
+    --voley-dark-red: #9D0000;
+    --voley-green: #2E7D32;
+    --voley-dark-green: #1B5E20;
+    --voley-white: #FFFFFF;
+    --voley-light: #FFF5F5;
+    --voley-gray: #F0F0F0;
+    --voley-dark: #222222;
+    --voley-border: #E0E0E0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--voley-dark);
+    background-color: var(--voley-light);
+    margin: 0;
+    padding: 0;
+}
+
+.voley-header {
+    background: linear-gradient(to right, var(--voley-red), var(--voley-dark-red));
+    color: var(--voley-white);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+.voley-form-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: var(--voley-white);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 2px solid var(--voley-border);
+}
+
+.voley-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.voley-progress-bar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--voley-border);
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+.voley-step {
+    padding: 0.8rem 1.5rem;
+    background: var(--voley-gray);
+    border-radius: 30px;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    color: var(--voley-dark);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.voley-step.active {
+    background: var(--voley-red);
+    color: var(--voley-white);
+    box-shadow: 0 4px 8px rgba(209, 0, 0, 0.2);
+}
+
+.voley-form-step {
+    display: none;
+}
+
+.voley-form-step.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.voley-form-title {
+    font-size: 1.5rem;
+    color: var(--voley-red);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--voley-border);
+    padding-bottom: 0.8rem;
+}
+
+.voley-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.voley-input-group {
+    margin-bottom: 1rem;
+}
+
+.voley-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--voley-dark);
+}
+
+.voley-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid var(--voley-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--voley-white);
+}
+
+.voley-input:focus {
+    border-color: var(--voley-red);
+    box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
+    outline: none;
+}
+
+.voley-radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.voley-radio-label, .voley-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+.voley-radio, .voley-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--voley-red);
+}
+
+.voley-form-navigation {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--voley-border);
+}
+
+.voley-next-btn, .voley-submit-btn {
+    background: var(--voley-green);
+    color: var(--voley-white);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.voley-next-btn:hover, .voley-submit-btn:hover {
+    background: var(--voley-dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+}
+
+.voley-prev-btn {
+    background: var(--voley-white);
+    color: var(--voley-red);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 2px solid var(--voley-red);
+    cursor: pointer;
+}
+
+.voley-prev-btn:hover {
+    background: var(--voley-light);
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: var(--voley-red);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.voley-input.error {
+    border-color: var(--voley-red) !important;
+    box-shadow: 0 0 0 2px rgba(209, 0, 0, 0.1);
+}
+
+.voley-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.voley-modal-content {
+    background-color: var(--voley-white);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    animation: modalScaleIn 0.3s ease-out;
+}
+
+.voley-modal-icon {
+    color: var(--voley-green);
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.voley-modal h3 {
+    color: var(--voley-green);
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.voley-modal p {
+    color: var(--voley-dark);
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.voley-modal-button {
+    background-color: var(--voley-green);
+    color: var(--voley-white);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.voley-modal-button:hover {
+    background-color: var(--voley-dark-green);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .voley-form-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .voley-progress-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .voley-progress-bar::before {
+        display: none;
+    }
+    
+    .voley-step {
+        width: 100%;
+        border-radius: 6px;
+    }
+    
+    .voley-form-navigation {
+        flex-direction: column;
+    }
+    
+    .voley-next-btn, .voley-prev-btn, .voley-submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .voley-modal-content {
+        padding: 20px;
+    }
+    
+    .voley-modal-icon {
+        font-size: 50px;
+    }
+}

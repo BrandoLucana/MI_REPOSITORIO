@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneos - Pasión por el Vóley</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
+    <link href="{{ url_for('static', filename='css/torneos.css') }}" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+
+    <!-- CABECERA -->
+    <header style="background-color: #DC2626;" class="text-white">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <a href="/" class="flex items-center">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Logo"
+                    class="h-16 w-auto mr-4">
+                <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold">
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                    </div>
+                    </li>
+                </ul>
+            </nav>
+            <button id="menuBtn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
+                </svg>
+            </button>
+        </div>
+        <div id="menuMobile" class="hidden md:hidden absolute top-full left-0 w-full bg-red-700 shadow-md z-10">
+            <ul class="py-2 flex flex-col items-center">
+                <li><a href="/formulario" class="block py-2 px-4 hover:bg-red-800 font-bold">Inscripciones</a></li>
+                <li><a href="/horarios" class="block py-2 px-4 hover:bg-red-800 font-bold">Horarios</a></li>
+                <li><a href="/donde_estamos" class="block py-2 px-4 hover:bg-red-800 font-bold">Dónde Estamos</a></li>
+                <li><a href="/contactanos" class="block py-2 px-4 hover:bg-red-800 font-bold">Contáctanos</a></li>
+                <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                <li class="relative group w-full text-center">
+                    <a href="/mas" class="block py-2 px-4 hover:bg-red-800 font-bold">Más</a>
+                    <div
+                        class="hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 absolute left-1/2 transform -translate-x-1/2 text-gray-800">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+
+    <!-- Sección: Opciones -->
+    <section class="text-center mt-10 mb-5">
+        <h2 class="text-3xl font-semibold text-red-800">Torneos</h2>
+        <p class="text-gray-700 mt-2">Elige cómo deseas participar</p>
+    </section>
+
+    <!-- Opción 1: Participar en Torneos -->
+    <section
+        class="transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+        <img src="static/img/regional_de_voley.jpg" alt="Torneo 1"
+            class="rounded-xl object-cover h-64 transition duration-300 ease-in-out hover:brightness-110 hover:scale-105">
+        <div>
+            <h3 class="text-2xl font-bold text-red-700">Torneo Regional Sub 18</h3>
+            <p class="text-gray-700 mt-2">Participa en nuestro torneo anual donde compiten los mejores equipos del sur.
+                Registra a tu equipo como delegado.</p>
+            <a href="/inscripcion-torneo"
+                class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-105 hover:shadow-md transition-all duration-300 inline-block text-center">
+                Quiero participar
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Opción 2: Otro Torneo -->
+    <section
+        class="transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+        <div>
+            <h3 class="text-2xl font-bold text-red-700">Torneo Nacional Abierto</h3>
+            <p class="text-gray-700 mt-2">Abierto para todas las categorías. Registra a tu equipo antes del cierre de
+                inscripciones.</p>
+            <a href="/inscripcion-torneo"
+                class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-105 hover:shadow-md transition-all duration-300 inline-block text-center">
+                Quiero participar
+            </a>
+        </div>
+        <img src="static/img/voley_peruano.jpg" alt="Torneo 2"
+            class="rounded-xl object-cover h-64 transition duration-300 ease-in-out hover:brightness-110 hover:scale-105">
+    </section>
+
+
+    <!-- Opción 3: Torneo Mixto -->
+    <section
+        class="transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10 items-center bg-white rounded-xl shadow-lg p-5">
+        <img src="static/img/mixto.jpg" alt="Torneo 3"
+            class="rounded-xl object-cover h-64 transition duration-300 ease-in-out hover:brightness-110 hover:scale-105">
+        <div>
+            <h3 class="text-2xl font-bold text-red-700">Torneo Mixto Verano</h3>
+            <p class="text-gray-700 mt-2">Equipos mixtos, formato recreativo con premiación sorpresa. ¡Diversión
+                asegurada!</p>
+            <a href="/inscripcion-torneo"
+                class="mt-4 px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-105 hover:shadow-md transition-all duration-300 inline-block text-center">
+                Quiero participar
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Botón flotante tipo burbuja -->
+    <button id="btnAbrirModal"
+        class="fixed bottom-5 right-5 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-lg z-50">
+        👨‍🏫 Entrenadores
+    </button>
+
+    <!-- Modal oculto -->
+    <div id="modalLogin" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md relative">
+            <button id="btnCerrarModal"
+                class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+            <h2 class="text-xl font-bold text-red-800 mb-4">Entrenadores</h2>
+            <p class="text-gray-600 mb-5">Ingresa con tu usuario para registrar torneos</p>
+            <form action="/login-entrenador" method="POST">
+                <input type="text" name="usuario" placeholder="Usuario" required class="w-full mb-3 p-2 border rounded">
+                <input type="password" name="contrasena" placeholder="Contraseña" required
+                    class="w-full mb-3 p-2 border rounded">
+                <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full w-full">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit"
+                        class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" class="hover:text-gray-300">📘</a>
+                    <a href="#" class="hover:text-gray-300">📸</a>
+                    <a href="#" class="hover:text-gray-300">📺</a>
+                    <a href="#" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>&copy; 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#"
+                    class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('menuMobile').classList.toggle('hidden');
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/burbuja.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="../static/js/nosotros.js"></script>
+
+</body>
+
+</html>

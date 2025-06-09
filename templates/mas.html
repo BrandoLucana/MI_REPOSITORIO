@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Más - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <link href="../static/css/mas.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+    <header class="bg-red-600 text-white shadow-md z-50">
+
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/">
+                    <div class="flex items-center">
+                        <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo" class="h-16 w-auto mr-4">
+                        <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+                    </div>
+                </a>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold">
+                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                    </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <h2 class="text-2xl font-bold mb-4">Explora Más</h2>
+        <p class="mb-6">Descubre más sobre nuestra academia y el mundo del voley.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
+                <img src="../static/img/galeria_placeholder.jpg" alt="Galería" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold mb-2">Galería de Fotos</h3>
+                    <p class="text-gray-700 text-sm mb-2">Echa un vistazo a nuestros mejores momentos en entrenamientos y partidos.</p>
+                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Galería</a>
+                </div>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
+                <img src="../static/img/eventos_placeholder.jpg" alt="Eventos" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold mb-2">Próximos Eventos</h3>
+                    <p class="text-gray-700 text-sm mb-2">Mantente al día con nuestros torneos, clínicas y otras actividades.</p>
+                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Eventos</a>
+                </div>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg overflow-hidden fade-in">
+                <img src="../static/img/noticias_placeholder.jpg" alt="Noticias" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold mb-2">Noticias del Voley</h3>
+                    <p class="text-gray-700 text-sm mb-2">Entérate de las últimas novedades del mundo del voleibol y de nuestra academia.</p>
+                    <a href="#" class="text-red-500 hover:text-red-700 font-bold">Leer Noticias</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-white py-10 mt-8 no-border">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100 animate-pulse-custom">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" aria-label="Facebook" class="hover:text-gray-300">📘</a>
+                    <a href="#" aria-label="Instagram" class="hover:text-gray-300">📸</a>
+                    <a href="#" aria-label="YouTube" class="hover:text-gray-300">📺</a>
+                    <a href="#" aria-label="WhatsApp" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 text-center text-xs">
+            <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+    <script src="../static/js/loading.js"></script>
+    <script src="../static/js/mas.js"></script>
+    <script src="../static/js/nosotros.js"></script>
+</body>
+
+</html>

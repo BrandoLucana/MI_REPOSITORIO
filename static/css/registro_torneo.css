@@ -1,0 +1,142 @@
+/* registro_torneo.css */
+
+/* Aplica sólo dentro del contenedor con clase registro-torneo-container */
+.registro-torneo-container {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 40px auto;
+    padding: 40px 30px;
+    color: #333;
+    width: 90%;
+    max-width: 900px;    /* Más ancho */
+    min-width: 320px;    /* Para móviles */
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.registro-torneo-container h1 {
+    text-align: center;
+    color: #b30000;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.registro-torneo-container .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.registro-torneo-container label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.registro-torneo-container input[type="text"],
+.registro-torneo-container input[type="date"],
+.registro-torneo-container select,
+.registro-torneo-container textarea {
+    font-size: 1rem;
+    padding: 10px 14px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.registro-torneo-container input[type="text"]:focus,
+.registro-torneo-container input[type="date"]:focus,
+.registro-torneo-container select:focus,
+.registro-torneo-container textarea:focus {
+    border-color: #b30000;
+    outline: none;
+}
+
+.registro-torneo-container textarea {
+    min-height: 80px;
+}
+
+.registro-torneo-container .botones {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.registro-torneo-container .btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.registro-torneo-container .btn-primary {
+    background-color: #b30000;
+}
+
+.registro-torneo-container .btn-primary:hover {
+    background-color: #8a0000;
+}
+
+.registro-torneo-container .btn-warning {
+    background-color: #ff9900;
+}
+
+.registro-torneo-container .btn-warning:hover {
+    background-color: #cc7a00;
+}
+
+.registro-torneo-container .btn-danger {
+    background-color: #d9534f;
+}
+
+.registro-torneo-container .btn-danger:hover {
+    background-color: #b52b27;
+}
+
+.registro-torneo-container .btn-secondary {
+    background-color: #6c757d;
+}
+
+.registro-torneo-container .btn-secondary:hover {
+    background-color: #565e64;
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+    .registro-torneo-container .botones {
+        flex-direction: column;
+    }
+    .registro-torneo-container .btn {
+        width: 100%;
+    }
+}
+
+/* Animación para cuando aparece la fila */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Animación para cuando desaparece la fila */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
