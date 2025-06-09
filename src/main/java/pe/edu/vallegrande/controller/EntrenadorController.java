@@ -45,13 +45,19 @@ public class EntrenadorController {
 
     public void cargarEntrenadorParaEditar(int fila) {
         try {
-            List<Entrenador> entrenadores = servicio.listarEntrenadores(); // Obtener la lista de entrenadores
-            if (fila >= 0 && fila < entrenadores.size()) {
-                Entrenador entrenador = entrenadores.get(fila);
-                vista.cargarDatosFormulario(entrenador); // Pasar el objeto Entrenador a la vista
+            if (fila >= 0) {
+                int id = (int) vista.getModeloTabla().getValueAt(fila, 0); // Obtener el ID de la tabla
+                Entrenador entrenador = servicio.obtenerEntrenadorPorId(id);
+                if (entrenador != null) {
+                    vista.cargarDatosFormulario(entrenador);
+                } else {
+                    vista.mostrarError("No se encontró el entrenador con ID: " + id);
+                }
             }
         } catch (SQLException ex) {
             vista.mostrarError("Error al cargar entrenador para editar: " + ex.getMessage());
+        } catch (IndexOutOfBoundsException ex) {
+            vista.mostrarError("Fila seleccionada no válida: " + ex.getMessage());
         }
     }
 
@@ -74,7 +80,7 @@ public class EntrenadorController {
             List<Entrenador> entrenadores = servicio.listarEntrenadores();
             for (Entrenador entrenador : entrenadores) {
                 modeloTabla.addRow(new Object[]{
-                        entrenador.getId(),
+                        entrenador.getId(), // Asegúrate de que ID esté incluido
                         entrenador.getNombre(),
                         entrenador.getApellido(),
                         entrenador.getEspecialidad(),

@@ -2,13 +2,13 @@ package pe.edu.vallegrande.service;
 
 import pe.edu.vallegrande.model.Torneo;
 import pe.edu.vallegrande.dataBase.ConexionMySQL;
+import pe.edu.vallegrande.dataBase.PruebaConexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TorneoService {
@@ -19,8 +19,9 @@ public class TorneoService {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            conn = ConexionMySQL.conectar();
+            conn = ConexionMySQL.conectar(); // Cambiado "ConexiónMySQL" por "ConexionMySQL"
             String sql = "SELECT id, nombre, fecha, lugar, nivel, descripcion, estado FROM torneos";
+            assert conn != null;
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -34,7 +35,7 @@ public class TorneoService {
                 torneo.setEstado(rs.getString("estado"));
                 torneos.add(torneo);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Considerar un mejor manejo de errores
         } finally {
             try {
@@ -52,7 +53,7 @@ public class TorneoService {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
-            conn = ConexionMySQL.conectar();
+            conn = ConexionMySQL.conectar(); // Cambiado "ConexiónMySQL" por "ConexionMySQL"
             String sql = "INSERT INTO torneos (nombre, fecha, lugar, nivel, descripcion, estado) VALUES (?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, torneo.getNombre());
@@ -62,7 +63,7 @@ public class TorneoService {
             pstmt.setString(5, torneo.getDescripcion());
             pstmt.setString(6, torneo.getEstado());
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Considerar un mejor manejo de errores
         } finally {
             try {
@@ -78,7 +79,7 @@ public class TorneoService {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
-            conn = ConexionMySQL.conectar();
+            conn = ConexionMySQL.conectar(); // Cambiado "ConexiónMySQL" por "ConexionMySQL"
             String sql = "UPDATE torneos SET nombre = ?, fecha = ?, lugar = ?, nivel = ?, descripcion = ?, estado = ? WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, torneo.getNombre());
@@ -89,7 +90,7 @@ public class TorneoService {
             pstmt.setString(6, torneo.getEstado());
             pstmt.setInt(7, torneo.getId());
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Considerar un mejor manejo de errores
         } finally {
             try {
@@ -105,12 +106,12 @@ public class TorneoService {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
-            conn = ConexionMySQL.conectar();
+            conn = ConexionMySQL.conectar(); // Cambiado "ConexiónMySQL" por "ConexionMySQL"
             String sql = "DELETE FROM torneos WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Considerar un mejor manejo de errores
         } finally {
             try {

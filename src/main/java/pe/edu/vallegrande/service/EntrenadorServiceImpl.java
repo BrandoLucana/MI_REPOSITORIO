@@ -27,8 +27,10 @@ public class EntrenadorServiceImpl implements EntrenadorService {
             pstmt.setString(5, entrenador.getEmail());
             pstmt.setBoolean(6, entrenador.isActivo());
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el driver de MySQL", e);
         } finally {
-            ConexionMySQL.cerrarRecursos(conn, pstmt, null);
+            cerrarRecursos(conn, pstmt, null);
         }
     }
 
@@ -47,8 +49,10 @@ public class EntrenadorServiceImpl implements EntrenadorService {
             if (rs.next()) {
                 entrenador = crearEntrenadorDesdeResultSet(rs);
             }
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el driver de MySQL", e);
         } finally {
-            ConexionMySQL.cerrarRecursos(conn, pstmt, rs);
+            cerrarRecursos(conn, pstmt, rs);
         }
         return entrenador;
     }
@@ -68,8 +72,10 @@ public class EntrenadorServiceImpl implements EntrenadorService {
                 Entrenador entrenador = crearEntrenadorDesdeResultSet(rs);
                 entrenadores.add(entrenador);
             }
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el driver de MySQL", e);
         } finally {
-            ConexionMySQL.cerrarRecursos(conn, stmt, rs);
+            cerrarRecursos(conn, stmt, rs);
         }
         return entrenadores;
     }
@@ -90,8 +96,10 @@ public class EntrenadorServiceImpl implements EntrenadorService {
             pstmt.setBoolean(6, entrenador.isActivo());
             pstmt.setInt(7, entrenador.getId());
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el driver de MySQL", e);
         } finally {
-            ConexionMySQL.cerrarRecursos(conn, pstmt, null);
+            cerrarRecursos(conn, pstmt, null);
         }
     }
 
@@ -105,13 +113,15 @@ public class EntrenadorServiceImpl implements EntrenadorService {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el driver de MySQL", e);
         } finally {
-            ConexionMySQL.cerrarRecursos(conn, pstmt, null);
+            cerrarRecursos(conn, pstmt, null);
         }
     }
 
     private Entrenador crearEntrenadorDesdeResultSet(ResultSet rs) throws SQLException {
-        Entrenador entrenador = new Entrenador(
+        return new Entrenador(
                 rs.getInt("id"),
                 rs.getString("nombre"),
                 rs.getString("apellido"),
@@ -120,7 +130,23 @@ public class EntrenadorServiceImpl implements EntrenadorService {
                 rs.getString("email"),
                 rs.getBoolean("activo")
         );
-        return entrenador;
     }
 
+    private void cerrarRecursos(Connection conn, Statement stmt, ResultSet rs) {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,45 +1,43 @@
 package pe.edu.vallegrande.view;
 
 import pe.edu.vallegrande.model.Estudiante;
-import pe.edu.vallegrande.dataBase.ConexionMySQL;
-import pe.edu.vallegrande.service.EstudianteService; // Importar EstudianteService
+import pe.edu.vallegrande.service.EstudianteService;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public class FormularioEstudiante extends JFrame {
-    private JTextField campoNombre, campoApellido, campoEdad, campoDni, campoCorreo, campoCelular;
-    private JComboBox<String> comboCategoria;
-    private JRadioButton radioMasculino, radioFemenino;
-    private JTextArea resultado;
-    private ButtonGroup grupoGenero;
-    private JTable tablaEstudiantes;
-    private DefaultTableModel modeloTabla;
-    private EstudianteService estudianteService; // Agregamos una instancia de EstudianteService
+public class FormularioEstudiante extends JPanel {
 
+    private final JTextField campoNombre;
+    private final JTextField campoApellido;
+    private final JTextField campoEdad;
+    private final JTextField campoDni;
+    private final JTextField campoCorreo;
+    private final JTextField campoCelular;
+    private final JComboBox<String> comboCategoria;
+    private final JRadioButton radioMasculino;
+    private final JRadioButton radioFemenino;
+    private final JTextArea resultado;
+    private final ButtonGroup grupoGenero;
+    private final DefaultTableModel modeloTabla;
+    private final EstudianteService estudianteService;
 
     public FormularioEstudiante() {
-        setTitle("Inscripción Academia de Vóley");
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        // Configuración del panel principal con GridBagLayout
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        campoNombre = new JTextField();
-        campoApellido = new JTextField();
-        campoEdad = new JTextField();
-        campoDni = new JTextField();
-        campoCorreo = new JTextField();
-        campoCelular = new JTextField();
+        campoNombre = new JTextField(15);
+        campoApellido = new JTextField(15);
+        campoEdad = new JTextField(5);
+        campoDni = new JTextField(10);
+        campoCorreo = new JTextField(15);
+        campoCelular = new JTextField(10);
         comboCategoria = new JComboBox<>(new String[]{"Infantil", "Juvenil", "Adulto"});
 
         radioMasculino = new JRadioButton("Masculino");
@@ -56,7 +54,7 @@ public class FormularioEstudiante extends JFrame {
 
         // Inicializar la tabla y el modelo
         modeloTabla = new DefaultTableModel();
-        tablaEstudiantes = new JTable(modeloTabla);
+        JTable tablaEstudiantes = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaEstudiantes);
         modeloTabla.addColumn("ID");
         modeloTabla.addColumn("Nombre");
@@ -97,9 +95,9 @@ public class FormularioEstudiante extends JFrame {
         add(panelBotones, gbc);
 
         gbc.gridy = y++;
-        gbc.gridwidth = 2; // Para que el scrollPane ocupe 2 columnas
-        gbc.fill = GridBagConstraints.BOTH; // Para que se expanda en ambas direcciones
-        gbc.weighty = 1; // Para que el scrollPane se expanda verticalmente
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1;
         add(scrollPane, gbc);
 
         gbc.gridy = y;
@@ -109,12 +107,9 @@ public class FormularioEstudiante extends JFrame {
         add(new JScrollPane(resultado), gbc);
 
         botonGuardar.addActionListener(this::guardarDatos);
-        botonVolver.addActionListener(e -> {
-            dispose();
-            new MenuPrincipal().setVisible(true);
-        });
+        botonVolver.addActionListener(e -> limpiarFormulario()); // Solo limpia el formulario, la navegación se manejará en LoginMenuApp
 
-        estudianteService = new EstudianteService(); // Inicializamos la instancia de EstudianteService
+        estudianteService = new EstudianteService();
         actualizarTablaEstudiantes();
     }
 
@@ -129,22 +124,9 @@ public class FormularioEstudiante extends JFrame {
 
     private void guardarDatos(ActionEvent e) {
         try {
-            String nombre = campoNombre.getText().trim();
-            String apellido = campoApellido.getText().trim();
-            int edad = Integer.parseInt(campoEdad.getText().trim());
-            String dni = campoDni.getText().trim();
-            String correo = campoCorreo.getText().trim();
-            String celular = campoCelular.getText().trim();
-            String categoria = (String) comboCategoria.getSelectedItem();
-            String genero = radioMasculino.isSelected() ? "Masculino" : radioFemenino.isSelected() ? "Femenino" : "No especificado";
+            Estudiante estudiante = getEstudiante();
 
-            Estudiante estudiante = new Estudiante(nombre, apellido, edad, categoria);
-            estudiante.setDni(dni);
-            estudiante.setCorreo(correo);
-            estudiante.setCelular(celular);
-            estudiante.setGenero(genero);
-
-            estudianteService.insertarEstudiante(estudiante); // Pasa el objeto estudiante como argumento
+            estudianteService.insertarEstudiante(estudiante);
             mostrarMensaje("Estudiante registrado exitosamente.");
             limpiarFormulario();
             actualizarTablaEstudiantes();
@@ -156,41 +138,24 @@ public class FormularioEstudiante extends JFrame {
         }
     }
 
-    private void insertarEstudiante(Estudiante estudiante) throws SQLException {
-        Connection conn = ConexionMySQL.conectar();
-        if (conn != null) {
-            try {
-                String sql = "INSERT INTO estudiantes (nombre, apellido, edad, dni, correo, celular, categoria, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, estudiante.getNombre());
-                pstmt.setString(2, estudiante.getApellido());
-                pstmt.setInt(3, estudiante.getEdad());
-                pstmt.setString(4, estudiante.getDni());
-                pstmt.setString(5, estudiante.getCorreo());
-                pstmt.setString(6, estudiante.getCelular());
-                pstmt.setString(7, estudiante.getCategoria());
-                pstmt.setString(8, estudiante.getGenero());
-                int rowsInserted = pstmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    System.out.println("Datos del estudiante guardados correctamente.");
-                } else {
-                    System.out.println("No se pudieron guardar los datos del estudiante.");
-                }
-            } catch (SQLException ex) {
-                throw new SQLException("Error al guardar datos: " + ex.getMessage());
-            } finally {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error al cerrar la conexión: " + ex.getMessage());
-                }
-            }
-        } else {
-            System.out.println("No se pudo establecer la conexión.");
-        }
+    private Estudiante getEstudiante() {
+        String nombre = campoNombre.getText().trim();
+        String apellido = campoApellido.getText().trim();
+        int edad = Integer.parseInt(campoEdad.getText().trim());
+        String dni = campoDni.getText().trim();
+        String correo = campoCorreo.getText().trim();
+        String celular = campoCelular.getText().trim();
+        String categoria = (String) comboCategoria.getSelectedItem();
+        String genero = radioMasculino.isSelected() ? "Masculino" : radioFemenino.isSelected() ? "Femenino" : "No especificado";
+
+        Estudiante estudiante = new Estudiante(nombre, apellido, edad, categoria);
+        estudiante.setDni(dni);
+        estudiante.setCorreo(correo);
+        estudiante.setCelular(celular);
+        estudiante.setGenero(genero);
+        return estudiante;
     }
 
-    // Nuevos métodos para mostrar mensajes, limpiar el formulario y actualizar la tabla
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -210,34 +175,13 @@ public class FormularioEstudiante extends JFrame {
         grupoGenero.clearSelection();
     }
 
-    public DefaultTableModel getModeloTabla() {
-        return modeloTabla;
-    }
-
-    public void cargarDatosFormulario(Estudiante estudiante) {
-        campoNombre.setText(estudiante.getNombre());
-        campoApellido.setText(estudiante.getApellido());
-        campoEdad.setText(String.valueOf(estudiante.getEdad()));
-        campoDni.setText(estudiante.getDni());
-        campoCorreo.setText(estudiante.getCorreo());
-        campoCelular.setText(estudiante.getCelular());
-        comboCategoria.setSelectedItem(estudiante.getCategoria());
-        if (estudiante.getGenero().equals("Masculíno")) {
-            radioMasculino.setSelected(true);
-        } else if (estudiante.getGenero().equals("Femenino")) {
-            radioFemenino.setSelected(true);
-        } else {
-            grupoGenero.clearSelection();
-        }
-    }
-
     public void actualizarTablaEstudiantes() {
         modeloTabla.setRowCount(0);
         try {
-            List<Estudiante> estudiantes = estudianteService.obtenerTodosEstudiantes(); // Aquí se usa el servicio
+            List<Estudiante> estudiantes = estudianteService.obtenerTodosEstudiantes();
             for (Estudiante estudiante : estudiantes) {
                 Object[] fila = {
-                        estudiante.getId(),  // Asegúrate de que el estudiante tenga un ID
+                        estudiante.getId(),
                         estudiante.getNombre(),
                         estudiante.getApellido(),
                         estudiante.getEdad(),

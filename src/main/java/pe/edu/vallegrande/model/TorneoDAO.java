@@ -3,37 +3,40 @@ package pe.edu.vallegrande.model;
 import pe.edu.vallegrande.dataBase.ConexionMySQL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TorneoDAO {
 
-    public List<Torneo> getAllTorneos() {
+    public List<Torneo> getAllTorneos() throws SQLException {
         List<Torneo> torneos = new ArrayList<>();
-        String sql = "SELECT * FROM tournament";
+        String sql = "SELECT * FROM torneos";
         try (Connection conn = ConexionMySQL.conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Torneo torneo = new Torneo(
-                        rs.getInt("tournament_id"),
-                        rs.getString("name"),
-                        rs.getDate("date"),
-                        rs.getString("location"),
-                        rs.getString("level"),
-                        rs.getString("description"),
-                        rs.getString("status")
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        new Date(rs.getDate("fecha").getTime()),
+                        rs.getString("lugar"),
+                        rs.getString("nivel"),
+                        rs.getString("descripcion"),
+                        rs.getString("estado")
                 );
                 torneos.add(torneo);
             }
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el controlador JDBC: " + e.getMessage(), e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException("Error al obtener torneos: " + e.getMessage(), e);
         }
         return torneos;
     }
 
-    public void addTorneo(Torneo torneo) {
-        String sql = "INSERT INTO tournament (name, date, location, level, description, status) VALUES (?, ?, ?, ?, ?, ?)";
+    public void addTorneo(Torneo torneo) throws SQLException {
+        String sql = "INSERT INTO torneos (nombre, fecha, lugar, nivel, descripcion, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -44,14 +47,15 @@ public class TorneoDAO {
             pstmt.setString(5, torneo.getDescripcion());
             pstmt.setString(6, torneo.getEstado());
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el controlador JDBC: " + e.getMessage(), e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException("Error al agregar torneo: " + e.getMessage(), e);
         }
     }
 
-    // Método para actualizar un torneo
-    public void updateTorneo(Torneo torneo) {
-        String sql = "UPDATE tournament SET name = ?, date = ?, location = ?, level = ?, description = ?, status = ? WHERE tournament_id = ?";
+    public void updateTorneo(Torneo torneo) throws SQLException {
+        String sql = "UPDATE torneos SET nombre = ?, fecha = ?, lugar = ?, nivel = ?, descripcion = ?, estado = ? WHERE id = ?";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -61,23 +65,26 @@ public class TorneoDAO {
             pstmt.setString(4, torneo.getNivel());
             pstmt.setString(5, torneo.getDescripcion());
             pstmt.setString(6, torneo.getEstado());
-            pstmt.setInt(7, torneo.getId()); // Establecer el ID del torneo a actualizar
+            pstmt.setInt(7, torneo.getId());
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el controlador JDBC: " + e.getMessage(), e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException("Error al actualizar torneo: " + e.getMessage(), e);
         }
     }
 
-    // Método para eliminar un torneo
-    public void deleteTorneo(int id) {
-        String sql = "DELETE FROM tournament WHERE tournament_id = ?";
+    public void deleteTorneo(int id) throws SQLException {
+        String sql = "DELETE FROM torneos WHERE id = ?";
         try (Connection conn = ConexionMySQL.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id); // Establecer el ID del torneo a eliminar
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Error al cargar el controlador JDBC: " + e.getMessage(), e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException("Error al eliminar torneo: " + e.getMessage(), e);
         }
     }
 }

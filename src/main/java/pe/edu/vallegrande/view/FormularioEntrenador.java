@@ -4,39 +4,59 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-import pe.edu.vallegrande.controller.EntrenadorController; // Importar el controlador
+
+import pe.edu.vallegrande.controller.EntrenadorController;
 import pe.edu.vallegrande.model.Entrenador;
 
-public class FormularioEntrenador extends JFrame {
+public class FormularioEntrenador extends JPanel {
 
     // Campos del formulario
-    private JTextField txtNombre, txtApellido, txtTelefono, txtEmail;
-    private JComboBox<String> comboEspecialidad;
-    private JCheckBox chkEstado;
-    private JButton btnGuardar, btnCancelar, btnEliminar;
+    private final JTextField txtNombre;
+    private final JTextField txtApellido;
+    private final JTextField txtTelefono;
+    private final JTextField txtEmail;
+    private final JComboBox<String> comboEspecialidad;
+    private final JCheckBox chkEstado;
 
     // Estructura para el CRUD
-    private JTable tablaEntrenadores;
-    private DefaultTableModel modeloTabla;
+    private final JTable tablaEntrenadores;
+    private final DefaultTableModel modeloTabla;
     private int filaSeleccionada = -1;
 
     // Referencia al controlador
     private EntrenadorController controller;
 
     public FormularioEntrenador() {
-        setTitle("Formulario de Entrenador");
-        setSize(1200, 700);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        // Configuración del panel principal con BorderLayout
+        setLayout(new BorderLayout(10, 10));
+        setBackground(new Color(255, 204, 204));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Panel principal con BorderLayout
-        JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
-        panelPrincipal.setBackground(new Color(255, 204, 204));
-        panelPrincipal.setBorder(new EmptyBorder(10, 10, 10, 10));
-        setContentPane(panelPrincipal);
+        // Inicializar modeloTabla y tabla primero
+        String[] columnas = {"ID", "Nombre", "Apellido", "Especialidad", "Teléfono", "Email", "Activo"};
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaEntrenadores = new JTable(modeloTabla);
+        tablaEntrenadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(tablaEntrenadores);
+        add(scroll, BorderLayout.CENTER);
+
+        // Escucha selección en tabla
+        tablaEntrenadores.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                filaSeleccionada = tablaEntrenadores.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    controller.cargarEntrenadorParaEditar(filaSeleccionada);
+                }
+            }
+        });
+
+        // Ahora inicializamos el controlador
+        this.controller = new EntrenadorController(this);
 
         // Banner superior
         JPanel banner = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -45,7 +65,7 @@ public class FormularioEntrenador extends JFrame {
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 18));
         lblLogoTexto.setForeground(Color.DARK_GRAY);
         banner.add(lblLogoTexto);
-        panelPrincipal.add(banner, BorderLayout.NORTH);
+        add(banner, BorderLayout.NORTH);
 
         // Panel formulario (West)
         JPanel panelFormulario = new JPanel(new GridBagLayout());
@@ -112,9 +132,9 @@ public class FormularioEntrenador extends JFrame {
         // Botones de formulario
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelBotones.setOpaque(false);
-        btnEliminar = new JButton("Eliminar");
-        btnCancelar = new JButton("Cancelar");
-        btnGuardar = new JButton("Guardar");
+        JButton btnEliminar = new JButton("Eliminar");
+        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnGuardar = new JButton("Guardar");
         panelBotones.add(btnEliminar);
         panelBotones.add(btnCancelar);
         panelBotones.add(btnGuardar);
@@ -124,43 +144,19 @@ public class FormularioEntrenador extends JFrame {
         gbc.gridwidth = 2;
         panelFormulario.add(panelBotones, gbc);
 
-        panelPrincipal.add(panelFormulario, BorderLayout.WEST);
-
-        // Tabla de entrenadores (Center)
-        String[] columnas = {"Nombre", "Apellido", "Especialidad", "Teléfono", "Email", "Activo"};
-        modeloTabla = new DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        tablaEntrenadores = new JTable(modeloTabla);
-        tablaEntrenadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scroll = new JScrollPane(tablaEntrenadores);
-        panelPrincipal.add(scroll, BorderLayout.CENTER);
-
-        // Escucha selección en tabla
-        tablaEntrenadores.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                filaSeleccionada = tablaEntrenadores.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    controller.cargarEntrenadorParaEditar(filaSeleccionada); // Llama al controlador
-                }
-            }
-        });
+        add(panelFormulario, BorderLayout.WEST);
 
         // Acciones de botones
         btnGuardar.addActionListener(e -> guardarOActualizar());
         btnCancelar.addActionListener(e -> {
-            // Cierra el formulario actual
-            dispose();
-            // Abre el MenuPrincipal
-            new MenuPrincipal().setVisible(true);
+            // Limpia el formulario al cancelar
+            limpiarFormulario();
+            // La navegación al MenuPrincipal se manejará desde LoginMenuApp
         });
         btnEliminar.addActionListener(e -> eliminarSeleccionado());
     }
 
-    // Método para establecer el controlador
+    // Método para establecer el controlador (si decides usar inyección)
     public void setController(EntrenadorController controller) {
         this.controller = controller;
     }
@@ -188,7 +184,7 @@ public class FormularioEntrenador extends JFrame {
     }
 
     // Método para cargar los datos de un entrenador en el formulario
-    public void cargarDatosFormulario(Entrenador entrenador) { // Recibe un Entrenador
+    public void cargarDatosFormulario(Entrenador entrenador) {
         txtNombre.setText(entrenador.getNombre());
         txtApellido.setText(entrenador.getApellido());
         comboEspecialidad.setSelectedItem(entrenador.getEspecialidad());
@@ -204,6 +200,12 @@ public class FormularioEntrenador extends JFrame {
     }
 
     private void guardarOActualizar() {
+        if (controller == null) {
+            JOptionPane.showMessageDialog(this, "Error: Controlador no inicializado.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String nombre = txtNombre.getText().trim();
         String apellido = txtApellido.getText().trim();
         String especialidad = (String) comboEspecialidad.getSelectedItem();
@@ -217,13 +219,20 @@ public class FormularioEntrenador extends JFrame {
             return;
         }
 
-        if (filaSeleccionada == -1) {
-            // Nuevo entrenador
-            controller.guardarEntrenador(nombre, apellido, especialidad, telefono, email, activo);
-        } else {
-            // Actualizar entrenador existente
-            int id = obtenerIdEntrenador(filaSeleccionada); // Debes obtener el ID de la fila seleccionada
-            controller.actualizarEntrenador(id, nombre, apellido, especialidad, telefono, email, activo);
+        try {
+            if (filaSeleccionada == -1) {
+                // Nuevo entrenador
+                controller.guardarEntrenador(nombre, apellido, especialidad, telefono, email, activo);
+            } else {
+                // Actualizar entrenador existente
+                int id = obtenerIdEntrenador(filaSeleccionada);
+                controller.actualizarEntrenador(id, nombre, apellido, especialidad, telefono, email, activo);
+            }
+            // Recargar la tabla después de guardar o actualizar
+            controller.cargarEntrenadores();
+            limpiarFormulario();
+        } catch (Exception e) {
+            mostrarError("Error al guardar/actualizar el entrenador: " + e.getMessage());
         }
     }
 
@@ -233,8 +242,15 @@ public class FormularioEntrenador extends JFrame {
                     "¿Eliminar entrenador seleccionado?",
                     "Confirmar", JOptionPane.YES_NO_OPTION);
             if (resp == JOptionPane.YES_OPTION) {
-                int id = obtenerIdEntrenador(filaSeleccionada); // Obtener el ID del entrenador a eliminar
-                controller.eliminarEntrenador(id);
+                try {
+                    int id = obtenerIdEntrenador(filaSeleccionada);
+                    controller.eliminarEntrenador(id);
+                    // Recargar la tabla después de eliminar
+                    controller.cargarEntrenadores();
+                    limpiarFormulario();
+                } catch (Exception e) {
+                    mostrarError("Error al eliminar el entrenador: " + e.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un entrenador para eliminar.",
@@ -243,19 +259,9 @@ public class FormularioEntrenador extends JFrame {
     }
 
     private int obtenerIdEntrenador(int fila) {
-        // Asumiendo que la primera columna de tu tabla es el ID.
-        // Si no lo es, ajusta el índice de la columna (0 en este caso)
-        return (int) modeloTabla.getValueAt(fila, 0);
-    }
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            FormularioEntrenador formulario = new FormularioEntrenador();
-            // Crear el controlador y pasar la vista
-            EntrenadorController controller = new EntrenadorController(formulario);
-            formulario.setController(controller); // Establecer el controlador en la vista
-            formulario.setVisible(true);
-        });
+        if (fila >= 0 && fila < modeloTabla.getRowCount()) {
+            return (int) modeloTabla.getValueAt(fila, 0); // Obtener el ID de la primera columna
+        }
+        throw new IllegalStateException("Fila seleccionada no válida: " + fila);
     }
 }

@@ -7,10 +7,6 @@ import pe.edu.vallegrande.controller.EntrenadorController; // Importar el contro
 
 public class MenuPrincipal extends JFrame {
 
-    private JButton btnFormularioEstudiante;
-    private JButton btnFormularioEntrenador;
-    private JButton btnTorneoForm;
-
     public MenuPrincipal() {
         setTitle("Formularios de la Academia Pasión por el Vóley");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,9 +41,9 @@ public class MenuPrincipal extends JFrame {
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         panelBotones.setBackground(new Color(255, 204, 204)); // fondo claro
 
-        btnFormularioEstudiante = new JButton("Formulario Estudiante");
-        btnFormularioEntrenador = new JButton("Formulario Entrenador");
-        btnTorneoForm = new JButton("Formulario Torneo");
+        JButton btnFormularioEstudiante = new JButton("Formulario Estudiante");
+        JButton btnFormularioEntrenador = new JButton("Formulario Entrenador");
+        JButton btnTorneoForm = new JButton("Formulario Torneo");
 
         panelBotones.add(btnFormularioEstudiante);
         panelBotones.add(btnFormularioEntrenador);
@@ -58,9 +54,7 @@ public class MenuPrincipal extends JFrame {
         add(panelBotones, BorderLayout.CENTER);
 
         // EVENTOS
-        btnFormularioEstudiante.addActionListener(e -> {
-            new FormularioEstudiante().setVisible(true);
-        });
+        btnFormularioEstudiante.addActionListener(e -> new FormularioEstudiante().setVisible(true));
 
         btnFormularioEntrenador.addActionListener(e -> {
             FormularioEntrenador formularioEntrenador = new FormularioEntrenador();
@@ -73,8 +67,6 @@ public class MenuPrincipal extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new MenuPrincipal().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new MenuPrincipal().setVisible(true));
     }
 }

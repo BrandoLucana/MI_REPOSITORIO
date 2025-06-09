@@ -5,103 +5,119 @@ import pe.edu.vallegrande.model.TorneoDAO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class GestionTorneos extends JFrame {
-    private JTextField txtNombre, txtLugar, txtDescripcion;
-    private JComboBox<String> cbNivel, cbEstado;
-    private JSpinner spFecha;
-    private JTable tabla;
-    private DefaultTableModel modeloTabla;
-    private TorneoDAO torneoDAO;
+public class GestionTorneos extends JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(GestionTorneos.class.getName());
+    private final JTextField txtNombre;
+    private final JTextField txtLugar;
+    private final JTextField txtDescripcion;
+    private final JComboBox<String> cbNivel;
+    private final JComboBox<String> cbEstado;
+    private final JSpinner spFecha;
+    private final JTable tabla;
+    private final DefaultTableModel modeloTabla;
+    private final TorneoDAO torneoDAO;
 
     public GestionTorneos() {
         torneoDAO = new TorneoDAO();
 
-        setTitle("Gestión de Torneos de Vóley");
-        setSize(800, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
+        // Configuración del panel principal con GridBagLayout
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel lblNombre = new JLabel("Nombre del Torneo:");
-        lblNombre.setBounds(20, 20, 150, 25);
-        add(lblNombre);
+        // Campo: Nombre del Torneo
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(new JLabel("Nombre del Torneo:"), gbc);
+        txtNombre = new JTextField(15);
+        gbc.gridx = 1;
+        add(txtNombre, gbc);
 
-        txtNombre = new JTextField();
-        txtNombre.setBounds(170, 20, 200, 25);
-        add(txtNombre);
-
-        JLabel lblFecha = new JLabel("Fecha:");
-        lblFecha.setBounds(400, 20, 100, 25);
-        add(lblFecha);
-
+        // Campo: Fecha
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        add(new JLabel("Fecha:"), gbc);
         spFecha = new JSpinner(new SpinnerDateModel());
         spFecha.setEditor(new JSpinner.DateEditor(spFecha, "dd/MM/yyyy"));
-        spFecha.setBounds(450, 20, 150, 25);
-        add(spFecha);
+        gbc.gridx = 3;
+        add(spFecha, gbc);
 
-        JLabel lblLugar = new JLabel("Lugar:");
-        lblLugar.setBounds(20, 60, 150, 25);
-        add(lblLugar);
+        // Campo: Lugar
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(new JLabel("Lugar:"), gbc);
+        txtLugar = new JTextField(15);
+        gbc.gridx = 1;
+        add(txtLugar, gbc);
 
-        txtLugar = new JTextField();
-        txtLugar.setBounds(170, 60, 200, 25);
-        add(txtLugar);
-
-        JLabel lblNivel = new JLabel("Nivel:");
-        lblNivel.setBounds(400, 60, 100, 25);
-        add(lblNivel);
-
+        // Campo: Nivel
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        add(new JLabel("Nivel:"), gbc);
         cbNivel = new JComboBox<>(new String[]{"Aficionado", "Intermedio", "Avanzado"});
-        cbNivel.setBounds(450, 60, 150, 25);
-        add(cbNivel);
+        gbc.gridx = 3;
+        add(cbNivel, gbc);
 
-        JLabel lblDescripcion = new JLabel("Descripción:");
-        lblDescripcion.setBounds(20, 100, 150, 25);
-        add(lblDescripcion);
+        // Campo: Descripción
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(new JLabel("Descripción:"), gbc);
+        txtDescripcion = new JTextField(30);
+        gbc.gridx = 1;
+        gbc.gridwidth = 3;
+        add(txtDescripcion, gbc);
+        gbc.gridwidth = 1; // Resetear gridwidth
 
-        txtDescripcion = new JTextField();
-        txtDescripcion.setBounds(170, 100, 430, 25);
-        add(txtDescripcion);
-
-        JLabel lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(20, 140, 150, 25);
-        add(lblEstado);
-
+        // Campo: Estado
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(new JLabel("Estado:"), gbc);
         cbEstado = new JComboBox<>(new String[]{"Pendiente", "En Curso", "Finalizado"});
-        cbEstado.setBounds(170, 140, 200, 25);
-        add(cbEstado);
+        gbc.gridx = 1;
+        add(cbEstado, gbc);
 
         // Botones
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         JButton btnAgregar = new JButton("Registrar");
-        btnAgregar.setBounds(20, 180, 120, 30);
         btnAgregar.setBackground(Color.RED);
         btnAgregar.setForeground(Color.WHITE);
-        add(btnAgregar);
-
         JButton btnModificar = new JButton("Modificar");
-        btnModificar.setBounds(160, 180, 120, 30);
         btnModificar.setBackground(Color.RED);
         btnModificar.setForeground(Color.WHITE);
-        add(btnModificar);
-
         JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(300, 180, 120, 30);
         btnEliminar.setBackground(Color.RED);
         btnEliminar.setForeground(Color.WHITE);
-        add(btnEliminar);
+        panelBotones.add(btnAgregar);
+        panelBotones.add(btnModificar);
+        panelBotones.add(btnEliminar);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 4;
+        add(panelBotones, gbc);
+        gbc.gridwidth = 1; // Resetear gridwidth
 
         // Tabla
         modeloTabla = new DefaultTableModel(new String[]{
                 "ID", "Nombre", "Fecha", "Lugar", "Nivel", "Descripción", "Estado"
         }, 0);
-
         tabla = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tabla);
-        scrollPane.setBounds(20, 230, 740, 200);
-        add(scrollPane);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 4;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        add(scrollPane, gbc);
 
         // Cargar torneos existentes
         cargarTorneos();
@@ -111,17 +127,22 @@ public class GestionTorneos extends JFrame {
             String nombre = txtNombre.getText();
             String lugar = txtLugar.getText();
             String descripcion = txtDescripcion.getText();
-            String nivel = cbNivel.getSelectedItem().toString();
-            String estado = cbEstado.getSelectedItem().toString();
+            String nivel = Objects.requireNonNull(cbNivel.getSelectedItem()).toString();
+            String estado = Objects.requireNonNull(cbEstado.getSelectedItem()).toString();
             java.util.Date fecha = (java.util.Date) spFecha.getValue();
 
             if (!nombre.isEmpty() && !lugar.isEmpty()) {
                 Torneo nuevoTorneo = new Torneo(0, nombre, fecha, lugar, nivel, descripcion, estado);
-                torneoDAO.addTorneo(nuevoTorneo);
-                cargarTorneos();  // Refrescar la tabla con los nuevos datos
-                limpiarCampos();
+                try {
+                    torneoDAO.addTorneo(nuevoTorneo);
+                    cargarTorneos();
+                    limpiarCampos();
+                } catch (java.sql.SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error al agregar torneo", ex);
+                    JOptionPane.showMessageDialog(null, "Error al registrar el torneo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Completa al menos el nombre y lugar.");
+                JOptionPane.showMessageDialog(null, "Completa al menos el nombre y lugar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -132,16 +153,21 @@ public class GestionTorneos extends JFrame {
                 String nombre = txtNombre.getText();
                 String lugar = txtLugar.getText();
                 String descripcion = txtDescripcion.getText();
-                String nivel = cbNivel.getSelectedItem().toString();
-                String estado = cbEstado.getSelectedItem().toString();
+                String nivel = Objects.requireNonNull(cbNivel.getSelectedItem()).toString();
+                String estado = Objects.requireNonNull(cbEstado.getSelectedItem()).toString();
                 java.util.Date fecha = (java.util.Date) spFecha.getValue();
 
                 Torneo torneoModificado = new Torneo(id, nombre, fecha, lugar, nivel, descripcion, estado);
-                torneoDAO.updateTorneo(torneoModificado);
-                cargarTorneos();  // Refrescar la tabla con los nuevos datos
-                limpiarCampos();
+                try {
+                    torneoDAO.updateTorneo(torneoModificado);
+                    cargarTorneos();
+                    limpiarCampos();
+                } catch (java.sql.SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error al modificar torneo", ex);
+                    JOptionPane.showMessageDialog(null, "Error al modificar el torneo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecciona una fila para modificar.");
+                JOptionPane.showMessageDialog(null, "Selecciona una fila para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -149,10 +175,15 @@ public class GestionTorneos extends JFrame {
             int fila = tabla.getSelectedRow();
             if (fila != -1) {
                 int id = (int) tabla.getValueAt(fila, 0);
-                torneoDAO.deleteTorneo(id);
-                cargarTorneos();  // Refrescar la tabla con los nuevos datos
+                try {
+                    torneoDAO.deleteTorneo(id);
+                    cargarTorneos();
+                } catch (java.sql.SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error al eliminar torneo", ex);
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el torneo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.");
+                JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -165,7 +196,8 @@ public class GestionTorneos extends JFrame {
                         java.util.Date fecha = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(tabla.getValueAt(fila, 2).toString());
                         spFecha.setValue(fecha);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        LOGGER.log(Level.SEVERE, "Error al parsear fecha", ex);
+                        JOptionPane.showMessageDialog(null, "Error al cargar la fecha.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     txtLugar.setText(tabla.getValueAt(fila, 3).toString());
                     cbNivel.setSelectedItem(tabla.getValueAt(fila, 4).toString());
@@ -177,13 +209,18 @@ public class GestionTorneos extends JFrame {
     }
 
     private void cargarTorneos() {
-        modeloTabla.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
-        List<Torneo> torneos = torneoDAO.getAllTorneos();
-        for (Torneo torneo : torneos) {
-            modeloTabla.addRow(new Object[]{
-                    torneo.getId(), torneo.getNombre(), torneo.getFecha(), torneo.getLugar(),
-                    torneo.getNivel(), torneo.getDescripcion(), torneo.getEstado()
-            });
+        modeloTabla.setRowCount(0);
+        try {
+            List<Torneo> torneos = torneoDAO.getAllTorneos();
+            for (Torneo torneo : torneos) {
+                modeloTabla.addRow(new Object[]{
+                        torneo.getId(), torneo.getNombre(), torneo.getFecha(), torneo.getLugar(),
+                        torneo.getNivel(), torneo.getDescripcion(), torneo.getEstado()
+                });
+            }
+        } catch (java.sql.SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error al cargar torneos", ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar los torneos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -194,9 +231,5 @@ public class GestionTorneos extends JFrame {
         cbNivel.setSelectedIndex(0);
         cbEstado.setSelectedIndex(0);
         spFecha.setValue(new java.util.Date());
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GestionTorneos().setVisible(true));
     }
 }

@@ -19,7 +19,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version> <!-- Puedes usar la versión más reciente -->
+            <version>8.0.33</version>
         </dependency>
 
         <!-- Dependencia para las bibliotecas de Swing (si es necesario) -->
@@ -29,5 +29,19 @@
             <version>1.6.1</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Asegura compatibilidad con Java 17 -->
+            <plugin>
+                <groupId>maven-compiler-plugin</groupId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17}</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
