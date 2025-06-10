@@ -36,3 +36,7 @@ tablaBody.addEventListener('click', function(event) {
     });
   }
 });
+
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('menuMobile').classList.toggle('hidden');
+});

@@ -12,7 +12,10 @@
     justify-content: center;
 }
 
-
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
 
 /* Animación "mover" personalizada */
 .mover {
