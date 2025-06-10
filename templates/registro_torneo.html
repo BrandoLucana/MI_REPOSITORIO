@@ -1,265 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
-  <title>Registro de Torneo - Pasión por el Vóley</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link href="../static/css/loader.css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/registro_torneo.css') }}" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100 flex flex-col min-h-screen">
-  <div id="loader" class="loader">
-    <div class="mover"></div>
-  </div>
-
-  <!-- CABECERA -->
-  <header style="background-color: #DC2626;" class="text-white">
-    <div class="container mx-auto p-4 flex items-center justify-between">
-      <a href="/" class="flex items-center">
-        <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Logo" class="h-16 w-auto mr-4">
-        <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
-      </a>
-      <nav class="hidden md:block">
-        <ul class="flex space-x-4 font-bold">
-          <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
-          <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
-          <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
-          <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
-          <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
-          <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
-          <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
-            <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
-            <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
-            <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
-            <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
-            <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
-            <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
-          </div>
-          </li>
-        </ul>
-      </nav>
-      <button id="menuBtn" class="md:hidden focus:outline-none">
-        <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
-        </svg>
-      </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel de Entrenadores - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contactanos.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />
+  </head>
+  <body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+        <div class="mover"></div>
     </div>
-    <div id="menuMobile" class="hidden md:hidden absolute top-full left-0 w-full bg-red-700 shadow-md z-10">
-      <ul class="py-2 flex flex-col items-center">
-        <li><a href="/formulario" class="block py-2 px-4 hover:bg-red-800 font-bold">Inscripciones</a></li>
-        <li><a href="/horarios" class="block py-2 px-4 hover:bg-red-800 font-bold">Horarios</a></li>
-        <li><a href="/donde_estamos" class="block py-2 px-4 hover:bg-red-800 font-bold">Dónde Estamos</a></li>
-        <li><a href="/contactanos" class="block py-2 px-4 hover:bg-red-800 font-bold">Contáctanos</a></li>
-        <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
-        <li class="relative group w-full text-center">
-          <a href="/mas" class="block py-2 px-4 hover:bg-red-800 font-bold">Más</a>
-          <div class="hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 absolute left-1/2 transform -translate-x-1/2 text-gray-800">
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </header>
 
-  <div class="registro-torneo-container">
-    <h1>Registro de Torneo de Vóley</h1>
-    <!-- Formulario que envía datos al backend -->
-    <form id="formTorneo" method="POST" action="{{ url_for('registro_torneo') }}" autocomplete="off">
-      <div class="form-group">
-        <label for="nombre">Nombre del Torneo</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del torneo" required />
-      </div>
-
-      <div class="form-group">
-        <label for="fecha">Fecha</label>
-        <input type="date" id="fecha" name="fecha" required />
-      </div>
-
-      <div class="form-group">
-        <label for="lugar">Lugar</label>
-        <input type="text" id="lugar" name="lugar" placeholder="Ingrese el lugar del torneo" required />
-      </div>
-
-      <div class="form-group">
-        <label for="nivel">Nivel</label>
-        <select id="nivel" name="nivel" required>
-          <option value="">-- Seleccione un nivel --</option>
-          <option value="Aficionado">Aficionado</option>
-          <option value="Intermedio">Intermedio</option>
-          <option value="Avanzado">Avanzado</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" name="descripcion" placeholder="Descripción del torneo"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="estado">Estado</label>
-        <select id="estado" name="estado" required>
-          <option value="">-- Seleccione un estado --</option>
-          <option value="Pendiente">Pendiente</option>
-          <option value="En Curso">En Curso</option>
-          <option value="Finalizado">Finalizado</option>
-        </select>
-      </div>
-
-      <div class="botones">
-        <button type="submit" class="btn btn-primary">Registrar</button>
-        <button type="button" class="btn btn-warning">Modificar</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-        <button type="reset" class="btn btn-secondary">Limpiar</button>
-      </div>
-    </form>
-
-    <h2 style="margin-top: 40px; color: #b30000;">Torneos Registrados</h2>
-    <table id="tablaTorneos" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-      <thead>
-        <tr style="background-color: #b30000; color: white;">
-          <th style="padding: 10px; border: 1px solid #ddd;">Nombre</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Lugar</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Nivel</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Descripción</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for torneo in torneos %}
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.nombre }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.fecha }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.lugar }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.nivel }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.descripcion }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.estado }}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">
-            <button class="btn-modificar" style="margin-right: 5px; background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Modificar</button>
-            <button class="btn-eliminar" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Eliminar</button>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-  <script>
-    const form = document.getElementById('formTorneo');
-    const tablaBody = document.querySelector('#tablaTorneos tbody');
-
-    let filaEditando = null;
-
-    // Cargar torneos existentes desde el backend al inicio
-    window.addEventListener('load', () => {
-      // Aquí podrías usar fetch para cargar torneos dinámicamente si lo deseas
-    });
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault(); // No prevenimos el submit si el formulario se envía al backend
-      this.submit(); // Enviar el formulario al backend
-    });
-
-    // Funcionalidad de edición local
-    document.querySelectorAll('.btn-modificar').forEach(button => {
-      button.addEventListener('click', () => {
-        const fila = button.closest('tr');
-        filaEditando = fila;
-        document.getElementById('nombre').value = fila.cells[0].textContent;
-        document.getElementById('fecha').value = fila.cells[1].textContent;
-        document.getElementById('lugar').value = fila.cells[2].textContent;
-        document.getElementById('nivel').value = fila.cells[3].textContent;
-        document.getElementById('descripcion').value = fila.cells[4].textContent;
-        document.getElementById('estado').value = fila.cells[5].textContent;
-        form.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
-      });
-    });
-
-    // Funcionalidad de eliminación local
-    document.querySelectorAll('.btn-eliminar').forEach(button => {
-      button.addEventListener('click', () => {
-        const fila = button.closest('tr');
-        if (confirm('¿Seguro quieres eliminar este torneo?')) {
-          if (filaEditando === fila) {
-            form.reset();
-            filaEditando = null;
-            form.querySelector('button[type="submit"]').textContent = 'Registrar';
-          }
-          fila.remove();
-        }
-      });
-    });
-
-    // Restaurar botón al limpiar
-    form.querySelector('button[type="reset"]').addEventListener('click', () => {
-      if (filaEditando) {
-        filaEditando = null;
-        form.querySelector('button[type="submit"]').textContent = 'Registrar';
-      }
-    });
-  </script>
-
-  <!-- FOOTER -->
-  <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
-        <p class="text-sm">San Vicente de Cañete, Perú</p>
-        <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
-      </div>
-      <div>
-        <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
-        <ul class="space-y-1 text-sm">
-          <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
-          <li><a href="/horarios" class="hover:underline">Horarios</a></li>
-          <li><a href="/mas" class="hover:underline">Galería</a></li>
-          <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
-        <form class="space-y-2">
-          <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
-          <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
-          <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
-        </form>
-      </div>
-      <div>
-        <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
-        <div class="flex space-x-4 mt-2 text-2xl">
-          <a href="#" class="hover:text-gray-300">📘</a>
-          <a href="#" class="hover:text-gray-300">📸</a>
-          <a href="#" class="hover:text-gray-300">📺</a>
-          <a href="#" class="hover:text-gray-300">💬</a>
+    <header class="text-white">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/">
+                    <div class="flex items-center">
+                        <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo" class="h-16 w-auto mr-4">
+                        <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+                    </div>
+                </a>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-4 font-bold">
+                <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+                <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+                <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+                <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+                <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+                <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+                    <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+                    <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
+                    <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+                    <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+                    <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+                    <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                </div>
+                </li>
+                </ul>
+            </nav>
         </div>
-      </div>
-    </div>
-    <div class="border-t border-white mt-6 pt-4 text-center text-xs">
-      <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
-      <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
-      <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
-    </div>
-  </footer>
+    </header>
 
-  <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
-  <script src="../static/js/registro_torneo.js"></script>
-  <script src="../static/js/nosotros.js"></script>
+    <!-- panel-entrenadores.html -->
+<div class="min-h-screen bg-gray-100 flex">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
+    <h2 class="text-2xl font-bold">Panel Entrenador</h2>
+    <nav class="space-y-2">
+      <a href="#seccion-alumnos" class="block hover:bg-red-700 p-2 rounded">Alumnos</a>
+      <a href="#seccion-torneos" class="block hover:bg-red-700 p-2 rounded">Torneos</a>
+      <a href="#seccion-estadisticas" class="block hover:bg-red-700 p-2 rounded">Estadísticas</a>
+    </nav>
+  </aside>
 
-  <!-- Botón flotante de WhatsApp -->
-  <a href="https://wa.me/51987654321" target="_blank"
-     class="fixed bottom-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-      <path d="M12.04 2C6.55 2 2 6.45 2 11.93c0 2.11.69 4.06 1.87 5.66L2 22l4.56-1.79a10.017 10.017 0 0 0 5.48 1.58c5.49 0 9.96-4.45 9.96-9.93S17.52 2 12.04 2Zm0 18.12c-1.73 0-3.34-.5-4.68-1.38l-.34-.21-2.7 1.05.72-2.63-.22-.34c-1.02-1.46-1.6-3.23-1.6-5.09 0-4.77 3.91-8.64 8.71-8.64 4.8 0 8.7 3.87 8.7 8.64s-3.91 8.64-8.7 8.64Zm4.85-6.46c-.27-.14-1.57-.78-1.81-.86-.24-.09-.41-.14-.59.14-.18.27-.68.86-.83 1.04-.15.18-.3.2-.56.07-.27-.14-1.12-.41-2.13-1.3-.79-.7-1.32-1.56-1.47-1.83-.15-.27-.02-.41.11-.54.11-.11.27-.29.41-.44.14-.14.18-.24.27-.41.09-.18.05-.32-.02-.45-.07-.14-.59-1.4-.8-1.92-.21-.5-.43-.44-.59-.45-.14 0-.32-.02-.5-.02s-.45.07-.68.32c-.23.25-.91.89-.91 2.16 0 1.27.93 2.49 1.06 2.66.14.18 1.83 2.86 4.43 4.01.62.27 1.11.43 1.48.54.62.2 1.19.17 1.64.1.5-.07 1.57-.64 1.79-1.25.23-.61.23-1.13.16-1.25-.07-.11-.23-.18-.5-.32Z"/>
-    </svg>
-  </a>
-</body>
+  <!-- Contenido -->
+  <main class="flex-1 p-8">
+    <section id="seccion-alumnos" class="mb-10">
+      <h3 class="text-xl font-bold mb-3">Registros de Alumnos</h3>
+      <!-- Tabla, filtros, etc -->
+    </section>
 
+    <section id="seccion-torneos" class="mb-10">
+      <h3 class="text-xl font-bold mb-3">Registros de Torneos</h3>
+      <!-- Tabla, CRUD de torneos -->
+        <div class="registro-torneo-container">
+          <h1>Podrá registrar y visualizar todos los torneos manejados este 2025.</h1>
+          <!-- Formulario que envía datos al backend -->
+          <form id="formTorneo" method="POST" action="{{ url_for('registro_torneo') }}" autocomplete="off" class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+          <div>
+            <label for="nombre" class="block text-gray-700 font-semibold">Nombre del Torneo</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Ingrese el nombre"
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+          </div>
+
+          <div>
+            <label for="fecha" class="block text-gray-700 font-semibold">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+          </div>
+
+          <div>
+            <label for="lugar" class="block text-gray-700 font-semibold">Lugar</label>
+            <input type="text" id="lugar" name="lugar" required placeholder="Ingrese el lugar"
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+          </div>
+
+          <div>
+            <label for="nivel" class="block text-gray-700 font-semibold">Nivel</label>
+            <select id="nivel" name="nivel" required
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500">
+              <option value="">-- Seleccione un nivel --</option>
+              <option value="Aficionado">Aficionado</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="descripcion" class="block text-gray-700 font-semibold">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="3" placeholder="Descripción del torneo"
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+          </div>
+
+          <div>
+            <label for="estado" class="block text-gray-700 font-semibold">Estado</label>
+            <select id="estado" name="estado" required
+              class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500">
+              <option value="">-- Seleccione un estado --</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Curso">En Curso</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex flex-wrap gap-4 mt-6">
+            <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition">
+              Registrar
+            </button>
+            <button type="button" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">
+              Modificar
+            </button>
+            <button type="button" class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition">
+              Eliminar
+            </button>
+            <button type="reset" class="bg-green-400 text-white px-6 py-2 rounded hover:bg-green-500 transition">
+              Limpiar
+            </button>
+          </div>
+        </form>
+
+          <h2 style="margin-top: 40px; color: #b30000;">Torneos Registrados</h2>
+          <table id="tablaTorneos" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+              <tr style="background-color: #b30000; color: white;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Nombre</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Lugar</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Nivel</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Descripción</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for torneo in torneos %}
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.nombre }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.fecha }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.lugar }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.nivel }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.descripcion }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ torneo.estado }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">
+                  <button class="btn-modificar" style="margin-right: 5px; background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Modificar</button>
+                  <button class="btn-eliminar" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Eliminar</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <script>
+          const form = document.getElementById('formTorneo');
+          const tablaBody = document.querySelector('#tablaTorneos tbody');
+
+          let filaEditando = null;
+
+          // Cargar torneos existentes desde el backend al inicio
+          window.addEventListener('load', () => {
+            // Aquí podrías usar fetch para cargar torneos dinámicamente si lo deseas
+          });
+
+          form.addEventListener('submit', function (event) {
+            event.preventDefault(); // No prevenimos el submit si el formulario se envía al backend
+            this.submit(); // Enviar el formulario al backend
+          });
+
+          // Funcionalidad de edición local
+          document.querySelectorAll('.btn-modificar').forEach(button => {
+            button.addEventListener('click', () => {
+              const fila = button.closest('tr');
+              filaEditando = fila;
+              document.getElementById('nombre').value = fila.cells[0].textContent;
+              document.getElementById('fecha').value = fila.cells[1].textContent;
+              document.getElementById('lugar').value = fila.cells[2].textContent;
+              document.getElementById('nivel').value = fila.cells[3].textContent;
+              document.getElementById('descripcion').value = fila.cells[4].textContent;
+              document.getElementById('estado').value = fila.cells[5].textContent;
+              form.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
+            });
+          });
+
+          // Funcionalidad de eliminación local
+          document.querySelectorAll('.btn-eliminar').forEach(button => {
+            button.addEventListener('click', () => {
+              const fila = button.closest('tr');
+              if (confirm('¿Seguro quieres eliminar este torneo?')) {
+                if (filaEditando === fila) {
+                  form.reset();
+                  filaEditando = null;
+                  form.querySelector('button[type="submit"]').textContent = 'Registrar';
+                }
+                fila.remove();
+              }
+            });
+          });
+
+          // Restaurar botón al limpiar
+          form.querySelector('button[type="reset"]').addEventListener('click', () => {
+            if (filaEditando) {
+              filaEditando = null;
+              form.querySelector('button[type="submit"]').textContent = 'Registrar';
+            }
+          });
+        </script>
+
+
+    </section>
+
+    <section id="seccion-estadisticas">
+      <h3 class="text-xl font-bold mb-3">Estadísticas</h3>
+      <!-- Gráficos, KPIs, etc -->
+    </section>
+  </main>
+</div>
+
+
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/torneo-registro.js') }}"></script>
+  </body>
 </html>

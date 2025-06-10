@@ -472,7 +472,7 @@ def login_entrenador():
     else:
         flash("Usuario o contraseña incorrectos", "error")
         # Asumo que '/torneos' es la página desde donde se intenta el login de entrenador
-        return redirect(url_for('torneos')) 
+        return redirect(url_for('index')) 
 
 # Rutas para otras páginas de contenido
 @app.route("/mas")
