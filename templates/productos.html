@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneos - Pasión por el Vóley</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
+    <link href="{{ url_for('static', filename='css/torneos.css') }}" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+
+    <div id="loader" class="loader">
+        <div class="mover"></div>
+    </div>
+
+    <!-- CABECERA -->
+    <header style="background-color: #DC2626;" class="text-white">
+        <div class="container mx-auto p-4 flex items-center justify-between">
+            <a href="/" class="flex items-center">
+                <img src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" alt="Logo"
+                    class="h-16 w-auto mr-4">
+                <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </a>
+      <nav class="hidden md:block">
+        <ul class="flex space-x-4 font-bold">
+          <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
+          <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
+          <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
+          <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
+          <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
+          <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
+          <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+            <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+            <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
+            <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+            <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+            <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+            <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+          </div>
+          </li>
+        </ul>
+      </nav>
+            <button id="menuBtn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
+                </svg>
+            </button>
+        </div>
+        <div id="menuMobile" class="hidden md:hidden absolute top-full left-0 w-full bg-red-700 shadow-md z-10">
+            <ul class="py-2 flex flex-col items-center">
+                <li><a href="/formulario" class="block py-2 px-4 hover:bg-red-800 font-bold">Inscripciones</a></li>
+                <li><a href="/horarios" class="block py-2 px-4 hover:bg-red-800 font-bold">Horarios</a></li>
+                <li><a href="/donde_estamos" class="block py-2 px-4 hover:bg-red-800 font-bold">Dónde Estamos</a></li>
+                <li><a href="/contactanos" class="block py-2 px-4 hover:bg-red-800 font-bold">Contáctanos</a></li>
+                <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                <li class="relative group w-full text-center">
+                    <a href="/mas" class="block py-2 px-4 hover:bg-red-800 font-bold">Más</a>
+                    <div
+                        class="hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 absolute left-1/2 transform -translate-x-1/2 text-gray-800">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+
+    <main class="p-6 bg-white">
+    <h1 class="text-4xl font-bold text-center mb-8">Productos</h1>
+
+    <!-- Sección: Uniforme -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Uniforme</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Tarjeta de producto -->
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/uniforme.png" alt="Uniforme Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Uniforme Oficial</h3>
+            <p class="text-gray-600 mb-2">Camiseta y short - Tallas disponibles: S, M, L</p>
+            <p class="text-red-600 font-bold mb-3">S/ 80.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Uniforme%20Oficial)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        <!-- Puedes duplicar esta tarjeta cambiando la imagen y datos -->
+        </div>
+    </section>
+
+    <!-- Sección: Implementos deportivos -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Implementos deportivos</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/balon.jpg" alt="Balón Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Balón Oficial Mikasa</h3>
+            <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+            <p class="text-red-600 font-bold mb-3">S/ 150.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20Mikasa)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/balon2.webp" alt="Balón V33OW" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Balón V33OW</h3>
+            <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+            <p class="text-red-600 font-bold mb-3">S/ 100.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20V330W)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/zapatillas.webp" alt="Balón Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Zapatillas ASICS</h3>
+            <p class="text-gray-600 mb-2">Zapatillas para entrenamientos y torneos.</p>
+            <p class="text-red-600 font-bold mb-3">S/ 490.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Zapatillas%20ASICS)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        </div>
+    </section>
+
+    <!-- Sección: Rodilleras y mangas -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Rodilleras y mangas</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/rodilleras.jpg" alt="Rodilleras Negras" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Rodilleras Mikasa</h3>
+            <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
+            <p class="text-red-600 font-bold mb-3">S/ 45.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Rodilleras%20Negras)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
+            <img src="../static/img/mangas.jpg" alt="Mangas Negras" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <h3 class="text-xl font-semibold">Mangas MTD</h3>
+            <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
+            <p class="text-red-600 font-bold mb-3">S/ 35.00</p>
+            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Mangas%20Negras)" target="_blank"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+            ¡Lo quiero!
+            </a>
+        </div>
+        </div>
+    </section>
+    </main>
+
+
+
+    <!-- FOOTER -->
+    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
+                <p class="text-sm">San Vicente de Cañete, Perú</p>
+                <p class="text-sm mt-2">Forjando Campeones desde 2020</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
+                    <li><a href="/horarios" class="hover:underline">Horarios</a></li>
+                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Contáctanos</h4>
+                <form class="space-y-2">
+                    <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
+                    <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
+                    <button type="submit"
+                        class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                </form>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold mb-2">Síguenos</h4>
+                <div class="flex space-x-4 mt-2 text-2xl">
+                    <a href="#" class="hover:text-gray-300">📘</a>
+                    <a href="#" class="hover:text-gray-300">📸</a>
+                    <a href="#" class="hover:text-gray-300">📺</a>
+                    <a href="#" class="hover:text-gray-300">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white mt-6 pt-4 text-center text-xs">
+            <p>&copy; 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#"
+                    class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
+        </div>
+    </footer>
+
+
+
+    <script src="{{ url_for('static', filename='js/burbuja.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="../static/js/nosotros.js"></script>
+    <script src="../static/js/torneo.js"></script>
+
+</body>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/51987654321" target="_blank"
+    class="fixed bottom-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+        <path d="M12.04 2C6.55 2 2 6.45 2 11.93c0 2.11.69 4.06 1.87 5.66L2 22l4.56-1.79a10.017 10.017 0 0 0 5.48 1.58c5.49 0 9.96-4.45 9.96-9.93S17.52 2 12.04 2Zm0 18.12c-1.73 0-3.34-.5-4.68-1.38l-.34-.21-2.7 1.05.72-2.63-.22-.34c-1.02-1.46-1.6-3.23-1.6-5.09 0-4.77 3.91-8.64 8.71-8.64 4.8 0 8.7 3.87 8.7 8.64s-3.91 8.64-8.7 8.64Zm4.85-6.46c-.27-.14-1.57-.78-1.81-.86-.24-.09-.41-.14-.59.14-.18.27-.68.86-.83 1.04-.15.18-.3.2-.56.07-.27-.14-1.12-.41-2.13-1.3-.79-.7-1.32-1.56-1.47-1.83-.15-.27-.02-.41.11-.54.11-.11.27-.29.41-.44.14-.14.18-.24.27-.41.09-.18.05-.32-.02-.45-.07-.14-.59-1.4-.8-1.92-.21-.5-.43-.44-.59-.45-.14 0-.32-.02-.5-.02s-.45.07-.68.32c-.23.25-.91.89-.91 2.16 0 1.27.93 2.49 1.06 2.66.14.18 1.83 2.86 4.43 4.01.62.27 1.11.43 1.48.54.62.2 1.19.17 1.64.1.5-.07 1.57-.64 1.79-1.25.23-.61.23-1.13.16-1.25-.07-.11-.23-.18-.5-.32Z"/>
+    </svg>
+    </a>
+
+</html>

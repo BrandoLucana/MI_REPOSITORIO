@@ -343,6 +343,10 @@ def login_entrenador():
 def mas():
     return render_template('mas.html')
 
+@app.route("/productos")
+def productos():
+    return render_template('productos.html')
+
 @app.route("/galeria")
 def galeria():
     return render_template('galeria.html')
