@@ -35,15 +35,18 @@
                     <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
                     <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
                     <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
-                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
-                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
-                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
-                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
-                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
-                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
-                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
-                    </div>
-                    </li>
+                    <li class="relative">
+                        <button id="menu-btn" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">
+                            Más ▾
+                        </button>
+                        <div id="dropdown-menu" class="absolute left-0 mt-2 hidden flex-col bg-white shadow-lg rounded w-48 text-gray-800 z-50">
+                            <a href="/torneos" class="px-4 py-2 hover:bg-gray-100">Torneos</a>
+                            <a href="/galeria" class="px-4 py-2 hover:bg-gray-100">Galería</a>
+                            <a href="/eventos" class="px-4 py-2 hover:bg-gray-100">Eventos</a>
+                            <a href="/noticias" class="px-4 py-2 hover:bg-gray-100">Noticias</a>
+                            <a href="/donde_estamos" class="px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                        </div>
+                        </li>
                 </ul>
             </nav>
 
@@ -55,7 +58,7 @@
     <div class="bg-black/50 rounded-xl p-8 max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
         <div class="animate-fadeInLeft">
         <h1 class="text-5xl font-extrabold mb-4">¿Quiénes Somos?</h1>
-        <p class="text-lg font-light">Una academia que forma campeonas con pasión, esfuerzo y disciplina.</p>
+        <p class="text-lg font-light">Impulsamos el desarrollo de jóvenes campeonas a través de la pasión, el esfuerzo constante y la disciplina que transforma vidas.</p>
         </div>
         <div class="relative">
         <img src="../static/img/quienes_somos.jpg" alt="Academia de vóley" class="rounded-xl shadow-2xl animate-fadeInRight">

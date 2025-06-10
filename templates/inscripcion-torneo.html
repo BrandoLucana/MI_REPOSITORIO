@@ -8,6 +8,7 @@
     <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg" />
     <link href="{{ url_for('static', filename='css/torneos.css') }}" rel="stylesheet" />
     <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/mas.css" rel="stylesheet">
     <link href="../static/css/loader.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -32,15 +33,18 @@
                     <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
                     <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
                     <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
-                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
-                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
-                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
-                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
-                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
-                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
-                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
-                    </div>
-                    </li>
+                    <li class="relative">
+                        <button id="menu-btn" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">
+                            Más ▾
+                        </button>
+                        <div id="dropdown-menu" class="absolute left-0 mt-2 hidden flex-col bg-white shadow-lg rounded w-48 text-gray-800 z-50">
+                            <a href="/torneos" class="px-4 py-2 hover:bg-gray-100">Torneos</a>
+                            <a href="/galeria" class="px-4 py-2 hover:bg-gray-100">Galería</a>
+                            <a href="/eventos" class="px-4 py-2 hover:bg-gray-100">Eventos</a>
+                            <a href="/noticias" class="px-4 py-2 hover:bg-gray-100">Noticias</a>
+                            <a href="/donde_estamos" class="px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                        </div>
+                        </li>
                 </ul>
             </nav>
             <button id="menuBtn" class="md:hidden focus:outline-none">

@@ -1,11 +1,8 @@
-import tailwindcss from "@tailwindcss/vite";
-/** @type {import("tailwindcss¨).config}*/
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./templates/*.html"],
-    theme:{
-        extend: {},
-    },
-    plugins: [
-        tailwindcss(),
-    ],
+  content: ["./templates/**/*.html", "./static/**/*.js"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }

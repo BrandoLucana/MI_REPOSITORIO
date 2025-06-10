@@ -1,12 +1,22 @@
 {
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.7",
-    "@tailwindcss/vite": "^4.1.4",
-    "tailwindcss": "^4.1.7"
+    "@tailwindcss/cli": "^4.1.8",
+    "@tailwindcss/vite": "^4.1.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
-    "postcss-cli": "^11.0.1"
-  }
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.1.8"
+  },
+  "name": "ase242s2_t02-wp",
+  "description": "- Herrera Nayeli\r - Soto Cardenas Alejandro\r - Brando Lucana",
+  "version": "1.0.0",
+  "main": "postcss.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

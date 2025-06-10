@@ -29,19 +29,28 @@
             </div>
             <nav class="hidden md:block">
                 <ul class="flex space-x-4 font-bold">
-                    <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
-                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
-                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
-                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
-                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
-                    <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
-                    <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
-                        <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
-                        <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
-                        <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
-                        <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
-                        <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
-                    </div>
+                    <li><a href="/"class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a>
+                    </li>
+                    <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a>
+                    </li>
+                    <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a>
+                    </li>
+                    <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a>
+                    </li>
+                    <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a>
+                    </li>
+                    <li class="relative">
+                        <button id="menu-btn" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">
+                            Más ▾
+                        </button>
+                        <div id="dropdown-menu" class="absolute left-0 mt-2 hidden flex-col bg-white shadow-lg rounded w-48 text-gray-800 z-50">
+                            <a href="/torneos" class="px-4 py-2 hover:bg-gray-100">Torneos</a>
+                            <a href="/galeria" class="px-4 py-2 hover:bg-gray-100">Galería</a>
+                            <a href="/eventos" class="px-4 py-2 hover:bg-gray-100">Eventos</a>
+                            <a href="/noticias" class="px-4 py-2 hover:bg-gray-100">Noticias</a>
+                            <a href="/donde_estamos" class="px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+                        </div>
+                        </li>
                     </li>
                 </ul>
             </nav>
@@ -57,7 +66,8 @@
                 <img src="../static/img/galeria_placeholder.jpg" alt="Galería" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-semibold mb-2">Galería de Fotos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Echa un vistazo a nuestros mejores momentos en entrenamientos y partidos.</p>
+                    <p class="text-gray-700 text-sm mb-2">Echa un vistazo a nuestros mejores momentos en entrenamientos
+                        y partidos.</p>
                     <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Galería</a>
                 </div>
             </div>
@@ -66,7 +76,8 @@
                 <img src="../static/img/eventos_placeholder.jpg" alt="Eventos" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-semibold mb-2">Próximos Eventos</h3>
-                    <p class="text-gray-700 text-sm mb-2">Mantente al día con nuestros torneos, clínicas y otras actividades.</p>
+                    <p class="text-gray-700 text-sm mb-2">Mantente al día con nuestros torneos, clínicas y otras
+                        actividades.</p>
                     <a href="#" class="text-red-500 hover:text-red-700 font-bold">Ver Eventos</a>
                 </div>
             </div>
@@ -75,7 +86,8 @@
                 <img src="../static/img/noticias_placeholder.jpg" alt="Noticias" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-semibold mb-2">Noticias del Voley</h3>
-                    <p class="text-gray-700 text-sm mb-2">Entérate de las últimas novedades del mundo del voleibol y de nuestra academia.</p>
+                    <p class="text-gray-700 text-sm mb-2">Entérate de las últimas novedades del mundo del voleibol y de
+                        nuestra academia.</p>
                     <a href="#" class="text-red-500 hover:text-red-700 font-bold">Leer Noticias</a>
                 </div>
             </div>
@@ -104,7 +116,8 @@
                 <form class="space-y-2">
                     <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800">
                     <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
-                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100 animate-pulse-custom">Enviar</button>
+                    <button type="submit"
+                        class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100 animate-pulse-custom">Enviar</button>
                 </form>
             </div>
             <div>
@@ -119,7 +132,8 @@
         </div>
         <div class="mt-6 pt-4 text-center text-xs">
             <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
-            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#" class="underline hover:text-gray-300">Política de privacidad</a></p>
+            <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#"
+                    class="underline hover:text-gray-300">Política de privacidad</a></p>
             <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
         </div>
     </footer>
