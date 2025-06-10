@@ -40,3 +40,23 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* === Arreglo para menú desplegable === */
+header {
+  position: relative;
+  z-index: 40;
+}
+
+
+.group > div {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  background-color: white;
+  border-radius: 0.375rem; /* rounded */
+  width: 12rem; /* 48 */
+  position: absolute;
+  left: 0;
+  margin-top: 0.5rem; /* mt-2 */
+  z-index: 50;
+  display: none; /* oculto por defecto */
+}
+

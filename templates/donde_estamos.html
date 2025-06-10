@@ -7,7 +7,9 @@
     <title>Dónde Estamos - Pasión por el Voley</title>
     <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
     <link href="../static/css/donde_estamos.css" rel="stylesheet" />
-     <link href="../static/css/loader.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/mas.css" rel="stylesheet">
+    <link href="../static/css/loader.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -17,15 +19,12 @@
         <div class="mover"></div>
     </div>
 
-    <header style="background-color: #DC2626;" class="text-white fixed w-full top-0 z-50 shadow-md">
+    <header class="bg-red-600 text-white fixed w-full top-0 z-50 shadow-md">
         <div class="container mx-auto p-4 flex items-center justify-between">
-            <div class="flex items-center">
-                <a href="/" class="flex items-center">
-                    <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo"
-                        class="h-12 md:h-16 w-auto mr-3 md:mr-4" />
-                    <h1 class="text-lg md:text-xl font-bold">PASIÓN POR EL VOLEY</h1>
-                </a>
-            </div>
+            <a href="/" class="flex items-center space-x-3">
+                <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo" class="h-12 md:h-16 w-auto rounded-full" />
+                <h1 class="text-xl md:text-2xl font-bold tracking-wide">PASIÓN POR EL VÓLEY</h1>
+            </a>
 
         <nav class="hidden md:block">
             <ul class="flex space-x-4 font-bold">
@@ -48,61 +47,52 @@
         </nav>
 
             <button id="menuBtn" class="md:hidden focus:outline-none z-50">
-                <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
+        </div>
 
-            <!-- Menú móvil -->
-            <div id="menuMobile"
-                class="hidden fixed inset-0 bg-red-700 bg-opacity-95 backdrop-blur-sm flex flex-col items-center justify-start pt-24 space-y-4 text-white text-lg z-40">
-                <a href="/inscripciones" class="w-full text-center py-3 hover:bg-red-800 font-bold">Inscripciones</a>
-                <a href="/horarios" class="w-full text-center py-3 hover:bg-red-800 font-bold">Horarios</a>
-                <a href="/donde_estamos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Dónde Estamos</a>
-                <a href="/contactanos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Contáctanos</a>
-                <a href="/torneos" class="w-full text-center py-3 hover:bg-red-800 font-bold">Torneos</a>
-                <div class="relative w-full text-center group">
-                    <button
-                        class="w-full py-3 hover:bg-red-800 font-bold flex justify-center items-center space-x-1 focus:outline-none">
-                        <span>Más</span>
-                        <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div
-                        class="hidden group-focus:block bg-white shadow-md rounded mt-2 w-full text-gray-800 absolute left-0 z-50 flex flex-col">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Galería</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Eventos</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 font-bold">Noticias</a>
-                    </div>
-                </div>
-            </div>
+        <div id="menuMobile" class="hidden fixed inset-0 bg-red-700 bg-opacity-95 flex flex-col items-center justify-start pt-24 space-y-4 text-white text-lg z-40">
+            <a href="/inscripciones" class="mobile-link">Inscripciones</a>
+            <a href="/horarios" class="mobile-link">Horarios</a>
+            <a href="/donde_estamos" class="mobile-link">Dónde Estamos</a>
+            <a href="/contactanos" class="mobile-link">Contáctanos</a>
+            <a href="/torneos" class="mobile-link">Torneos</a>
+            <a href="/galeria" class="mobile-link">Galería</a>
+            <a href="/eventos" class="mobile-link">Eventos</a>
+            <a href="/noticias" class="mobile-link">Noticias</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 pt-28 pb-16">
-        <h2 class="text-2xl font-bold mb-4">¿Dónde nos encontramos?</h2>
-        <p class="mb-4">Visítanos en nuestra sede principal para inscripciones y más información.</p>
+<main class="container mx-auto px-4 pt-28 pb-16">
+    <h2 class="text-3xl font-bold text-center mb-6">¿Dónde nos encontramos?</h2>
+    <p class="text-center max-w-2xl mx-auto mb-8">
+        El <span class="font-semibold">Coliseo Lolo Fernández</span> está ubicado en la provincia de Cañete, en 
+        <span class="font-semibold">San Vicente de Cañete, Perú</span>.
+    </p>
 
-        <section class="mb-6">
-            <h3 class="text-xl font-semibold mb-2">Nuestra Sede Principal</h3>
-            <p>Polideportivo Municipal de San Vicente de Cañete</p>
-            <p>Av. Augusto B. Leguía s/n, San Vicente de Cañete, Perú</p>
-        </section>
+    <section class="bg-gray-100 p-6 rounded-lg shadow-lg mb-8">
+        <h3 class="text-xl font-semibold mb-2">Nuestra Sede Principal</h3>
+        <p>Coliseo Lolo Fernández</p>
+        <p>San Vicente de Cañete, Perú</p>
+    </section>
 
-        <section class="map-container w-full aspect-[16/9] rounded overflow-hidden shadow-md">
-            <!-- Mantiene proporción 16:9 -->
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.885939309378!2d-76.3834288257774!3d-13.07088889137851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91128c4891e7a9b1%3A0x89944494c9b7b2e4!2sPolideportivo%20Municipal%20de%20San%20Vicente!5e0!3m2!1ses-419!2spe!4v1712433600000!5m2!1ses-419!2spe"
-                class="w-full h-full border-0" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
+    <section class="map-container w-full aspect-[16/9] rounded overflow-hidden shadow-md">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6322.258834415266!2d-76.38656!3d-13.07227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110b9a8cf0fbb63%3A0x2e79ad1dc7a3f94a!2sColiseo%20Lolo%20Fern%C3%A1ndez!5e0!3m2!1ses!2spe!4v1717896556845!5m2!1ses!2spe" 
+            width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
 
-        <p class="mt-6 text-sm text-gray-600">Puedes hacer clic en el mapa para obtener indicaciones detalladas.</p>
-    </main>
+    <p class="mt-6 text-center text-sm text-gray-600">
+        Puedes hacer clic en el mapa para obtener indicaciones detalladas.
+    </p>
+</main>
 
-    <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
+
+    <footer class="bg-red-600 text-white py-10">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <h4 class="text-xl font-semibold mb-2">Pasión por el Vóley</h4>
@@ -114,9 +104,9 @@
                 <ul class="space-y-1 text-sm">
                     <li><a href="/inscripciones" class="hover:underline">Inscripciones</a></li>
                     <li><a href="/horarios" class="hover:underline">Horarios</a></li>
-                    <li><a href="/mas" class="hover:underline">Galería</a></li>
+                    <li><a href="/galeria" class="hover:underline">Galería</a></li>
                     <li><a href="/contactanos" class="hover:underline">Contáctanos</a></li>
-                    <li><a href="/torneos" class="hover:text-gray-300 font-bold">Torneos</a></li>
+                    <li><a href="/torneos" class="hover:underline">Torneos</a></li>
                 </ul>
             </div>
             <div>
@@ -124,8 +114,7 @@
                 <form class="space-y-2">
                     <input type="email" placeholder="Tu correo" class="w-full p-2 rounded text-gray-800" />
                     <textarea placeholder="Mensaje" rows="2" class="w-full p-2 rounded text-gray-800"></textarea>
-                    <button type="submit"
-                        class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
+                    <button type="submit" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-100">Enviar</button>
                 </form>
             </div>
             <div>
@@ -150,14 +139,27 @@
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const menuMobile = document.getElementById('menuMobile');
+        const dropdownBtn = document.getElementById('menu-btn');
+        const dropdownMenu = document.getElementById('dropdown-menu');
 
         menuBtn.addEventListener('click', () => {
             menuMobile.classList.toggle('hidden');
         });
+
+        dropdownBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => {
+            dropdownMenu.classList.add('hidden');
+        });
+
+        dropdownMenu.addEventListener('click', e => e.stopPropagation());
     </script>
 
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
-    <script src="../static/js/nosotros.js"></script>
 </body>
 
 <!-- Botón flotante de WhatsApp -->
