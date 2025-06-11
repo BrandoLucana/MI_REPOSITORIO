@@ -1,7 +1,6 @@
 package pe.edu.vallegrande.controller;
 
 import pe.edu.vallegrande.view.*;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,27 +18,55 @@ public class LoginMenuApp extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // PANEL IZQUIERDO (MENÚ)
-        JPanel panelIzquierdo = new JPanel();
-        panelIzquierdo.setBackground(new Color(176, 0, 32));
-        panelIzquierdo.setPreferredSize(new Dimension(220, getHeight()));
-        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        // BARRA DE MENÚ
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(new Color(176, 0, 32));
+        menuBar.setForeground(Color.WHITE);
+        menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        JLabel lblTituloMenu = new JLabel("Panel de Control", SwingConstants.CENTER);
-        lblTituloMenu.setForeground(Color.WHITE);
-        lblTituloMenu.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblTituloMenu.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-        lblTituloMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // MENÚ "Sistema" con ícono
+        JMenu menuSistema = new JMenu("Sistema");
+        menuSistema.setForeground(Color.WHITE);
+        menuSistema.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        // Cargar el ícono
+        java.net.URL imgURL = getClass().getResource("/computadora.png");
+        if (imgURL != null) {
+            ImageIcon icon = new ImageIcon(imgURL);
+            menuSistema.setIcon(icon);
+        } else {
+            System.err.println("No se pudo cargar el ícono: /resources/computadora.png");
+            // Depuración: Imprimir el classpath para verificar
+            System.out.println("Classpath: " + System.getProperty("java.class.path"));
+        }
 
-        // PANELES COMO SECCIONES DE NAVEGACIÓN
-        panelIzquierdo.add(lblTituloMenu);
-        panelIzquierdo.add(crearItemMenu("Gestión de Torneos", new GestionTorneos()));
-        panelIzquierdo.add(crearItemMenu("Formulario Entrenador", new FormularioEntrenador()));
-        panelIzquierdo.add(crearItemMenu("Formulario Estudiante", new FormularioEstudiante()));
-        panelIzquierdo.add(crearItemMenu("Formulario Polo", new FormularioPolo()));
-        panelIzquierdo.add(crearItemMenu("Equipos de Vóley", new EquiposVoley()));
+        // ÍTEMS DEL MENÚ "Sistema"
+        menuSistema.add(crearItemMenu("Gestión de Torneos", new GestionTorneos()));
+        menuSistema.add(crearItemMenu("Formulario Entrenador", new FormularioEntrenador()));
+        menuSistema.add(crearItemMenu("Formulario Estudiante", new FormularioEstudiante()));
+        menuSistema.add(crearItemMenu("Formulario Polo", new FormularioPolo()));
+        menuSistema.add(crearItemMenu("Equipos de Vóley", new EquiposVoley()));
 
-        add(panelIzquierdo, BorderLayout.WEST);
+        // MENÚ "Acerca de" como un menú con un solo ítem
+        JMenu menuAcercaDe = new JMenu("Acerca de");
+        menuAcercaDe.setForeground(Color.WHITE);
+        menuAcercaDe.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        // Cargar el ícono
+        java.net.URL imagURL = getClass().getResource("/acerca.png");
+        if (imagURL != null) {
+            ImageIcon icon = new ImageIcon(imagURL);
+            menuAcercaDe.setIcon(icon);
+        } else {
+            System.err.println("No se pudo cargar el ícono: /resources/acerca.png");
+            // Depuración: Imprimir el classpath para verificar
+            System.out.println("Classpath: " + System.getProperty("java.class.path"));
+        }
+
+        menuAcercaDe.add(crearItemAcercaDe());
+
+        // AÑADIR MENÚS A LA BARRA
+        menuBar.add(menuSistema);
+        menuBar.add(menuAcercaDe);
+        setJMenuBar(menuBar);
 
         // PANEL SUPERIOR
         JPanel topPanel = new JPanel(new BorderLayout());
@@ -53,16 +80,12 @@ public class LoginMenuApp extends JFrame {
         JPanel botonesTop = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonesTop.setBackground(Color.WHITE);
 
-        JButton btnAcercaDe = new JButton("Acerca de");
-        btnAcercaDe.addActionListener(e -> mostrarCreditos());
-
         btnSesion = new JButton("Iniciar Sesión");
         btnSesion.addActionListener(e -> {
             if (sesionActiva) cerrarSesion();
             else mostrarLogin();
         });
 
-        botonesTop.add(btnAcercaDe);
         botonesTop.add(btnSesion);
         topPanel.add(botonesTop, BorderLayout.EAST);
 
@@ -75,31 +98,27 @@ public class LoginMenuApp extends JFrame {
         add(panelContenido, BorderLayout.CENTER);
     }
 
-    private JPanel crearItemMenu(String nombre, JPanel contenido) {
-        JLabel label = new JLabel(nombre);
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        label.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
-        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(176, 0, 32));
-        panel.add(label, BorderLayout.CENTER);
-
-        panel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (sesionActiva) {
-                    panelContenido.removeAll();
-                    panelContenido.add(contenido, BorderLayout.CENTER);
-                    panelContenido.revalidate();
-                    panelContenido.repaint();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe iniciar sesión para acceder.", "Acceso denegado", JOptionPane.WARNING_MESSAGE);
-                }
+    private JMenuItem crearItemMenu(String nombre, JPanel contenido) {
+        JMenuItem item = new JMenuItem(nombre);
+        item.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        item.addActionListener(e -> {
+            if (sesionActiva) {
+                panelContenido.removeAll();
+                panelContenido.add(contenido, BorderLayout.CENTER);
+                panelContenido.revalidate();
+                panelContenido.repaint();
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe iniciar sesión para acceder.", "Acceso denegado", JOptionPane.WARNING_MESSAGE);
             }
         });
+        return item;
+    }
 
-        return panel;
+    private JMenuItem crearItemAcercaDe() {
+        JMenuItem item = new JMenuItem("Acerca de");
+        item.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        item.addActionListener(e -> mostrarCreditos());
+        return item;
     }
 
     private void mostrarLogin() {
@@ -176,16 +195,20 @@ public class LoginMenuApp extends JFrame {
     private void mostrarCreditos() {
         JOptionPane.showMessageDialog(this,
                 """
-                Sistema de Gestión - Valle Grande
-                Proyecto académico en Java Swing
+                Sistema de Gestión - Pasión por el Vóley
+                Proyecto académico desarrollado en Java Swing
 
-                Participantes:
+                Bienvenido/a al sistema de gestión de la academia deportiva.
+
+                Este sistema permite registrar, consultar y administrar la información de torneos, entrenadores, estudiantes, polos y equipos de vóley.
+
+                Participantes del equipo:
                 - Nayeli Herrera Albino
                 - Alejandro Soto Cárdenas
                 - Brando Flores Lucana
 
-                Instituto Superior Tecnológico Valle Grande
-                Versión 1.0 - 2025
+                Instituto Superior Tecnológico Valle Grande.
+                Versión 2025.
                 """, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
     }
 
