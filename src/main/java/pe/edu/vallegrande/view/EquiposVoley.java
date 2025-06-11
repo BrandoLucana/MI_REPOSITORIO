@@ -1,108 +1,87 @@
 package pe.edu.vallegrande.view;
 
+import pe.edu.vallegrande.controller.EquipoController;
+import pe.edu.vallegrande.model.Equipo;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class EquiposVoley extends JPanel {
-    private final JTextField customerNameField;
-    private final JTextField quantityField;
-    private final JTextField totalField;
-    private final JComboBox<String> productComboBox;
-    private final JTextField unitPriceField;
+    private final EquipoController controller = new EquipoController();
 
-    private final double[] productPrices = {25.00, 40.00, 15.00, 60.00};
+    private final JTextField txtCliente = new JTextField();
+    private final JComboBox<String> cboProducto = new JComboBox<>(new String[]{"Balón de Voleibol", "Red de Voleibol", "Rodilleras (par)", "Zapatillas de Voleibol"});
+    private final JTextField txtCantidad = new JTextField();
+    private final JTextField txtPrecio = new JTextField();
+    private final JTextField txtTotal = new JTextField();
+    private final JTable tabla = new JTable();
+
+    private final double[] precios = {25.00, 40.00, 15.00, 60.00};
 
     public EquiposVoley() {
-        setLayout(new GridLayout(8, 2, 10, 10));
+        setLayout(new BorderLayout());
+        JPanel formulario = new JPanel(new GridLayout(6, 2, 5, 5));
+        formulario.setBorder(BorderFactory.createTitledBorder("Formulario de Registro"));
 
-        JLabel customerLabel = new JLabel("Nombre del Cliente:");
-        customerNameField = new JTextField(20);
-        customerNameField.setToolTipText("Ingrese su nombre completo");
+        formulario.add(new JLabel("Cliente:")); formulario.add(txtCliente);
+        formulario.add(new JLabel("Producto:")); formulario.add(cboProducto);
+        formulario.add(new JLabel("Cantidad:")); formulario.add(txtCantidad);
+        formulario.add(new JLabel("Precio Unitario:")); formulario.add(txtPrecio);
+        formulario.add(new JLabel("Total:")); formulario.add(txtTotal);
 
-        JLabel productLabel = new JLabel("Producto:");
-        String[] products = {"Balón de Voleibol", "Red de Voleibol", "Rodilleras (par)", "Zapatillas de Voleibol"};
-        productComboBox = new JComboBox<>(products);
-        productComboBox.setToolTipText("Seleccione el producto que desea comprar");
+        JButton btnCalcular = new JButton("Calcular");
+        JButton btnGuardar = new JButton("Guardar");
+        formulario.add(btnCalcular); formulario.add(btnGuardar);
 
-        JLabel quantityLabel = new JLabel("Cantidad:");
-        quantityField = new JTextField(10);
-        quantityField.setToolTipText("Ingrese la cantidad deseada");
+        add(formulario, BorderLayout.NORTH);
+        add(new JScrollPane(tabla), BorderLayout.CENTER);
 
-        JLabel unitPriceLabel = new JLabel("Precio Unitario ($):");
-        unitPriceField = new JTextField(10);
-        unitPriceField.setEditable(false);
-        unitPriceField.setToolTipText("El precio se actualiza automáticamente según el producto");
+        txtPrecio.setEditable(false);
+        txtTotal.setEditable(false);
 
-        JLabel totalLabel = new JLabel("Total a Pagar ($):");
-        totalField = new JTextField(10);
-        totalField.setEditable(false);
+        cboProducto.addActionListener(e -> txtPrecio.setText(String.valueOf(precios[cboProducto.getSelectedIndex()])));
+        cboProducto.setSelectedIndex(0);
 
-        JButton calculateButton = new JButton("Calcular Total");
-        JButton clearButton = new JButton("Limpiar");
-        JButton exitButton = new JButton("Salir");
-
-        // Añadir componentes al panel
-        add(customerLabel);
-        add(customerNameField);
-        add(productLabel);
-        add(productComboBox);
-        add(quantityLabel);
-        add(quantityField);
-        add(unitPriceLabel);
-        add(unitPriceField);
-        add(totalLabel);
-        add(totalField);
-        add(calculateButton);
-        add(clearButton);
-        add(new JLabel(""));
-        add(exitButton);
-
-        // Eventos igual que antes...
-        calculateButton.addActionListener(e -> {
+        btnCalcular.addActionListener(e -> {
             try {
-                String quantityText = quantityField.getText();
-                if (quantityText.isEmpty() || !quantityText.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para la cantidad.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                int quantity = Integer.parseInt(quantityText);
-                if (quantity <= 0) {
-                    JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor que 0.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                double unitPrice = productPrices[productComboBox.getSelectedIndex()];
-                double total = quantity * unitPrice;
-                unitPriceField.setText(String.format("%.2f", unitPrice));
-                totalField.setText(String.format("%.2f", total));
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Error en el cálculo. Por favor intente nuevamente.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                double precio = precios[cboProducto.getSelectedIndex()];
+                txtPrecio.setText(String.valueOf(precio));
+                txtTotal.setText(String.valueOf(precio * cantidad));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al calcular total.");
             }
         });
 
-        clearButton.addActionListener(e -> {
-            customerNameField.setText("");
-            quantityField.setText("");
-            unitPriceField.setText("");
-            totalField.setText("");
-            productComboBox.setSelectedIndex(0);
+        btnGuardar.addActionListener(e -> {
+            try {
+                Equipo equipo = new Equipo();
+                equipo.setNombreCliente(txtCliente.getText());
+                equipo.setProducto((String) cboProducto.getSelectedItem());
+                equipo.setCantidad(Integer.parseInt(txtCantidad.getText()));
+                equipo.setPrecioUnitario(Double.parseDouble(txtPrecio.getText()));
+                equipo.setTotalPago(Double.parseDouble(txtTotal.getText()));
+                controller.registrar(equipo);
+                JOptionPane.showMessageDialog(this, "Equipo registrado.");
+                listarDatos();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al guardar.");
+            }
         });
 
-        exitButton.addActionListener(e -> {
-            // Puedes decidir si aquí quieres cerrar la app o limpiar el panel, o alguna otra acción
-            // Por ejemplo:
-            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            topFrame.dispose();
-        });
+        listarDatos();
+    }
 
-        productComboBox.addActionListener(e -> {
-            int selectedIndex = productComboBox.getSelectedIndex();
-            unitPriceField.setText(String.format("%.2f", productPrices[selectedIndex]));
-        });
-
-        // Inicializar precio unitario
-        unitPriceField.setText(String.format("%.2f", productPrices[0]));
+    private void listarDatos() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"ID", "Cliente", "Producto", "Cantidad", "Precio", "Total"});
+        for (Equipo e : controller.listar()) {
+            model.addRow(new Object[]{
+                    e.getId(), e.getNombreCliente(), e.getProducto(),
+                    e.getCantidad(), e.getPrecioUnitario(), e.getTotalPago()
+            });
+        }
+        tabla.setModel(model);
     }
 }

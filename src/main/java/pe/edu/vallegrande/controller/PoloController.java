@@ -1,27 +1,26 @@
 package pe.edu.vallegrande.controller;
 
+import pe.edu.vallegrande.model.PoloDAO;
 import pe.edu.vallegrande.model.Polo;
-import pe.edu.vallegrande.service.PoloService;
-import pe.edu.vallegrande.service.PoloServiceImpl;
 
 import java.util.List;
 
 public class PoloController {
-    private final PoloService service = new PoloServiceImpl();
+    private final PoloDAO dao = new PoloDAO();
 
     public void registrar(Polo polo) {
-        service.registrar(polo);
+        dao.insertar(polo);
     }
 
     public void actualizar(Polo polo) {
-        service.actualizar(polo);
+        dao.actualizar(polo);
     }
 
     public void eliminar(int id) {
-        service.eliminar(id);
+        dao.eliminar(id);
     }
 
     public List<Polo> listar() {
-        return service.listar();
+        return dao.listar();
     }
 }
