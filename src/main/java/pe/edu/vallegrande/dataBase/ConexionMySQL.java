@@ -9,8 +9,8 @@ import java.util.logging.Level;
 public class ConexionMySQL {
     private static final Logger LOGGER = Logger.getLogger(ConexionMySQL.class.getName());
     private static final String URL = "jdbc:mysql://localhost:3306/appJava?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root"; // Cambia según tu usuario
-    private static final String PASSWORD = "admin123"; // Cambia según tu contraseña
+    private static final String USER = "root";
+    private static final String PASSWORD = "admin123";
 
     public static Connection conectar() throws ClassNotFoundException, SQLException {
         Connection conn = null;
