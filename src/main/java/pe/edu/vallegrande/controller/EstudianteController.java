@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class EstudianteController {
 
-    private FormularioEstudiante vista;
-    private EstudianteService servicio;
+    private final FormularioEstudiante vista;
+    private final EstudianteService servicio;
 
     public EstudianteController(FormularioEstudiante vista) {
         this.vista = vista;

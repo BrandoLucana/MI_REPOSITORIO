@@ -7,7 +7,7 @@ import pe.edu.vallegrande.service.PoloServiceImpl;
 import java.util.List;
 
 public class PoloController {
-    private PoloService service = new PoloServiceImpl();
+    private final PoloService service = new PoloServiceImpl();
 
     public void registrar(Polo polo) {
         service.registrar(polo);

@@ -10,8 +10,8 @@ import pe.edu.vallegrande.service.EntrenadorServiceImpl;
 
 public class EntrenadorController {
 
-    private FormularioEntrenador vista;
-    private EntrenadorService servicio;
+    private final FormularioEntrenador vista;
+    private final EntrenadorService servicio;
 
     public EntrenadorController(FormularioEntrenador vista) {
         this.vista = vista;
