@@ -35,7 +35,6 @@ public class LoginMenuApp extends JFrame {
             menuSistema.setIcon(icon);
         } else {
             System.err.println("No se pudo cargar el ícono: /resources/computadora.png");
-            // Depuración: Imprimir el classpath para verificar
             System.out.println("Classpath: " + System.getProperty("java.class.path"));
         }
 
@@ -57,7 +56,6 @@ public class LoginMenuApp extends JFrame {
             menuAcercaDe.setIcon(icon);
         } else {
             System.err.println("No se pudo cargar el ícono: /resources/acerca.png");
-            // Depuración: Imprimir el classpath para verificar
             System.out.println("Classpath: " + System.getProperty("java.class.path"));
         }
 
@@ -96,6 +94,15 @@ public class LoginMenuApp extends JFrame {
         panelContenido.setBackground(Color.WHITE);
         mostrarBienvenida();
         add(panelContenido, BorderLayout.CENTER);
+
+        // PANEL DE PIE DE PÁGINA
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        footerPanel.setBackground(Color.LIGHT_GRAY);
+        footerPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        JLabel footerLabel = new JLabel("© 2025 Instituto Superior Tecnológico Valle Grande. Todos los derechos reservados.");
+        footerLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        footerPanel.add(footerLabel);
+        add(footerPanel, BorderLayout.SOUTH);
     }
 
     private JMenuItem crearItemMenu(String nombre, JPanel contenido) {
@@ -208,7 +215,7 @@ public class LoginMenuApp extends JFrame {
                 - Brando Flores Lucana
 
                 Instituto Superior Tecnológico Valle Grande.
-                Versión 2025.
+                Versión 1.0 - Creado desde el 2025.
                 """, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
     }
 
