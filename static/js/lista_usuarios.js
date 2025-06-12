@@ -123,24 +123,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-document.addEventListener('DOMContentLoaded', function () {
-  const sidebarLinks = document.querySelectorAll('aside nav a');
-  const sections = document.querySelectorAll('main section');
-
-  // Mostrar sección de usuarios por defecto
-  const defaultSection = document.getElementById('seccion-usuarios');
-  if (defaultSection) {
-    defaultSection.classList.remove('section-hidden');
-  }
-
-  sidebarLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').substring(1); // Obtener el ID de la sección
-      sections.forEach(section => {
-        section.classList.add('section-hidden');
-      });
-      document.getElementById(targetId).classList.remove('section-hidden');
-    });
-  });
-});
