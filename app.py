@@ -515,7 +515,7 @@ def panel_usuarios():
 
 @app.route('/torneos-panel')
 def panel_torneos():
-    return render_template('torneos.html')
+    return render_template('torneos_panel.html')
 
 @app.route('/estadisticas-panel')
 def panel_estadisticas():
