@@ -1,3 +1,4 @@
+/* Estilos para el botón de inscripción */
 .inscripcion-btn {
     background-color: white;
     color: red;
@@ -66,8 +67,7 @@
     opacity: 1;
 }
 
-/* From Uiverse.io by MikeAndrewDesigner */ 
-/* From Uiverse.io by MikeAndrewDesigner */ 
+/* Tarjetas desde Uiverse.io by MikeAndrewDesigner */
 .e-card {
   margin: 100px auto;
   background: transparent;
@@ -116,7 +116,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centrado vertical */
+  justify-content: center;
   font-size: 20px;
   text-align: center;
   padding: 1em;
@@ -207,33 +207,31 @@
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
 }
 
-
 .tarifas-section {
   position: relative;
-  background: white; /* o el color que uses de fondo */
-  overflow: hidden; /* Asegura que los elementos posicionados no se salgan si son muy grandes */
+  background: white;
+  overflow: hidden;
 }
 
 /* Estilos para "ÚNETE" - El texto grande detrás del título principal */
 .titulo-fondo-unete {
-  font-size: 7rem; /* Puedes ajustar el tamaño para que se vea bien */
+  font-size: 7rem;
   font-weight: 900;
-  color: #ff4d4d; /* Un rojo que contrasta bien, ajusta a tu gusto */
+  color: #ff4d4d;
   position: absolute;
-  top: -20px; /* Sube un poco para que sea más prominente en la parte superior */
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   user-select: none;
   pointer-events: none;
   letter-spacing: 12px;
-  z-index: 0; /* Por debajo del título principal */
-  opacity: 0.25; /* Sube un poco la opacidad */
+  z-index: 0;
+  opacity: 0.25;
   font-family: 'Arial Black', Arial, sans-serif;
   margin: 0;
   line-height: 1;
@@ -248,55 +246,54 @@
   font-size: 2.5rem;
   font-weight: 800;
   color: #000;
-  z-index: 1; /* Por encima de 'ÚNETE' */
+  z-index: 1;
   letter-spacing: 2px;
   margin-bottom: 2rem;
-  margin-top: 1rem; /* Asegura que el título principal no quede pegado a "ÚNETE" */
+  margin-top: 1rem;
   font-family: 'Arial Black', Arial, sans-serif;
 }
 
 /* Estilos para el fondo de la empresa (PASIÓN POR EL VOLEY / Logo) */
 .fondo-empresa {
   position: absolute;
-  top: 50%; /* Centra verticalmente */
-  left: 50%; /* Centra horizontalmente */
-  transform: translate(-50%, -50%); /* Ajusta el centrado real */
-  width: 100%; /* Opcional: ajusta el ancho si es una imagen */
-  height: 100%; /* Opcional: ajusta el alto si es una imagen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: -1; /* ¡MUY IMPORTANTE! Lo pone detrás de todo */
-  pointer-events: none; /* Permite hacer clic a través de él */
+  z-index: -1;
+  pointer-events: none;
 }
 
 .fondo-empresa span {
-  font-size: 15rem; /* Tamaño muy grande para el texto de fondo */
+  font-size: 15rem;
   font-weight: 900;
-  background-image: linear-gradient(to right, #f8d7da, #fce4e4); /* Degradado rojo muy sutil */
+  background-image: linear-gradient(to right, #f8d7da, #fce4e4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; /* Fallback */
-  opacity: 0.05; /* Muy baja opacidad para que sea un patrón sutil */
+  color: transparent;
+  opacity: 0.05;
   user-select: none;
   text-transform: uppercase;
-  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+  white-space: nowrap;
 }
 
 .fondo-empresa img {
-    max-width: 80%; /* Ajusta el tamaño máximo del logo */
+    max-width: 80%;
     max-height: 80%;
-    object-fit: contain; /* Asegura que la imagen se ajuste sin distorsionarse */
-    opacity: 0.05; /* Baja opacidad para el logo */
+    object-fit: contain;
+    opacity: 0.05;
 }
 
 /* Aseguramos que el contenedor de las tarjetas tenga un z-index superior al fondo de empresa */
 .flex.flex-wrap.justify-center.items-center.gap-2.py-8 {
   position: relative;
-  z-index: 10; /* Un z-index alto para que las tarjetas estén siempre visibles */
+  z-index: 10;
 }
 
-/* Animacion e Sección de profesor Edward 
 /* Animación de entrada suave desde abajo */
 @keyframes fade-in-up {
   0% {
@@ -323,3 +320,80 @@
   transform: scale(1.05);
 }
 
+/* Animaciones para la sección de oferta */
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  50% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-up {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Animation classes */
+.slide-up {
+  animation: slide-up 1s ease-out;
+}
+
+.fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.scale-up {
+  animation: scale-up 2s infinite;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* Ensure animations apply only once on load */
+@keyframes fade-in-once {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in-once {
+  animation: fade-in-once 1s ease-out forwards;
+}
+
+/* Loader styles */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.mover {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f72222;
+  animation: move 1s infinite alternate;
+}
+
+@keyframes move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(30px); }
+}
