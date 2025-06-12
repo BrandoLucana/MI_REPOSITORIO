@@ -16,12 +16,17 @@ public class EstudianteController {
         this.servicio = new EstudianteService();
     }
 
-    public void guardarEstudiante(String nombre, String apellido, int edad, String dni, String correo, String celular, String categoria, String genero) {
+    public void guardarEstudiante(String nombre, String apellido, int edad,
+                                  String tipoDocumento, String numeroDocumento,
+                                  String correo, String celular,
+                                  String categoria, String genero) {
         Estudiante estudiante = new Estudiante(nombre, apellido, edad, categoria);
-        estudiante.setDni(dni);
+        estudiante.setTipoDocumento(tipoDocumento);
+        estudiante.setNumeroDocumento(numeroDocumento);
         estudiante.setCorreo(correo);
         estudiante.setCelular(celular);
         estudiante.setGenero(genero);
+
         try {
             servicio.insertarEstudiante(estudiante);
             vista.mostrarMensaje("Estudiante registrado exitosamente.");

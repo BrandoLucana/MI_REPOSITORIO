@@ -5,7 +5,8 @@ public class Estudiante {
     private String nombre;
     private String apellido;
     private int edad;
-    private String dni;
+    private String tipoDocumento;  // Nuevo campo: "DNI" o "Carné de Extranjería"
+    private String numeroDocumento; // Reemplaza al campo dni
     private String correo;
     private String celular;
     private String categoria;
@@ -19,12 +20,8 @@ public class Estudiante {
     }
 
     // Getters
-    public int getId(){
+    public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -39,8 +36,12 @@ public class Estudiante {
         return edad;
     }
 
-    public String getDni() {
-        return dni;
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
     }
 
     public String getCorreo() {
@@ -60,8 +61,16 @@ public class Estudiante {
     }
 
     // Setters
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
     public void setCorreo(String correo) {
@@ -76,11 +85,11 @@ public class Estudiante {
         this.genero = genero;
     }
 
-    // Método para mostrar los datos
+    // Método para mostrar los datos actualizado
     public String getResumen() {
         return "Nombre: " + nombre + " " + apellido + "\n" +
                 "Edad: " + edad + "\n" +
-                "DNI: " + dni + "\n" +
+                "Documento: " + tipoDocumento + " - " + numeroDocumento + "\n" +
                 "Correo: " + correo + "\n" +
                 "Celular: " + celular + "\n" +
                 "Género: " + genero + "\n" +

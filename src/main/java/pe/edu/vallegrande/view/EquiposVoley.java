@@ -4,7 +4,9 @@ import pe.edu.vallegrande.controller.EquipoController;
 import pe.edu.vallegrande.model.Equipo;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
 public class EquiposVoley extends JPanel {
@@ -20,15 +22,28 @@ public class EquiposVoley extends JPanel {
     private final double[] precios = {25.00, 40.00, 15.00, 60.00};
 
     public EquiposVoley() {
+        Color rojo = new Color(200, 50, 50);
         setLayout(new BorderLayout());
-        JPanel formulario = new JPanel(new GridLayout(6, 2, 5, 5));
-        formulario.setBorder(BorderFactory.createTitledBorder("Formulario de Registro"));
+        setBackground(rojo);
 
-        formulario.add(new JLabel("Cliente:")); formulario.add(txtCliente);
-        formulario.add(new JLabel("Producto:")); formulario.add(cboProducto);
-        formulario.add(new JLabel("Cantidad:")); formulario.add(txtCantidad);
-        formulario.add(new JLabel("Precio Unitario:")); formulario.add(txtPrecio);
-        formulario.add(new JLabel("Total:")); formulario.add(txtTotal);
+        JPanel formulario = new JPanel(new GridLayout(6, 2, 10, 10));
+        formulario.setBackground(rojo);
+        formulario.setBorder(new EmptyBorder(15, 15, 15, 15)); // elimina borde blanco y da margen interno
+
+        Font fontNegrita = new Font("Arial", Font.BOLD, 12); // fuente en negrita
+
+        // Crear labels en negrita y color blanco
+        JLabel lblCliente = crearLabel("Cliente:", fontNegrita);
+        JLabel lblProducto = crearLabel("Producto:", fontNegrita);
+        JLabel lblCantidad = crearLabel("Cantidad:", fontNegrita);
+        JLabel lblPrecio = crearLabel("Precio Unitario:", fontNegrita);
+        JLabel lblTotal = crearLabel("Total:", fontNegrita);
+
+        formulario.add(lblCliente); formulario.add(txtCliente);
+        formulario.add(lblProducto); formulario.add(cboProducto);
+        formulario.add(lblCantidad); formulario.add(txtCantidad);
+        formulario.add(lblPrecio); formulario.add(txtPrecio);
+        formulario.add(lblTotal); formulario.add(txtTotal);
 
         JButton btnCalcular = new JButton("Calcular");
         JButton btnGuardar = new JButton("Guardar");
@@ -39,6 +54,23 @@ public class EquiposVoley extends JPanel {
 
         txtPrecio.setEditable(false);
         txtTotal.setEditable(false);
+
+        // Limitar campo "Cantidad" a 2 caracteres numéricos
+        ((AbstractDocument) txtCantidad.getDocument()).setDocumentFilter(new javax.swing.text.DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
+                if ((fb.getDocument().getLength() + string.length()) <= 2 && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String string, javax.swing.text.AttributeSet attrs) throws javax.swing.text.BadLocationException {
+                if ((fb.getDocument().getLength() - length + string.length()) <= 2 && string.matches("\\d*")) {
+                    super.replace(fb, offset, length, string, attrs);
+                }
+            }
+        });
 
         cboProducto.addActionListener(e -> txtPrecio.setText(String.valueOf(precios[cboProducto.getSelectedIndex()])));
         cboProducto.setSelectedIndex(0);
@@ -71,6 +103,13 @@ public class EquiposVoley extends JPanel {
         });
 
         listarDatos();
+    }
+
+    private JLabel crearLabel(String texto, Font font) {
+        JLabel label = new JLabel(texto);
+        label.setForeground(Color.WHITE);
+        label.setFont(font);
+        return label;
     }
 
     private void listarDatos() {

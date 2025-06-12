@@ -29,15 +29,16 @@ SELECT * FROM torneos;
 
 -- CREACION DE LA TABLA ESTUDIANTE
 CREATE TABLE estudiantes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    edad INT NOT NULL,
-    dni VARCHAR(20) NOT NULL UNIQUE,
-    correo VARCHAR(100) NOT NULL,
-    celular VARCHAR(15) NOT NULL,
-    categoria VARCHAR(50) NOT NULL,
-    genero VARCHAR(10) NOT NULL
+                             id INT AUTO_INCREMENT PRIMARY KEY,
+                             nombre VARCHAR(100) NOT NULL,
+                             apellido VARCHAR(100) NOT NULL,
+                             edad INT NOT NULL,
+                             tipo_documento VARCHAR(20) NOT NULL,  -- "DNI" o "Carné de Extranjería"
+                             numero_documento VARCHAR(20) NOT NULL UNIQUE,  -- 8 dígitos para DNI, hasta 12 para Carné
+                             correo VARCHAR(100) NOT NULL,
+                             celular VARCHAR(15) NOT NULL,
+                             categoria VARCHAR(50) NOT NULL,
+                             genero VARCHAR(10) NOT NULL
 );
 
 

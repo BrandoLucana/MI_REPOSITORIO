@@ -1,14 +1,18 @@
 package pe.edu.vallegrande.view;
 
+import pe.edu.vallegrande.controller.TorneoController;
 import pe.edu.vallegrande.model.Torneo;
-import pe.edu.vallegrande.model.TorneoDAO;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel; // Importación añadida
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -26,16 +30,30 @@ public class GestionTorneos extends JPanel {
     private final JSpinner spFecha;
     private final JTable tabla;
     private final DefaultTableModel modeloTabla;
-    private final TorneoDAO torneoDAO;
+    private final TorneoController torneoController;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public GestionTorneos() {
-        torneoDAO = new TorneoDAO();
+        // Inicialización de variables
+        torneoController = new TorneoController();
+        txtNombre = new JTextField(15);
+        txtLugar = new JTextField(15);
+        txtDescripcion = new JTextField(30);
+        cbNivel = new JComboBox<>(new String[]{"Aficionado", "Intermedio", "Avanzado"});
+        cbEstado = new JComboBox<>(new String[]{"Pendiente", "En Curso", "Finalizado"});
+        SpinnerDateModel fechaModel = new SpinnerDateModel();
+        fechaModel.setStart(new Date()); // No permite fechas anteriores a hoy
+        spFecha = new JSpinner(fechaModel);
+        spFecha.setEditor(new JSpinner.DateEditor(spFecha, "dd/MM/yyyy"));
+        modeloTabla = new DefaultTableModel(new String[]{
+                "ID", "Nombre", "Fecha", "Lugar", "Nivel", "Descripción", "Estado"
+        }, 0);
+        tabla = new JTable(modeloTabla);
 
         // Colores base
-        Color fondoRojo = Color.decode("#B71C1C"); // Rojo fuerte
-        Color fondoBoton = Color.decode("#D32F2F"); // Rojo botón
+        Color fondoRojo = new Color(200, 50, 50);  // Rojo personalizado
+
         Color textoBlanco = Color.WHITE;
-        Color textoClaro = Color.decode("#F5F5F5");
 
         setBackground(fondoRojo);
         setLayout(new GridBagLayout());
@@ -50,7 +68,6 @@ public class GestionTorneos extends JPanel {
         JLabel lblNombre = new JLabel("Nombre del Torneo:");
         estilizarLabel(lblNombre, textoBlanco, fuente);
         add(lblNombre, gbc);
-        txtNombre = new JTextField(15);
         estilizarCampo(txtNombre, fuente);
         gbc.gridx = 1;
         add(txtNombre, gbc);
@@ -60,8 +77,6 @@ public class GestionTorneos extends JPanel {
         JLabel lblFecha = new JLabel("Fecha:");
         estilizarLabel(lblFecha, textoBlanco, fuente);
         add(lblFecha, gbc);
-        spFecha = new JSpinner(new SpinnerDateModel());
-        spFecha.setEditor(new JSpinner.DateEditor(spFecha, "dd/MM/yyyy"));
         estilizarCampo(spFecha, fuente);
         gbc.gridx = 3;
         add(spFecha, gbc);
@@ -71,7 +86,6 @@ public class GestionTorneos extends JPanel {
         JLabel lblLugar = new JLabel("Lugar:");
         estilizarLabel(lblLugar, textoBlanco, fuente);
         add(lblLugar, gbc);
-        txtLugar = new JTextField(15);
         estilizarCampo(txtLugar, fuente);
         gbc.gridx = 1;
         add(txtLugar, gbc);
@@ -81,18 +95,34 @@ public class GestionTorneos extends JPanel {
         JLabel lblNivel = new JLabel("Nivel:");
         estilizarLabel(lblNivel, textoBlanco, fuente);
         add(lblNivel, gbc);
-        cbNivel = new JComboBox<>(new String[]{"Aficionado", "Intermedio", "Avanzado"});
         estilizarCampo(cbNivel, fuente);
         gbc.gridx = 3;
         add(cbNivel, gbc);
 
-        // Campo: Descripción
+        // Campo: Descripción (Máximo 50 caracteres)
         gbc.gridx = 0; gbc.gridy = 2;
         JLabel lblDescripcion = new JLabel("Descripción:");
         estilizarLabel(lblDescripcion, textoBlanco, fuente);
         add(lblDescripcion, gbc);
-        txtDescripcion = new JTextField(30);
         estilizarCampo(txtDescripcion, fuente);
+
+        // Filtro para limitar a 50 caracteres
+        ((AbstractDocument) txtDescripcion.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_CHARS = 50;
+
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) return;
+                int currentLength = fb.getDocument().getLength();
+                int overLimit = (currentLength + text.length()) - MAX_CHARS;
+                if (overLimit > 0) {
+                    text = text.substring(0, text.length() - overLimit);
+                }
+                if (text.length() > 0) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
         gbc.gridx = 1; gbc.gridwidth = 3;
         add(txtDescripcion, gbc);
         gbc.gridwidth = 1;
@@ -102,7 +132,6 @@ public class GestionTorneos extends JPanel {
         JLabel lblEstado = new JLabel("Estado:");
         estilizarLabel(lblEstado, textoBlanco, fuente);
         add(lblEstado, gbc);
-        cbEstado = new JComboBox<>(new String[]{"Pendiente", "En Curso", "Finalizado"});
         estilizarCampo(cbEstado, fuente);
         gbc.gridx = 1;
         add(cbEstado, gbc);
@@ -115,28 +144,22 @@ public class GestionTorneos extends JPanel {
         JButton btnModificar = new JButton("Modificar");
         JButton btnEliminar = new JButton("Eliminar");
 
-        // En el panel de botones
         for (JButton b : new JButton[]{btnAgregar, btnModificar, btnEliminar}) {
             b.setBackground(Color.WHITE);
-            b.setForeground(Color.decode("#B71C1C")); // Texto rojo
+            b.setForeground(Color.decode("#B71C1C"));
             b.setFont(fuente);
             b.setFocusPainted(false);
-            b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Borde negro
-            b.setPreferredSize(new Dimension(120, 35)); // Tamaño uniforme
+            b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            b.setPreferredSize(new Dimension(120, 35));
             panelBotones.add(b);
         }
-
 
         gbc.gridx = 0; gbc.gridy = 4;
         gbc.gridwidth = 4;
         add(panelBotones, gbc);
         gbc.gridwidth = 1;
 
-        // Tabla
-        modeloTabla = new DefaultTableModel(new String[]{
-                "ID", "Nombre", "Fecha", "Lugar", "Nivel", "Descripción", "Estado"
-        }, 0);
-        tabla = new JTable(modeloTabla);
+        // Configuración de la tabla
         tabla.setFont(fuente);
         tabla.setBackground(Color.WHITE);
         tabla.setForeground(Color.BLACK);
@@ -144,7 +167,6 @@ public class GestionTorneos extends JPanel {
         tabla.getTableHeader().setFont(fuente);
         tabla.getTableHeader().setBackground(Color.DARK_GRAY);
         tabla.getTableHeader().setForeground(Color.WHITE);
-
         JScrollPane scrollPane = new JScrollPane(tabla);
         gbc.gridx = 0; gbc.gridy = 5;
         gbc.gridwidth = 4;
@@ -161,37 +183,57 @@ public class GestionTorneos extends JPanel {
         btnEliminar.addActionListener(e -> eliminarTorneo());
 
         tabla.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tabla.getSelectedRow();
                 if (fila != -1) {
-                    txtNombre.setText(tabla.getValueAt(fila, 1).toString());
+                    txtNombre.setText(String.valueOf(tabla.getValueAt(fila, 1)));
                     try {
-                        java.util.Date fecha = new SimpleDateFormat("yyyy-MM-dd").parse(tabla.getValueAt(fila, 2).toString());
+                        String fechaStr = String.valueOf(tabla.getValueAt(fila, 2));
+                        Date fecha = dateFormat.parse(fechaStr);
                         spFecha.setValue(fecha);
                     } catch (Exception ex) {
-                        LOGGER.log(Level.SEVERE, "Error al parsear fecha", ex);
+                        LOGGER.log(Level.WARNING, "Error al parsear fecha de la tabla", ex);
+                        spFecha.setValue(new Date());
                     }
-                    txtLugar.setText(tabla.getValueAt(fila, 3).toString());
-                    cbNivel.setSelectedItem(tabla.getValueAt(fila, 4).toString());
-                    txtDescripcion.setText(tabla.getValueAt(fila, 5).toString());
-                    cbEstado.setSelectedItem(tabla.getValueAt(fila, 6).toString());
+                    txtLugar.setText(String.valueOf(tabla.getValueAt(fila, 3)));
+                    cbNivel.setSelectedItem(String.valueOf(tabla.getValueAt(fila, 4)));
+                    txtDescripcion.setText(String.valueOf(tabla.getValueAt(fila, 5)));
+                    cbEstado.setSelectedItem(String.valueOf(tabla.getValueAt(fila, 6)));
                 }
             }
         });
     }
 
     private void registrarTorneo() {
+        Date fechaSeleccionada = (Date) spFecha.getValue();
+        Date today = new Date();
+        dateFormat.setLenient(false);
+        try {
+            String fechaSelStr = dateFormat.format(fechaSeleccionada);
+            String todayStr = dateFormat.format(today);
+            Date fechaSelNormalizada = dateFormat.parse(fechaSelStr);
+            Date todayNormalizada = dateFormat.parse(todayStr);
+            if (fechaSelNormalizada.before(todayNormalizada)) {
+                mostrarError("La fecha no puede ser anterior al día actual");
+                return;
+            }
+        } catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "Error al validar fecha", ex);
+            mostrarError("Error al validar la fecha seleccionada");
+            return;
+        }
+
         String nombre = txtNombre.getText();
         String lugar = txtLugar.getText();
         String descripcion = txtDescripcion.getText();
         String nivel = Objects.requireNonNull(cbNivel.getSelectedItem()).toString();
         String estado = Objects.requireNonNull(cbEstado.getSelectedItem()).toString();
-        java.util.Date fecha = (java.util.Date) spFecha.getValue();
+        Date fecha = (Date) spFecha.getValue();
 
         if (!nombre.isEmpty() && !lugar.isEmpty()) {
-            Torneo nuevo = new Torneo(0, nombre, fecha, lugar, nivel, descripcion, estado);
             try {
-                torneoDAO.addTorneo(nuevo);
+                torneoController.agregarTorneo(nombre, fecha, lugar, nivel, descripcion, estado);
                 cargarTorneos();
                 limpiarCampos();
             } catch (Exception ex) {
@@ -204,20 +246,37 @@ public class GestionTorneos extends JPanel {
     }
 
     private void modificarTorneo() {
+        Date fechaSeleccionada = (Date) spFecha.getValue();
+        Date today = new Date();
+        dateFormat.setLenient(false);
+        try {
+            String fechaSelStr = dateFormat.format(fechaSeleccionada);
+            String todayStr = dateFormat.format(today);
+            Date fechaSelNormalizada = dateFormat.parse(fechaSelStr);
+            Date todayNormalizada = dateFormat.parse(todayStr);
+            if (fechaSelNormalizada.before(todayNormalizada)) {
+                mostrarError("La fecha no puede ser anterior al día actual");
+                return;
+            }
+        } catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "Error al validar fecha", ex);
+            mostrarError("Error al validar la fecha seleccionada");
+            return;
+        }
+
         int fila = tabla.getSelectedRow();
         if (fila != -1) {
-            int id = (int) tabla.getValueAt(fila, 0);
-            Torneo modificado = new Torneo(
-                    id,
-                    txtNombre.getText(),
-                    (java.util.Date) spFecha.getValue(),
-                    txtLugar.getText(),
-                    cbNivel.getSelectedItem().toString(),
-                    txtDescripcion.getText(),
-                    cbEstado.getSelectedItem().toString()
-            );
+            int id = Integer.parseInt(String.valueOf(tabla.getValueAt(fila, 0)));
             try {
-                torneoDAO.updateTorneo(modificado);
+                torneoController.modificarTorneo(
+                        id,
+                        txtNombre.getText(),
+                        (Date) spFecha.getValue(),
+                        txtLugar.getText(),
+                        cbNivel.getSelectedItem().toString(),
+                        txtDescripcion.getText(),
+                        cbEstado.getSelectedItem().toString()
+                );
                 cargarTorneos();
                 limpiarCampos();
             } catch (Exception ex) {
@@ -232,9 +291,9 @@ public class GestionTorneos extends JPanel {
     private void eliminarTorneo() {
         int fila = tabla.getSelectedRow();
         if (fila != -1) {
-            int id = (int) tabla.getValueAt(fila, 0);
+            int id = Integer.parseInt(String.valueOf(tabla.getValueAt(fila, 0)));
             try {
-                torneoDAO.deleteTorneo(id);
+                torneoController.eliminarTorneo(id);
                 cargarTorneos();
             } catch (Exception ex) {
                 LOGGER.log(Level.SEVERE, "Error al eliminar torneo", ex);
@@ -248,11 +307,16 @@ public class GestionTorneos extends JPanel {
     private void cargarTorneos() {
         modeloTabla.setRowCount(0);
         try {
-            List<Torneo> torneos = torneoDAO.getAllTorneos();
+            List<Torneo> torneos = torneoController.obtenerTorneos();
             for (Torneo t : torneos) {
                 modeloTabla.addRow(new Object[]{
-                        t.getId(), t.getNombre(), t.getFecha(), t.getLugar(),
-                        t.getNivel(), t.getDescripcion(), t.getEstado()
+                        t.getId(),
+                        t.getNombre(),
+                        dateFormat.format(t.getFecha()), // Formatear la fecha para la tabla
+                        t.getLugar(),
+                        t.getNivel(),
+                        t.getDescripcion(),
+                        t.getEstado()
                 });
             }
         } catch (Exception ex) {
@@ -267,7 +331,7 @@ public class GestionTorneos extends JPanel {
         txtDescripcion.setText("");
         cbNivel.setSelectedIndex(0);
         cbEstado.setSelectedIndex(0);
-        spFecha.setValue(new java.util.Date());
+        spFecha.setValue(new Date());
     }
 
     private void mostrarError(String mensaje) {

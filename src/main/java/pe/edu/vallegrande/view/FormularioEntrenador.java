@@ -4,35 +4,28 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-
 import pe.edu.vallegrande.controller.EntrenadorController;
 import pe.edu.vallegrande.model.Entrenador;
 
 public class FormularioEntrenador extends JPanel {
 
-    // Campos del formulario
     private final JTextField txtNombre;
     private final JTextField txtApellido;
     private final JTextField txtTelefono;
     private final JTextField txtEmail;
     private final JComboBox<String> comboEspecialidad;
     private final JCheckBox chkEstado;
-
-    // Estructura para el CRUD
     private final JTable tablaEntrenadores;
     private final DefaultTableModel modeloTabla;
     private int filaSeleccionada = -1;
-
-    // Referencia al controlador
     private EntrenadorController controller;
 
     public FormularioEntrenador() {
-        // Configuración del panel principal con BorderLayout
         setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(255, 204, 204));
+        setBackground(new Color(200, 50, 50)); // Fondo rojo oscuro
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Inicializar modeloTabla y tabla primero
+        // Tabla y scroll
         String[] columnas = {"ID", "Nombre", "Apellido", "Especialidad", "Teléfono", "Email", "Activo"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
@@ -45,7 +38,6 @@ public class FormularioEntrenador extends JPanel {
         JScrollPane scroll = new JScrollPane(tablaEntrenadores);
         add(scroll, BorderLayout.CENTER);
 
-        // Escucha selección en tabla
         tablaEntrenadores.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 filaSeleccionada = tablaEntrenadores.getSelectedRow();
@@ -55,45 +47,52 @@ public class FormularioEntrenador extends JPanel {
             }
         });
 
-        // Ahora inicializamos el controlador
         this.controller = new EntrenadorController(this);
 
         // Banner superior
         JPanel banner = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        banner.setOpaque(false);
+        banner.setBackground(new Color(200, 50, 50));
         JLabel lblLogoTexto = new JLabel("Pasión por el Vóley");
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogoTexto.setForeground(Color.DARK_GRAY);
+        lblLogoTexto.setForeground(Color.WHITE);
         banner.add(lblLogoTexto);
         add(banner, BorderLayout.NORTH);
 
-        // Panel formulario (West)
+        // Panel formulario
         JPanel panelFormulario = new JPanel(new GridBagLayout());
-        panelFormulario.setOpaque(false);
+        panelFormulario.setBackground(new Color(200, 50, 50));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        Font labelFont = new Font("Arial", Font.BOLD, 14);
+
         // Nombre
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panelFormulario.add(new JLabel("Nombre:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0;
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setFont(labelFont);
+        lblNombre.setForeground(Color.WHITE);
+        panelFormulario.add(lblNombre, gbc);
         gbc.gridx = 1;
         txtNombre = new JTextField(15);
         panelFormulario.add(txtNombre, gbc);
 
         // Apellido
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panelFormulario.add(new JLabel("Apellido:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1;
+        JLabel lblApellido = new JLabel("Apellido:");
+        lblApellido.setFont(labelFont);
+        lblApellido.setForeground(Color.WHITE);
+        panelFormulario.add(lblApellido, gbc);
         gbc.gridx = 1;
         txtApellido = new JTextField(15);
         panelFormulario.add(txtApellido, gbc);
 
         // Especialidad
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panelFormulario.add(new JLabel("Especialidad:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 2;
+        JLabel lblEspecialidad = new JLabel("Especialidad:");
+        lblEspecialidad.setFont(labelFont);
+        lblEspecialidad.setForeground(Color.WHITE);
+        panelFormulario.add(lblEspecialidad, gbc);
         gbc.gridx = 1;
         comboEspecialidad = new JComboBox<>(new String[]{
                 "Entrenador general",
@@ -106,32 +105,40 @@ public class FormularioEntrenador extends JPanel {
         panelFormulario.add(comboEspecialidad, gbc);
 
         // Teléfono
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        panelFormulario.add(new JLabel("Teléfono:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 3;
+        JLabel lblTelefono = new JLabel("Teléfono:");
+        lblTelefono.setFont(labelFont);
+        lblTelefono.setForeground(Color.WHITE);
+        panelFormulario.add(lblTelefono, gbc);
         gbc.gridx = 1;
         txtTelefono = new JTextField(15);
         panelFormulario.add(txtTelefono, gbc);
 
         // Email
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        panelFormulario.add(new JLabel("Email:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 4;
+        JLabel lblEmail = new JLabel("Email:");
+        lblEmail.setFont(labelFont);
+        lblEmail.setForeground(Color.WHITE);
+        panelFormulario.add(lblEmail, gbc);
         gbc.gridx = 1;
         txtEmail = new JTextField(15);
         panelFormulario.add(txtEmail, gbc);
 
         // Estado
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        panelFormulario.add(new JLabel("Activo:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 5;
+        JLabel lblActivo = new JLabel("Activo:");
+        lblActivo.setFont(labelFont);
+        lblActivo.setForeground(Color.WHITE);
+        panelFormulario.add(lblActivo, gbc);
         gbc.gridx = 1;
         chkEstado = new JCheckBox();
+        chkEstado.setOpaque(false);
+        chkEstado.setForeground(Color.WHITE);
         panelFormulario.add(chkEstado, gbc);
 
-        // Botones de formulario
+        // Botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        panelBotones.setOpaque(false);
+        panelBotones.setBackground(new Color(200, 50, 50));
         JButton btnEliminar = new JButton("Eliminar");
         JButton btnCancelar = new JButton("Cancelar");
         JButton btnGuardar = new JButton("Guardar");
@@ -139,39 +146,29 @@ public class FormularioEntrenador extends JPanel {
         panelBotones.add(btnCancelar);
         panelBotones.add(btnGuardar);
 
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
         panelFormulario.add(panelBotones, gbc);
 
         add(panelFormulario, BorderLayout.WEST);
 
-        // Acciones de botones
+        // Eventos
         btnGuardar.addActionListener(e -> guardarOActualizar());
-        btnCancelar.addActionListener(e -> {
-            // Limpia el formulario al cancelar
-            limpiarFormulario();
-            // La navegación al MenuPrincipal se manejará desde LoginMenuApp
-        });
+        btnCancelar.addActionListener(e -> limpiarFormulario());
         btnEliminar.addActionListener(e -> eliminarSeleccionado());
     }
 
-    // Método para establecer el controlador (si decides usar inyección)
     public void setController(EntrenadorController controller) {
         this.controller = controller;
     }
 
-    // Método para mostrar mensajes
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Método para mostrar errores
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Método para limpiar el formulario
     public void limpiarFormulario() {
         txtNombre.setText("");
         txtApellido.setText("");
@@ -183,7 +180,6 @@ public class FormularioEntrenador extends JPanel {
         filaSeleccionada = -1;
     }
 
-    // Método para cargar los datos de un entrenador en el formulario
     public void cargarDatosFormulario(Entrenador entrenador) {
         txtNombre.setText(entrenador.getNombre());
         txtApellido.setText(entrenador.getApellido());
@@ -194,15 +190,13 @@ public class FormularioEntrenador extends JPanel {
         filaSeleccionada = tablaEntrenadores.getSelectedRow();
     }
 
-    // Método para obtener el modelo de la tabla
     public DefaultTableModel getModeloTabla() {
         return modeloTabla;
     }
 
     private void guardarOActualizar() {
         if (controller == null) {
-            JOptionPane.showMessageDialog(this, "Error: Controlador no inicializado.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarError("Error: Controlador no inicializado.");
             return;
         }
 
@@ -214,21 +208,17 @@ public class FormularioEntrenador extends JPanel {
         boolean activo = chkEstado.isSelected();
 
         if (nombre.isEmpty() || apellido.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nombre y Apellido son obligatorios.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarError("Nombre y Apellido son obligatorios.");
             return;
         }
 
         try {
             if (filaSeleccionada == -1) {
-                // Nuevo entrenador
                 controller.guardarEntrenador(nombre, apellido, especialidad, telefono, email, activo);
             } else {
-                // Actualizar entrenador existente
                 int id = obtenerIdEntrenador(filaSeleccionada);
                 controller.actualizarEntrenador(id, nombre, apellido, especialidad, telefono, email, activo);
             }
-            // Recargar la tabla después de guardar o actualizar
             controller.cargarEntrenadores();
             limpiarFormulario();
         } catch (Exception e) {
@@ -238,14 +228,11 @@ public class FormularioEntrenador extends JPanel {
 
     private void eliminarSeleccionado() {
         if (filaSeleccionada != -1) {
-            int resp = JOptionPane.showConfirmDialog(this,
-                    "¿Eliminar entrenador seleccionado?",
-                    "Confirmar", JOptionPane.YES_NO_OPTION);
+            int resp = JOptionPane.showConfirmDialog(this, "¿Eliminar entrenador seleccionado?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (resp == JOptionPane.YES_OPTION) {
                 try {
                     int id = obtenerIdEntrenador(filaSeleccionada);
                     controller.eliminarEntrenador(id);
-                    // Recargar la tabla después de eliminar
                     controller.cargarEntrenadores();
                     limpiarFormulario();
                 } catch (Exception e) {
@@ -253,14 +240,13 @@ public class FormularioEntrenador extends JPanel {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un entrenador para eliminar.",
-                    "Atención", JOptionPane.WARNING_MESSAGE);
+            mostrarMensaje("Selecciona un entrenador para eliminar.");
         }
     }
 
     private int obtenerIdEntrenador(int fila) {
         if (fila >= 0 && fila < modeloTabla.getRowCount()) {
-            return (int) modeloTabla.getValueAt(fila, 0); // Obtener el ID de la primera columna
+            return (int) modeloTabla.getValueAt(fila, 0);
         }
         throw new IllegalStateException("Fila seleccionada no válida: " + fila);
     }

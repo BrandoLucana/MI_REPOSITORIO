@@ -24,16 +24,17 @@ public class EstudianteService {
             if (conn == null) {
                 throw new SQLException("No se pudo conectar a la base de datos. Verifica que el servidor esté corriendo y las credenciales sean correctas.");
             }
-            String sql = "INSERT INTO estudiantes (nombre, apellido, edad, dni, correo, celular, categoria, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO estudiantes (nombre, apellido, edad, tipo_documento, numero_documento, correo, celular, categoria, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, estudiante.getNombre());
             pstmt.setString(2, estudiante.getApellido());
             pstmt.setInt(3, estudiante.getEdad());
-            pstmt.setString(4, estudiante.getDni());
-            pstmt.setString(5, estudiante.getCorreo());
-            pstmt.setString(6, estudiante.getCelular());
-            pstmt.setString(7, estudiante.getCategoria());
-            pstmt.setString(8, estudiante.getGenero());
+            pstmt.setString(4, estudiante.getTipoDocumento());
+            pstmt.setString(5, estudiante.getNumeroDocumento());
+            pstmt.setString(6, estudiante.getCorreo());
+            pstmt.setString(7, estudiante.getCelular());
+            pstmt.setString(8, estudiante.getCategoria());
+            pstmt.setString(9, estudiante.getGenero());
             pstmt.executeUpdate();
             LOGGER.info("Estudiante insertado correctamente: " + estudiante.getNombre() + " " + estudiante.getApellido());
         } catch (SQLException | ClassNotFoundException ex) {
@@ -59,7 +60,7 @@ public class EstudianteService {
             if (conn == null) {
                 throw new SQLException("No se pudo conectar a la base de datos. Verifica que el servidor esté corriendo y las credenciales sean correctas.");
             }
-            String sql = "SELECT id, nombre, apellido, edad, dni, correo, celular, categoria, genero FROM estudiantes";
+            String sql = "SELECT id, nombre, apellido, edad, tipo_documento, numero_documento, correo, celular, categoria, genero FROM estudiantes";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -70,7 +71,8 @@ public class EstudianteService {
                         rs.getString("categoria")
                 );
                 estudiante.setId(rs.getInt("id"));
-                estudiante.setDni(rs.getString("dni"));
+                estudiante.setTipoDocumento(rs.getString("tipo_documento"));
+                estudiante.setNumeroDocumento(rs.getString("numero_documento"));
                 estudiante.setCorreo(rs.getString("correo"));
                 estudiante.setCelular(rs.getString("celular"));
                 estudiante.setGenero(rs.getString("genero"));
