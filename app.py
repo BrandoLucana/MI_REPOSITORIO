@@ -375,7 +375,7 @@ def inscripcion_torneo():
     # Si la solicitud es GET, simplemente muestra el formulario de inscripción al torneo
     return render_template('inscripcion-torneo.html')
 
-@app.route('/registro-torneo', methods=['GET', 'POST'])
+@app.route('/panel-entrenador', methods=['GET', 'POST'])
 def registro_torneo():
     conn = None
     cursor = None
@@ -484,7 +484,7 @@ def registro_torneo():
             if conn:
                 conn.close()
         
-        return render_template('torneos_panel.html', torneos=torneos_existentes)
+        return render_template('registro_torneo.html', torneos=torneos_existentes)
 
 # Your existing /eliminar-torneo route is fine as is
 @app.route('/eliminar-torneo/<int:id>', methods=['POST'])
