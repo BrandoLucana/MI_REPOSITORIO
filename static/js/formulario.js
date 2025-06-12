@@ -223,3 +223,132 @@ function showNotification(message, type = 'success') {
         }, 300);
     }, 3000);
 }
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
+    const edadInput = document.getElementById('edad');
+    const apoderadoStep = document.getElementById('apoderado-step');
+    const apoderadoForm = document.getElementById('apoderado-form');
+    const nextButtons = document.querySelectorAll('.voley-next-btn');
+    const prevButtons = document.querySelectorAll('.voley-prev-btn');
+    const steps = document.querySelectorAll('.voley-step');
+    const formSteps = document.querySelectorAll('.voley-form-step');
+    let currentStep = 1;
+    let isAdult = false;
+
+    // Calculate age and update visibility of Apoderado step
+    function calculateAge() {
+        const birthDate = new Date(fechaNacimientoInput.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        edadInput.value = age;
+        isAdult = age >= 18;
+
+        // Toggle Apoderado step visibility and required fields
+        if (isAdult) {
+            apoderadoStep.style.display = 'none';
+            apoderadoForm.style.display = 'none';
+            // Remove required attributes for Apoderado fields when hidden
+            const apoderadoInputs = apoderadoForm.querySelectorAll('input, select');
+            apoderadoInputs.forEach(input => input.removeAttribute('required'));
+        } else {
+            apoderadoStep.style.display = 'flex';
+            // Only show Apoderado form when it's the active step
+            apoderadoForm.style.display = currentStep === 2 ? 'block' : 'none';
+            // Set required attributes for mandatory fields
+            const mandatoryFields = apoderadoForm.querySelectorAll('input[name="nombre_apoderado"], input[name="telefono_apoderado"], select[name="seguro_medico_apoderado"], select[name="tipo_documento"], input[name="numero_documento"]');
+            mandatoryFields.forEach(input => input.setAttribute('required', 'required'));
+            // Email is optional, so no required attribute
+            const emailField = apoderadoForm.querySelector('input[name="correo_apoderado"]');
+            if (emailField) emailField.removeAttribute('required');
+        }
+    }
+
+    // Update age when birth date changes
+    fechaNacimientoInput.addEventListener('change', calculateAge);
+
+    // Initialize age calculation on page load
+    if (fechaNacimientoInput.value) {
+        calculateAge();
+    }
+
+    // Handle next button click
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            if (validateStep(currentStep)) {
+                if (currentStep === 1 && isAdult) {
+                    // Skip step 2 (Apoderado) if user is 18 or older
+                    changeStep(3);
+                } else if (currentStep < steps.length) {
+                    changeStep(currentStep + 1);
+                }
+            }
+        });
+    });
+
+    // Handle previous button click
+    prevButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            if (currentStep === 3 && isAdult) {
+                // Go back to step 1 if user is 18 or older
+                changeStep(1);
+            } else if (currentStep > 1) {
+                changeStep(currentStep - 1);
+            }
+        });
+    });
+
+    // Validate current step
+    function validateStep(step) {
+        const currentFormStep = document.querySelector(`.voley-form-step[data-step="${step}"]`);
+        const inputs = currentFormStep.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!input.value) {
+                isValid = false;
+                input.classList.add('error');
+                let errorMessage = input.nextElementSibling;
+                if (!errorMessage || !errorMessage.classList.contains('error-message')) {
+                    errorMessage = document.createElement('span');
+                    errorMessage.classList.add('error-message');
+                    errorMessage.textContent = 'Este campo es obligatorio';
+                    input.parentElement.appendChild(errorMessage);
+                }
+            } else {
+                input.classList.remove('error');
+                const errorMessage = input.nextElementSibling;
+                if (errorMessage && errorMessage.classList.contains('error-message')) {
+                    errorMessage.remove();
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    // Change step
+    function changeStep(newStep) {
+        steps[currentStep - 1].classList.remove('active');
+        formSteps[currentStep - 1].classList.remove('active');
+
+        currentStep = newStep;
+
+        steps[currentStep - 1].classList.add('active');
+        formSteps[currentStep - 1].classList.add('active');
+
+        // Ensure Apoderado form visibility is updated
+        if (currentStep === 2 && !isAdult) {
+            apoderadoForm.style.display = 'block';
+        } else {
+            apoderadoForm.style.display = isAdult ? 'none' : 'none';
+        }
+    }
+});

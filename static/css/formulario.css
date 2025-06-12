@@ -126,12 +126,29 @@ body {
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: var(--voley-white);
+    color: var(--voley-dark);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .voley-input:focus {
     border-color: var(--voley-red);
     box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
     outline: none;
+}
+
+/* Estilo para selects */
+select.voley-input {
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%3svg%22%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%3E%3Cpath%20fill%3D%22%23222222%22%20d%3D%22M0%2C2L6%2C8%2012%2C2%2010%2C0%206%2C4%202%2C0%20Z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+select.voley-input:focus {
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%3svg%22%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%3E%3Cpath%20fill%3D%22%23D10000%22%20d%3D%22M0%2C2L6%2C8%2012%2C2%2010%2C0%206%2C4%202%2C0%20Z%22%2F%3E%3C%2Fsvg%3E');
 }
 
 /* Radio buttons y checkboxes */

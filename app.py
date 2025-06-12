@@ -620,6 +620,34 @@ def panel_estadisticas():
 def panel_formulario():
     return render_template('formulario_unificado.html')
 
+@app.route('/inscripcion-equipos')
+def inscripcion_equipos():
+    conn = None
+    cursor = None
+    equipos = []
+    try:
+        conn = get_db_connection()
+        if conn:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT id, nombre_equipo, categoria, delegado, telefono, email, fecha_inscripcion FROM inscripciones_equipos_torneo")
+            equipos = cursor.fetchall()
+            logger.info(f'Cargados {len(equipos)} equipos inscritos para la página.')
+        else:
+            flash('No se pudo conectar a la base de datos para cargar los equipos.', 'error')
+            logger.error('Conexión fallida al cargar equipos.')
+    except mysql.connector.Error as e:
+        logger.error(f'Error al cargar equipos: {str(e)}')
+        flash(f'Error al cargar equipos: {str(e)}', 'error')
+    except Exception as e:
+        logger.error(f'Error inesperado al cargar equipos: {str(e)}')
+        flash(f'Error inesperado al cargar equipos: {str(e)}', 'error')
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+    return render_template('inscripcion-equipos.html', equipos=equipos)
+    
 # Ejecutar la aplicación Flask en modo depuración si es el script principal
 if __name__ == '__main__':
     app.run(debug=True) # debug=True recarga el servidor automáticamente y muestra errores detallados
