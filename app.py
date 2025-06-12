@@ -375,7 +375,6 @@ def inscripcion_torneo():
     # Si la solicitud es GET, simplemente muestra el formulario de inscripción al torneo
     return render_template('inscripcion-torneo.html')
 
-
 @app.route('/registro-torneo', methods=['GET', 'POST'])
 def registro_torneo():
     conn = None
@@ -391,15 +390,18 @@ def registro_torneo():
 
         # Validación básica de campos
         if not all([nombre_torneo, fecha, lugar, nivel, estado]):
-            flash('Todos los campos son obligatorios excepto la descripción.', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': 'Todos los campos son obligatorios excepto la descripción.'
+            }), 400
 
         try:
             conn = get_db_connection()
             if conn is None:
-                flash('No se pudo conectar a la base de datos para registrar el torneo.', 'error')
-                logger.error('Conexión a la base de datos fallida.')
-                return redirect(url_for('registro_torneo'))
+                return jsonify({
+                    'éxito': False,
+                    'mensaje': 'No se pudo conectar a la base de datos.'
+                }), 500
 
             cursor = conn.cursor()
             if torneo_id:
@@ -410,8 +412,16 @@ def registro_torneo():
                     WHERE id=%s
                 """
                 cursor.execute(sql, (nombre_torneo, fecha, lugar, nivel, descripcion, estado, torneo_id))
-                flash('Torneo modificado exitosamente!', 'success')
+                if cursor.rowcount == 0:
+                    return jsonify({
+                        'éxito': False,
+                        'mensaje': 'No se encontró el torneo con el ID proporcionado.'
+                    }), 404
                 logger.info(f'Torneo ID {torneo_id} modificado exitosamente.')
+                response = {
+                    'éxito': True,
+                    'mensaje': 'Torneo modificado exitosamente!'
+                }
             else:
                 # Registrar nuevo torneo
                 sql = """
@@ -419,24 +429,31 @@ def registro_torneo():
                     VALUES (%s, %s, %s, %s, %s, %s)
                 """
                 cursor.execute(sql, (nombre_torneo, fecha, lugar, nivel, descripcion, estado))
-                flash('Torneo registrado exitosamente!', 'success')
                 logger.info(f'Torneo "{nombre_torneo}" registrado exitosamente.')
+                response = {
+                    'éxito': True,
+                    'mensaje': 'Torneo registrado exitosamente!'
+                }
 
             conn.commit()
-            return redirect(url_for('registro_torneo'))
+            return jsonify(response)
 
         except mysql.connector.Error as e:
             logger.error(f'Error al procesar torneo: {str(e)}')
             if conn:
                 conn.rollback()
-            flash(f'Error al procesar torneo: {str(e)}', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': f'Error al procesar torneo: {str(e)}'
+            }), 500
         except Exception as e:
             logger.error(f'Error inesperado al procesar torneo: {str(e)}')
             if conn:
                 conn.rollback()
-            flash(f'Error inesperado al procesar torneo: {str(e)}', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': f'Error inesperado al procesar torneo: {str(e)}'
+            }), 500
         finally:
             if cursor:
                 cursor.close()
@@ -467,8 +484,9 @@ def registro_torneo():
             if conn:
                 conn.close()
         
-        return render_template('registro_torneo.html', torneos=torneos_existentes)
+        return render_template('torneos_panel.html', torneos=torneos_existentes)
 
+# Your existing /eliminar-torneo route is fine as is
 @app.route('/eliminar-torneo/<int:id>', methods=['POST'])
 def eliminar_torneo(id):
     conn = None
@@ -509,6 +527,7 @@ def eliminar_torneo(id):
             cursor.close()
         if conn:
             conn.close()
+
 
 # Ruta para manejar el login de entrenadores (POST)
 @app.route('/login-entrenador', methods=['POST'])
