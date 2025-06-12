@@ -127,28 +127,7 @@
 
       <!-- Contenido -->
       <main class="flex-1 p-8">
-        <header class="bg-gradient-to-r from-red-700 to-red-900 text-white p-4 shadow-md sticky top-16 z-10">
-          <div class="flex justify-between items-center max-w-5xl mx-auto">
-            <div class="flex items-center">
-              <img
-                src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}"
-                alt="Pasión por el Voley"
-                class="h-12 w-auto mr-2"
-              />
-              <h1 class="text-xl font-bold">Registros de Torneos</h1>
-            </div>
-            <nav>
-              <a
-                href="/registro-torneo"
-                class="bg-transparent hover:bg-blue-100 text-white border-2 border-white px-4 py-2 rounded inline-flex items-center gap-2 transition"
-              >
-                <i class="fas fa-home"></i> Inicio
-              </a>
-            </nav>
-          </div>
-        </header>
-
-        <section class="bg-white p-6 rounded-lg shadow-md mb-6">
+          <section class="bg-white p-6 rounded-lg shadow-md mb-6">
           <h3 class="text-xl font-bold mb-3">Registros de Torneos</h3>
           <p class="mb-4">Podrá registrar y visualizar todos los torneos manejados este 2025.</p>
           <form
@@ -262,6 +241,44 @@
             </div>
           </form>
         </section>
+        <main class="flex-1 p-8">
+  <section class="bg-white p-6 rounded-lg shadow-md mt-8">
+    <h3 class="text-xl font-bold mb-4">Lista de Torneos Registrados</h3>
+    {% if torneos %}
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
+          <thead class="bg-red-700 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left text-sm font-semibold">ID</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Nombre</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Lugar</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Fecha</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Nivel</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Descripción</th>
+              <th class="px-4 py-2 text-left text-sm font-semibold">Estado</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for torneo in torneos %}
+            <tr>
+              <td class="px-4 py-2 text-sm">{{ torneo.id }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.nombre }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.lugar }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.fecha }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.nivel }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.descripcion }}</td>
+              <td class="px-4 py-2 text-sm">{{ torneo.estado }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-gray-600">No hay torneos registrados aún.</p>
+    {% endif %}
+  </section>
+</main>
+
       </main>
     </div>
 
