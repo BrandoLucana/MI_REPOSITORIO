@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administración de Usuarios - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contactanos.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+      <div class="mover"></div>
+    </div>
+
+    <header class="bg-red-700 text-white">
+      <div class="container mx-auto p-4 flex items-center justify-between">
+        <div class="flex items-center">
+          <a href="/panel">
+            <div class="flex items-center">
+              <img
+                src="../static/img/PASION POR EL VOLEY.jpg"
+                alt="Logo"
+                class="h-16 w-auto mr-4"
+              />
+              <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </div>
+          </a>
+        </div>
+        <nav class="hidden md:block">
+          <ul class="flex space-x-4 font-bold">
+            <li>
+              <a
+                href="/"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Inicio</a
+              >
+            </li>
+            <li>
+              <a
+                href="/inscripciones"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Inscripciones</a
+              >
+            </li>
+            <li>
+              <a
+                href="/nosotros"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Nosotros</a
+              >
+            </li>
+            <li>
+              <a
+                href="/horarios"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Horarios</a
+              >
+            </li>
+            <li>
+              <a
+                href="/contactanos"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Contáctanos</a
+              >
+            </li>
+            <li class="relative group">
+              <a
+                href="/mas"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Más ▾</a
+              >
+              <div
+                class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50"
+              >
+                <a
+                  href="/torneos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Torneos</a
+                >
+                <a
+                  href="/productos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Productos</a
+                >
+                <a
+                  href="/galeria"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Galería</a
+                >
+                <a
+                  href="/eventos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Eventos</a
+                >
+                <a
+                  href="/noticias"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Noticias</a
+                >
+                <a
+                  href="/donde_estamos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Dónde Estamos</a
+                >
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="min-h-screen bg-gray-100 flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
+        <h2 class="text-2xl font-bold">Panel Entrenador</h2>
+        <nav class="space-y-2">
+          <a href="/usuarios-panel" class="block hover:bg-red-700 p-2 rounded">Usuarios Registrados</a>
+          <a href="/torneos-panel" class="block hover:bg-red-700 p-2 rounded">Torneos</a>
+          <a href="/estadisticas-panel" class="block hover:bg-red-700 p-2 rounded">Estadísticas</a>
+        </nav>
+      </aside>
+
+
+      <!-- Contenido -->
+      <main class="flex-1 p-8">
+        <header class="bg-gradient-to-r from-red-700 to-red-900 text-white p-4 shadow-md sticky top-16 z-10">
+          <div class="flex justify-between items-center max-w-5xl mx-auto">
+            <div class="flex items-center">
+              <img
+                src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}"
+                alt="Pasión por el Voley"
+                class="h-12 w-auto mr-2"
+              />
+              <h1 class="text-xl font-bold">Administración de Usuarios</h1>
+            </div>
+            <nav>
+              <a
+                href="/formulario"
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded inline-flex items-center gap-2 transition"
+                id="nuevo-registro-btn"
+              >
+                <i class="fas fa-user-plus"></i> Nuevo Registro
+              </a>
+              <a
+                href="/registro-torneo"
+                class="bg-transparent hover:bg-blue-100 text-white border-2 border-white px-4 py-2 rounded inline-flex items-center gap-2 transition"
+              >
+                <i class="fas fa-home"></i> Inicio
+              </a>
+            </nav>
+          </div>
+        </header>
+
+        <!-- Sección de Filtros -->
+        <section class="bg-white p-6 rounded-lg shadow-md mb-6 border-l-4 border-red-700">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-filter text-red-600 mr-2"></i>
+            <h2 class="text-lg font-semibold">Filtros de Búsqueda</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex flex-col gap-2">
+              <label for="filtro-nombre" class="text-gray-700 font-medium">Buscar por nombre:</label>
+              <input
+                type="text"
+                id="filtro-nombre"
+                placeholder="Nombre..."
+                class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="filtro-nivel" class="text-gray-700 font-medium">Filtrar por nivel:</label>
+              <select
+                id="filtro-nivel"
+                class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="">Todos los niveles</option>
+                <option value="Principiante">Principiante</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+              </select>
+            </div>
+
+            <div class="flex items-end gap-4 mt-4 md:mt-0">
+              <button
+                id="btn-buscar"
+                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition flex items-center gap-2"
+              >
+                <i class="fas fa-search"></i> Buscar
+              </button>
+              <button
+                id="btn-reset"
+                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition flex items-center gap-2"
+              >
+                <i class="fas fa-undo"></i> Resetear
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mensajes del sistema -->
+        <div id="mensaje" class="system-message hidden text-red-600 mb-4"></div>
+
+        <!-- Tabla de usuarios -->
+        <section class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-700">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-users text-green-600 mr-2"></i>
+            <h2 class="text-lg font-semibold">Usuarios Registrados</h2>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table id="tabla-usuarios" class="w-full border-collapse">
+              <thead>
+                <tr class="bg-red-700 text-white">
+                  <th class="p-2 border border-gray-300">ID</th>
+                  <th class="p-2 border border-gray-300">Nombre</th>
+                  <th class="p-2 border border-gray-300">Edad</th>
+                  <th class="p-2 border border-gray-300">Email</th>
+                  <th class="p-2 border border-gray-300">Apoderado</th>
+                  <th class="p-2 border border-gray-300">Teléfono</th>
+                  <th class="p-2 border border-gray-300">Nivel</th>
+                  <th class="p-2 border border-gray-300">Posición</th>
+                  <th class="p-2 border border-gray-300">Registro</th>
+                  <th class="p-2 border border-gray-300">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for usuario in usuarios %}
+                <tr class="hover:bg-gray-100">
+                  <td class="p-2 border border-gray-300">{{ usuario.id }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.nombre }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.edad }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.email }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.apoderado }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.telefono }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.nivel }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.posicion }}</td>
+                  <td class="p-2 border border-gray-300">{{ usuario.fecha_registro }}</td>
+                  <td class="p-2 border border-gray-300">
+                    <button
+                      class="btn-modificar bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2"
+                    >
+                      Modificar
+                    </button>
+                    <button
+                      class="btn-eliminar bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lista_usuarios.js') }}"></script>
+  </body>
+</html>

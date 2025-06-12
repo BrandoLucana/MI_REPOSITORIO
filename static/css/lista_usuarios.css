@@ -260,8 +260,6 @@ tr:hover {
     background-color: #c53030;
 }
 
-/* Elimina estilos relacionados con edit-btn */
-
 /* Mensajes del sistema */
 .system-message {
     padding: 1rem;
@@ -295,4 +293,3 @@ tr:hover {
         justify-content: flex-start;
     }
 }
-

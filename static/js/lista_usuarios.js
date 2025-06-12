@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Selección de elementos del DOM
     const tablaUsuarios = document.getElementById('tabla-usuarios');
     const tbody = tablaUsuarios.querySelector('tbody');
     const filtroNombre = document.getElementById('filtro-nombre');
@@ -8,13 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnReset = document.getElementById('btn-reset');
     const mensajeDiv = document.getElementById('mensaje');
 
-    // Variable para almacenar los usuarios
     let usuarios = [];
 
-    // Cargar usuarios al iniciar
     cargarUsuariosDesdeBackend();
 
-    // Función para cargar usuarios desde el backend
     async function cargarUsuariosDesdeBackend() {
         try {
             const response = await fetch('/obtener_usuarios');
@@ -28,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Función para cargar usuarios en la tabla
     function cargarUsuariosEnTabla(usuariosFiltrados = null) {
         tbody.innerHTML = '';
         const datosAMostrar = usuariosFiltrados || usuarios;
@@ -50,8 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${usuario.nivel_actual}</td>
                 <td>${usuario.posicion || ''}</td>
                 <td>${new Date(usuario.fecha_registro).toLocaleDateString()}</td>
-                <td class="actions-cell">
-                    <button class="action-btn delete-btn" data-id="${usuario.id}">
+                <td class="flex gap-2">
+                    <button class="delete-btn bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" data-id="${usuario.id}">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>
@@ -60,17 +55,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Event listeners
     btnBuscar.addEventListener('click', filtrarUsuarios);
     btnReset.addEventListener('click', resetearFiltros);
 
-    // Funciones de filtrado
     async function filtrarUsuarios() {
         const texto = filtroNombre.value.trim();
         const nivel = filtroNivel.value;
         
         try {
-            // Construir URL con parámetros de búsqueda
             let url = '/obtener_usuarios?';
             if (texto) url += `nombre=${encodeURIComponent(texto)}&`;
             if (nivel) url += `nivel=${encodeURIComponent(nivel)}`;
@@ -97,10 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
         mostrarMensaje('Filtros reseteados correctamente', 'success');
     }
 
-    // Mostrar mensaje
     function mostrarMensaje(mensaje, tipo) {
         mensajeDiv.textContent = mensaje;
-        mensajeDiv.className = `system-message ${tipo}`;
+        mensajeDiv.className = `system-message ${tipo} p-4 mb-4 rounded`;
         mensajeDiv.style.display = 'block';
         
         setTimeout(() => {
@@ -108,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Event delegation para botones de acciones (solo eliminación)
     tbody.addEventListener('click', async function(e) {
         if (e.target.closest('.delete-btn')) {
             const id = e.target.closest('.delete-btn').dataset.id;
@@ -116,16 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (confirm(`¿Estás seguro de que deseas eliminar a ${usuario.nombre} ${usuario.apellidos}?`)) {
                 try {
-                    const response = await fetch(`/eliminar_usuario/${id}`, {
-                        method: 'POST'
-                    });
-                    
+                    const response = await fetch(`/eliminar_usuario/${id}`, { method: 'POST' });
                     const data = await response.json();
                     
                     if (!data.success) throw new Error(data.error || 'Error al eliminar');
                     
                     mostrarMensaje('Usuario eliminado correctamente', 'success');
-                    // Recargar los usuarios después de 1 segundo
                     setTimeout(() => {
                         cargarUsuariosDesdeBackend();
                     }, 1000);
@@ -136,4 +122,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  const sidebarLinks = document.querySelectorAll('aside nav a');
+  const sections = document.querySelectorAll('main section');
+
+  // Mostrar sección de usuarios por defecto
+  const defaultSection = document.getElementById('seccion-usuarios');
+  if (defaultSection) {
+    defaultSection.classList.remove('section-hidden');
+  }
+
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1); // Obtener el ID de la sección
+      sections.forEach(section => {
+        section.classList.add('section-hidden');
+      });
+      document.getElementById(targetId).classList.remove('section-hidden');
+    });
+  });
 });

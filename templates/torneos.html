@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registros de Torneos - Pasión por el Voley</title>
+    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contactanos.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body class="bg-white text-gray-800">
+    <div id="loader" class="loader">
+      <div class="mover"></div>
+    </div>
+
+    <header class="bg-red-700 text-white">
+      <div class="container mx-auto p-4 flex items-center justify-between">
+        <div class="flex items-center">
+          <a href="/panel">
+            <div class="flex items-center">
+              <img
+                src="../static/img/PASION POR EL VOLEY.jpg"
+                alt="Logo"
+                class="h-16 w-auto mr-4"
+              />
+              <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+            </div>
+          </a>
+        </div>
+        <nav class="hidden md:block">
+          <ul class="flex space-x-4 font-bold">
+            <li>
+              <a
+                href="/"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Inicio</a
+              >
+            </li>
+            <li>
+              <a
+                href="/inscripciones"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Inscripciones</a
+              >
+            </li>
+            <li>
+              <a
+                href="/nosotros"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Nosotros</a
+              >
+            </li>
+            <li>
+              <a
+                href="/horarios"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Horarios</a
+              >
+            </li>
+            <li>
+              <a
+                href="/contactanos"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Contáctanos</a
+              >
+            </li>
+            <li class="relative group">
+              <a
+                href="/mas"
+                class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200"
+                >Más ▾</a
+              >
+              <div
+                class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50"
+              >
+                <a
+                  href="/torneos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Torneos</a
+                >
+                <a
+                  href="/productos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Productos</a
+                >
+                <a
+                  href="/galeria"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Galería</a
+                >
+                <a
+                  href="/eventos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Eventos</a
+                >
+                <a
+                  href="/noticias"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Noticias</a
+                >
+                <a
+                  href="/donde_estamos"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                  >Dónde Estamos</a
+                >
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="min-h-screen bg-gray-100 flex">
+      <!-- Sidebar -->
+       <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
+        <h2 class="text-2xl font-bold">Panel Entrenador</h2>
+        <nav class="space-y-2">
+          <a href="/usuarios-panel" class="block hover:bg-red-700 p-2 rounded">Usuarios Registrados</a>
+          <a href="/torneos-panel" class="block hover:bg-red-700 p-2 rounded">Torneos</a>
+          <a href="/stadisticas-panel" class="block hover:bg-red-700 p-2 rounded">Estadísticas</a>
+        </nav>
+      </aside>
+
+
+      <!-- Contenido -->
+      <main class="flex-1 p-8">
+        <header class="bg-gradient-to-r from-red-700 to-red-900 text-white p-4 shadow-md sticky top-16 z-10">
+          <div class="flex justify-between items-center max-w-5xl mx-auto">
+            <div class="flex items-center">
+              <img
+                src="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}"
+                alt="Pasión por el Voley"
+                class="h-12 w-auto mr-2"
+              />
+              <h1 class="text-xl font-bold">Registros de Torneos</h1>
+            </div>
+            <nav>
+              <a
+                href="/registro-torneo"
+                class="bg-transparent hover:bg-blue-100 text-white border-2 border-white px-4 py-2 rounded inline-flex items-center gap-2 transition"
+              >
+                <i class="fas fa-home"></i> Inicio
+              </a>
+            </nav>
+          </div>
+        </header>
+
+        <section class="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h3 class="text-xl font-bold mb-3">Registros de Torneos</h3>
+          <p class="mb-4">Podrá registrar y visualizar todos los torneos manejados este 2025.</p>
+          <form
+            id="formTorneo"
+            method="POST"
+            action="{{ url_for('registro_torneo') }}"
+            autocomplete="off"
+            class="bg-white p-6 rounded-lg shadow-lg space-y-4"
+          >
+            <div>
+              <label for="nombre" class="block text-gray-700 font-semibold">Nombre del Torneo</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required
+                placeholder="Ingrese el nombre"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <div>
+              <label for="fecha" class="block text-gray-700 font-semibold">Fecha</label>
+              <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                required
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <div>
+              <label for="lugar" class="block text-gray-700 font-semibold">Lugar</label>
+              <input
+                type="text"
+                id="lugar"
+                name="lugar"
+                required
+                placeholder="Ingrese el lugar"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <div>
+              <label for="nivel" class="block text-gray-700 font-semibold">Nivel</label>
+              <select
+                id="nivel"
+                name="nivel"
+                required
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="">-- Seleccione un nivel --</option>
+                <option value="Aficionado">Aficionado</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="descripcion" class="block text-gray-700 font-semibold">Descripción</label>
+              <textarea
+                id="descripcion"
+                name="descripcion"
+                rows="3"
+                placeholder="Descripción del torneo"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="estado" class="block text-gray-700 font-semibold">Estado</label>
+              <select
+                id="estado"
+                name="estado"
+                required
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="">-- Seleccione un estado --</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En Curso">En Curso</option>
+                <option value="Finalizado">Finalizado</option>
+              </select>
+            </div>
+
+            <div class="flex flex-wrap gap-4 mt-6">
+              <button
+                type="submit"
+                class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition"
+              >
+                Registrar
+              </button>
+              <button
+                type="button"
+                class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+              >
+                Modificar
+              </button>
+              <button
+                type="button"
+                class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+              >
+                Eliminar
+              </button>
+              <button
+                type="reset"
+                class="bg-green-400 text-white px-6 py-2 rounded hover:bg-green-500 transition"
+              >
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/torneo-registro.js') }}"></script>
+  </body>
+</html>

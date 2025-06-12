@@ -345,7 +345,7 @@ def inscripcion_torneo():
             conn.commit()
             
             flash('¡Inscripción al torneo realizada con éxito!', 'success')
-            return redirect(url_for('torneos'))  # Redirige a la página de torneos o a una página de confirmación
+            return redirect(url_for('torneos'))  # Redirigir a la página de torneos o a una página de confirmación
 
         except mysql.connector.Error as err:
             logger.error(f"Error al guardar inscripción de torneo: {err}")
@@ -472,12 +472,16 @@ def login_entrenador():
     else:
         flash("Usuario o contraseña incorrectos", "error")
         # Asumo que '/torneos' es la página desde donde se intenta el login de entrenador
-        return redirect(url_for('torneos')) 
+        return redirect(url_for('index')) 
 
 # Rutas para otras páginas de contenido
 @app.route("/mas")
 def mas():
     return render_template('mas.html')
+
+@app.route("/productos")
+def productos():
+    return render_template('productos.html')
 
 @app.route("/galeria")
 def galeria():
@@ -498,6 +502,28 @@ def inscripciones():
 @app.route("/nosotros")
 def nosotros():
     return render_template('nosotros.html')
+
+
+
+
+# --- Nuevas rutas para el panel de entrenador con archivos HTML separados ---
+
+
+@app.route('/usuarios-panel')
+def panel_usuarios():
+    return render_template('usuarios.html')
+
+@app.route('/torneos-panel')
+def panel_torneos():
+    return render_template('torneos.html')
+
+@app.route('/estadisticas-panel')
+def panel_estadisticas():
+    return render_template('estadisticas.html')
+
+@app.route('/formulario-panel')
+def panel_formulario():
+    return render_template('formulario_unificado.html')
 
 # Ejecutar la aplicación Flask en modo depuración si es el script principal
 if __name__ == '__main__':
