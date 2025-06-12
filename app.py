@@ -316,7 +316,7 @@ def inscripcion_torneo():
                 conn.close()
     return render_template('inscripcion-torneo.html')
 
-@app.route('/registro-torneo', methods=['GET', 'POST'])
+@app.route('/panel-entrenador', methods=['GET', 'POST'])
 def registro_torneo():
     conn = None
     cursor = None
@@ -415,7 +415,7 @@ def registro_torneo():
                 cursor.close()
             if conn:
                 conn.close()
-        return render_template('torneos_panel.html', torneos=torneos_existentes)
+        return render_template('registro_torneo.html', torneos=torneos_existentes)
 
 @app.route('/eliminar-torneo/<int:id>', methods=['POST'])
 def eliminar_torneo(id):
@@ -536,5 +536,6 @@ def panel_estadisticas():
 def panel_formulario():
     return render_template('formulario_unificado.html')
 
+# Ejecutar la aplicación Flask en modo depuración si es el script principal
 if __name__ == '__main__':
     app.run(debug=True)

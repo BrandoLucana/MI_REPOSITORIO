@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Equipos Inscritos - Pasión por el Vóley</title>
+  <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contactanos.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body class="bg-white text-gray-800">
+  <div id="loader" class="loader">
+    <div class="mover"></div>
+  </div>
+
+  <header class="bg-red-700 text-white">
+    <div class="container mx-auto p-4 flex items-center justify-between">
+      <div class="flex items-center">
+        <a href="/panel">
+          <div class="flex items-center">
+            <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo" class="h-16 w-auto mr-4" />
+            <h1 class="text-xl font-bold">PASIÓN POR EL VOLEY</h1>
+          </div>
+        </a>
+      </div>
+      <nav class="hidden md:block">
+        <ul class="flex space-x-4 font-bold">
+          <li>
+            <a href="/"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a>
+          </li>
+          <li>
+            <a href="/inscripciones"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a>
+          </li>
+          <li>
+            <a href="/nosotros"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a>
+          </li>
+          <li>
+            <a href="/horarios"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a>
+          </li>
+          <li>
+            <a href="/contactanos"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a>
+          </li>
+          <li class="relative group">
+            <a href="/mas"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más
+              ▾</a>
+            <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+              <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+              <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
+              <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+              <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+              <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+              <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="min-h-screen bg-gray-100 flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
+      <h2 class="text-2xl font-bold">Panel Entrenador</h2>
+      <nav class="space-y-2">
+        <a href="/usuarios-panel" class="block hover:bg-red-700 p-2 rounded">Usuarios Registrados</a>
+        <a href="/inscripcion-equipos" class="block hover:bg-red-700 p-2 rounded">Equipos Inscritos</a>
+        <a href="/torneos-panel" class="block hover:bg-red-700 p-2 rounded">Torneos</a>
+        <a href="/estadisticas-panel" class="block hover:bg-red-700 p-2 rounded">Estadísticas</a>
+      </nav>
+    </aside>
+
+    <!-- Contenido -->
+    <main class="flex-1 p-8">
+      <!-- Botón de retorno -->
+      <div class="mb-4">
+        <a href="/panel-entrenador"
+          class="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+          <i class="fas fa-arrow-left mr-2"></i> Volver al Panel Principal
+        </a>
+      </div>
+      <h2 class="text-3xl font-semibold text-red-800 mb-6">Equipos Inscritos en Torneos</h2>
+      {% if equipos %}
+      <div class="overflow-x-auto">
+        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead class="bg-red-700 text-white">
+            <tr>
+              <th class="p-3 text-left">Nombre del Equipo</th>
+              <th class="p-3 text-left">Categoría</th>
+              <th class="p-3 text-left">Delegado</th>
+              <th class="p-3 text-left">Teléfono</th>
+              <th class="p-3 text-left">Correo</th>
+              <th class="p-3 text-left">Fecha de Inscripción</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla">
+            {% for equipo in equipos %}
+            <tr class="border-b hover:bg-gray-50" data-id="{{ equipo.id }}">
+              <td class="p-3">{{ equipo.nombre_equipo }}</td>
+              <td class="p-3">{{ equipo.categoria }}</td>
+              <td class="p-3">{{ equipo.delegado }}</td>
+              <td class="p-3">{{ equipo.telefono }}</td>
+              <td class="p-3">{{ equipo.email }}</td>
+              <td class="p-3">{{ equipo.fecha_inscripcion.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-gray-600">No hay equipos inscritos actualmente.</p>
+      {% endif %}
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/torneo-registro.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/registro_torneo.js') }}"></script>
+</body>
+
+</html>
