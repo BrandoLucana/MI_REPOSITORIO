@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Panel de Entrenadores - Pasión por el Voley</title>
+    <title>Equipos Inscritos - Pasión por el Vóley</title>
     <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
@@ -19,7 +19,7 @@
     <header class="bg-red-700 text-white">
       <div class="container mx-auto p-4 flex items-center justify-between">
         <div class="flex items-center">
-          <a href="/">
+          <a href="/panel">
             <div class="flex items-center">
               <img
                 src="../static/img/PASION POR EL VOLEY.jpg"
@@ -125,24 +125,44 @@
         </nav>
       </aside>
 
-      <!-- Contenido -->
+       <!-- Contenido -->
         <main class="flex-1 p-8">
-          <p class="text-gray-600">
-            <strong>¡Bienvenido al Panel de Entrenador!</strong> 👋<br><br>
-            Tu pasión por el voleibol tiene ahora su centro de mando. Desde aquí, tienes el control total para llevar a tu equipo al siguiente nivel.
-            <br><br>
-            Utiliza el menú de la izquierda para:
-            <br>
-            &bull; Gestionar a tus <strong>Usuarios Registrados</strong>.<br>
-            &bull; Verificar los <strong>Equipos inscritos</strong> de los alumnos.<br>
-            &bull; Organizar tus <strong>Torneos</strong>.<br>
-            &bull; Analizar todas las <strong>Estadísticas</strong> de tu equipo.<br>
-            <br>
-            ¡Selecciona una opción de la barra lateral para comenzar a planificar tu próxima victoria en la cancha!
-          </p>
+            <h2 class="text-3xl font-semibold text-red-800 mb-6">Equipos Inscritos en Torneos</h2>
+            {% if equipos %}
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead class="bg-red-700 text-white">
+                        <tr>
+                            <th class="p-3 text-left">Nombre del Equipo</th>
+                            <th class="p-3 text-left">Categoría</th>
+                            <th class="p-3 text-left">Delegado</th>
+                            <th class="p-3 text-left">Teléfono</th>
+                            <th class="p-3 text-left">Correo</th>
+                            <th class="p-3 text-left">Fecha de Inscripción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+                        {% for equipo in equipos %}
+                        <tr class="border-b hover:bg-gray-50" data-id="{{ equipo.id }}">
+                            <td class="p-3">{{ equipo.nombre_equipo }}</td>
+                            <td class="p-3">{{ equipo.categoria }}</td>
+                            <td class="p-3">{{ equipo.delegado }}</td>
+                            <td class="p-3">{{ equipo.telefono }}</td>
+                            <td class="p-3">{{ equipo.email }}</td>
+                            <td class="p-3">{{ equipo.fecha_inscripcion.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-gray-600">No hay equipos inscritos actualmente.</p>
+            {% endif %}
         </main>
     </div>
 
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/torneo-registro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/registro_torneo.js') }}"></script>
   </body>
 </html>
