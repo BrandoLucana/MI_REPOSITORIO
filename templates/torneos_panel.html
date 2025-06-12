@@ -115,7 +115,7 @@
 
     <div class="min-h-screen bg-gray-100 flex">
       <!-- Sidebar -->
-       <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
+      <aside class="w-64 bg-red-800 text-white p-6 space-y-4">
         <h2 class="text-2xl font-bold">Panel Entrenador</h2>
         <nav class="space-y-2">
           <a href="/usuarios-panel" class="block hover:bg-red-700 p-2 rounded">Usuarios Registrados</a>
@@ -124,10 +124,9 @@
         </nav>
       </aside>
 
-
       <!-- Contenido -->
       <main class="flex-1 p-8">
-          <section class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <section class="bg-white p-6 rounded-lg shadow-md mb-6">
           <h3 class="text-xl font-bold mb-3">Registros de Torneos</h3>
           <p class="mb-4">Podrá registrar y visualizar todos los torneos manejados este 2025.</p>
           <form
@@ -137,6 +136,7 @@
             autocomplete="off"
             class="bg-white p-6 rounded-lg shadow-lg space-y-4"
           >
+            <input type="hidden" id="torneo_id" name="torneo_id" />
             <div>
               <label for="nombre" class="block text-gray-700 font-semibold">Nombre del Torneo</label>
               <input
@@ -222,18 +222,21 @@
               </button>
               <button
                 type="button"
+                id="modificarBtn"
                 class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
               >
                 Modificar
               </button>
               <button
                 type="button"
+                id="eliminarBtn"
                 class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
               >
                 Eliminar
               </button>
               <button
                 type="reset"
+                id="limpiarBtn"
                 class="bg-green-400 text-white px-6 py-2 rounded hover:bg-green-500 transition"
               >
                 Limpiar
@@ -241,48 +244,62 @@
             </div>
           </form>
         </section>
-        <main class="flex-1 p-8">
-  <section class="bg-white p-6 rounded-lg shadow-md mt-8">
-    <h3 class="text-xl font-bold mb-4">Lista de Torneos Registrados</h3>
-    {% if torneos %}
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
-          <thead class="bg-red-700 text-white">
-            <tr>
-              <th class="px-4 py-2 text-left text-sm font-semibold">ID</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Nombre</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Lugar</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Fecha</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Nivel</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Descripción</th>
-              <th class="px-4 py-2 text-left text-sm font-semibold">Estado</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            {% for torneo in torneos %}
-            <tr>
-              <td class="px-4 py-2 text-sm">{{ torneo.id }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.nombre }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.lugar }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.fecha }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.nivel }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.descripcion }}</td>
-              <td class="px-4 py-2 text-sm">{{ torneo.estado }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <p class="text-gray-600">No hay torneos registrados aún.</p>
-    {% endif %}
-  </section>
-</main>
 
+        <section class="bg-white p-6 rounded-lg shadow-md mt-8">
+          <h3 class="text-xl font-bold mb-4">Lista de Torneos Registrados</h3>
+          {% if torneos %}
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
+                <thead class="bg-red-700 text-white">
+                  <tr>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">ID</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Nombre</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Lugar</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Fecha</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Nivel</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Descripción</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Estado</th>
+                    <th class="px-4 py-2 text-left text-sm font-semibold">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  {% for torneo in torneos %}
+                  <tr class="torneo-row" data-id="{{ torneo.id }}">
+                    <td class="px-4 py-2 text-sm">{{ torneo.id }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.nombre }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.lugar }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.fecha }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.nivel }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.descripcion }}</td>
+                    <td class="px-4 py-2 text-sm">{{ torneo.estado }}</td>
+                    <td class="px-4 py-2 text-sm">
+                      <button
+                        class="select-torneo bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition"
+                        data-id="{{ torneo.id }}"
+                        data-nombre="{{ torneo.nombre }}"
+                        data-fecha="{{ torneo.fecha }}"
+                        data-lugar="{{ torneo.lugar }}"
+                        data-nivel="{{ torneo.nivel }}"
+                        data-descripcion="{{ torneo.descripcion }}"
+                        data-estado="{{ torneo.estado }}"
+                      >
+                        Seleccionar
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-gray-600">No hay torneos registrados aún.</p>
+          {% endif %}
+        </section>
       </main>
     </div>
 
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
     <script src="{{ url_for('static', filename='js/torneo-registro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/registro_torneo.js') }}"></script>
   </body>
 </html>
