@@ -375,13 +375,12 @@ def inscripcion_torneo():
     # Si la solicitud es GET, simplemente muestra el formulario de inscripción al torneo
     return render_template('inscripcion-torneo.html')
 
-
-# Ruta para el registro de nuevos torneos (solo accesible por entrenadores)
 @app.route('/registro-torneo', methods=['GET', 'POST'])
 def registro_torneo():
     conn = None
     cursor = None
     if request.method == 'POST':
+        torneo_id = request.form.get('torneo_id', '').strip()
         nombre_torneo = request.form.get('nombre', '').strip()
         fecha = request.form.get('fecha', '').strip()
         lugar = request.form.get('lugar', '').strip()
@@ -391,41 +390,70 @@ def registro_torneo():
 
         # Validación básica de campos
         if not all([nombre_torneo, fecha, lugar, nivel, estado]):
-            flash('Todos los campos son obligatorios excepto la descripción.', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': 'Todos los campos son obligatorios excepto la descripción.'
+            }), 400
 
         try:
             conn = get_db_connection()
             if conn is None:
-                flash('No se pudo conectar a la base de datos para registrar el torneo.', 'error')
-                logger.error('Conexión a la base de datos fallida.')
-                return redirect(url_for('registro_torneo'))
+                return jsonify({
+                    'éxito': False,
+                    'mensaje': 'No se pudo conectar a la base de datos.'
+                }), 500
 
             cursor = conn.cursor()
-
-            sql = """
-                INSERT INTO registro_torneo (nombre, fecha, lugar, nivel, descripcion, estado)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(sql, (nombre_torneo, fecha, lugar, nivel, descripcion, estado))
+            if torneo_id:
+                # Modificar torneo existente
+                sql = """
+                    UPDATE registro_torneo
+                    SET nombre=%s, fecha=%s, lugar=%s, nivel=%s, descripcion=%s, estado=%s
+                    WHERE id=%s
+                """
+                cursor.execute(sql, (nombre_torneo, fecha, lugar, nivel, descripcion, estado, torneo_id))
+                if cursor.rowcount == 0:
+                    return jsonify({
+                        'éxito': False,
+                        'mensaje': 'No se encontró el torneo con el ID proporcionado.'
+                    }), 404
+                logger.info(f'Torneo ID {torneo_id} modificado exitosamente.')
+                response = {
+                    'éxito': True,
+                    'mensaje': 'Torneo modificado exitosamente!'
+                }
+            else:
+                # Registrar nuevo torneo
+                sql = """
+                    INSERT INTO registro_torneo (nombre, fecha, lugar, nivel, descripcion, estado)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (nombre_torneo, fecha, lugar, nivel, descripcion, estado))
+                logger.info(f'Torneo "{nombre_torneo}" registrado exitosamente.')
+                response = {
+                    'éxito': True,
+                    'mensaje': 'Torneo registrado exitosamente!'
+                }
 
             conn.commit()
-            logger.info(f'Torneo "{nombre_torneo}" registrado exitosamente.')
-            flash('Torneo registrado exitosamente!', 'success')
-            return redirect(url_for('registro_torneo'))
+            return jsonify(response)
 
         except mysql.connector.Error as e:
-            logger.error(f'Error al registrar torneo: {str(e)}')
+            logger.error(f'Error al procesar torneo: {str(e)}')
             if conn:
                 conn.rollback()
-            flash(f'Error al registrar torneo: {str(e)}', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': f'Error al procesar torneo: {str(e)}'
+            }), 500
         except Exception as e:
-            logger.error(f'Error inesperado al registrar torneo: {str(e)}')
+            logger.error(f'Error inesperado al procesar torneo: {str(e)}')
             if conn:
                 conn.rollback()
-            flash(f'Error inesperado al registrar torneo: {str(e)}', 'error')
-            return redirect(url_for('registro_torneo'))
+            return jsonify({
+                'éxito': False,
+                'mensaje': f'Error inesperado al procesar torneo: {str(e)}'
+            }), 500
         finally:
             if cursor:
                 cursor.close()
@@ -456,7 +484,50 @@ def registro_torneo():
             if conn:
                 conn.close()
         
-        return render_template('registro_torneo.html', torneos=torneos_existentes)
+        return render_template('torneos_panel.html', torneos=torneos_existentes)
+
+# Your existing /eliminar-torneo route is fine as is
+@app.route('/eliminar-torneo/<int:id>', methods=['POST'])
+def eliminar_torneo(id):
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({
+                'éxito': False,
+                'mensaje': 'No se pudo conectar a la base de datos.'
+            }), 500
+
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM registro_torneo WHERE id = %s", (id,))
+        conn.commit()
+        return jsonify({
+            'éxito': True,
+            'mensaje': 'Torneo eliminado exitosamente!'
+        })
+    except mysql.connector.Error as e:
+        logger.error(f'Error al eliminar torneo: {str(e)}')
+        if conn:
+            conn.rollback()
+        return jsonify({
+            'éxito': False,
+            'mensaje': f'Error al eliminar torneo: {str(e)}'
+        }), 500
+    except Exception as e:
+        logger.error(f'Error inesperado al eliminar torneo: {str(e)}')
+        if conn:
+            conn.rollback()
+        return jsonify({
+            'éxito': False,
+            'mensaje': f'Error inesperado al eliminar torneo: {str(e)}'
+        }), 500
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
 
 # Ruta para manejar el login de entrenadores (POST)
 @app.route('/login-entrenador', methods=['POST'])
@@ -515,7 +586,31 @@ def panel_usuarios():
 
 @app.route('/torneos-panel')
 def panel_torneos():
-    return render_template('torneos_panel.html')
+    conn = None
+    cursor = None
+    torneos = []
+    try:
+        conn = get_db_connection()
+        if conn:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT id, nombre, fecha, lugar, nivel, descripcion, estado FROM registro_torneo")
+            torneos = cursor.fetchall()
+            logger.info(f'Cargados {len(torneos)} torneos para el panel.')
+        else:
+            flash('No se pudo conectar a la base de datos para cargar los torneos.', 'error')
+            logger.error('Conexión fallida al cargar torneos.')
+    except mysql.connector.Error as e:
+        logger.error(f'Error al cargar torneos: {str(e)}')
+        flash(f'Error al cargar torneos: {str(e)}', 'error')
+    except Exception as e:
+        logger.error(f'Error inesperado al cargar torneos: {str(e)}')
+        flash(f'Error inesperado al cargar torneos: {str(e)}', 'error')
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+    return render_template('torneos_panel.html', torneos=torneos)
 
 @app.route('/estadisticas-panel')
 def panel_estadisticas():

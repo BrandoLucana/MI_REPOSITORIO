@@ -2,14 +2,14 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pasión por el Voley</title>
-    <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link href="../static/css/loader.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasión por el Voley</title>
+  <link rel="icon" href="../static/img/PASION POR EL VOLEY.jpg" type="image/jpeg">
+  <link href="../static/css/style.css" rel="stylesheet">
+  <link href="../static/css/loader.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-white text-gray-800">
@@ -20,43 +20,49 @@
 
   <header style="background-color: #f72222;" class="text-white fixed w-full top-0 left-0 z-50">
     <div class="container mx-auto p-4 flex items-center justify-between relative">
-      <!-- Logo -->
       <div class="flex items-center">
         <a href="/" aria-label="Inicio - Pasión por el Voley" class="flex items-center">
           <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo Pasión por el Voley" class="h-16 w-auto mr-4" />
           <h1 class="text-xl font-bold whitespace-nowrap">PASIÓN POR EL VOLEY</h1>
         </a>
       </div>
-
-      <!-- Menú escritorio -->
       <nav class="hidden md:block">
         <ul class="flex space-x-4 font-bold">
-          <li><a href="/" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a></li>
-          <li><a href="/inscripciones" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a></li>
-          <li><a href="/nosotros" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a></li>
-          <li><a href="/horarios" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a></li>
-          <li><a href="/contactanos" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a></li>
-          <li class="relative group"><a href="/mas" class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más ▾</a>
-          <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
-            <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
-            <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
-            <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
-            <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
-            <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
-            <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
-          </div>
+          <li><a href="/"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inicio</a>
+          </li>
+          <li><a href="/inscripciones"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Inscripciones</a>
+          </li>
+          <li><a href="/nosotros"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Nosotros</a>
+          </li>
+          <li><a href="/horarios"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Horarios</a>
+          </li>
+          <li><a href="/contactanos"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Contáctanos</a>
+          </li>
+          <li class="relative group"><a href="/mas"
+              class="relative pb-1 hover:text-gray-300 hover:border-b-2 hover:border-white transition-all duration-200">Más
+              ▾</a>
+            <div class="absolute hidden group-hover:block bg-white shadow-md rounded mt-2 w-48 text-gray-800 z-50">
+              <a href="/torneos" class="block px-4 py-2 hover:bg-gray-100">Torneos</a>
+              <a href="/productos" class="block px-4 py-2 hover:bg-gray-100">Productos</a>
+              <a href="/galeria" class="block px-4 py-2 hover:bg-gray-100">Galería</a>
+              <a href="/eventos" class="block px-4 py-2 hover:bg-gray-100">Eventos</a>
+              <a href="/noticias" class="block px-4 py-2 hover:bg-gray-100">Noticias</a>
+              <a href="/donde_estamos" class="block px-4 py-2 hover:bg-gray-100">Dónde Estamos</a>
+            </div>
           </li>
         </ul>
       </nav>
-      <!-- Botón menú móvil -->
       <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuMobile"
         class="md:hidden focus:outline-none z-60 relative">
         <svg class="w-6 h-6 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-5h18V6H3v2z" />
         </svg>
       </button>
-
-      <!-- Menú móvil overlay -->
       <div id="menuMobile"
         class="fixed inset-0 bg-red-900 bg-opacity-95 backdrop-blur-sm hidden flex-col items-center justify-center space-y-6 text-white text-2xl font-bold z-50 p-8">
         <button id="closeMenuBtn" aria-label="Cerrar menú" class="absolute top-6 right-6 text-white focus:outline-none">
@@ -72,8 +78,6 @@
         <a href="/donde_estamos" class="block hover:text-gray-300">Dónde Estamos</a>
         <a href="/contactanos" class="block hover:text-gray-300">Contáctanos</a>
         <a href="/torneos" class="block hover:text-gray-300">Torneos</a>
-
-        <!-- Submenú "Más" para móvil -->
         <div class="relative group w-full text-center">
           <button id="submenuBtn" aria-haspopup="true" aria-expanded="false"
             class="block w-full py-2 hover:text-gray-300 focus:outline-none font-bold">Más ▼</button>
@@ -86,7 +90,7 @@
       </div>
     </div>
   </header>
-  
+
   <section id="main-content"
     class="relative min-h-screen flex flex-col justify-center items-center bg-black overflow-hidden px-4 text-center">
     <div class="absolute inset-0 z-0">
@@ -130,7 +134,6 @@
 
   <section class="py-12 animate-on-scroll" data-animation-class="fade-in-up">
     <div class="max-w-4xl mx-auto text-center px-4">
-      <!-- agregado px-4 para margen horizontal -->
       <div class="flex flex-col items-center mb-8">
         <img src="../static/img/PASION POR EL VOLEY.jpg" alt="Logo de la Academia"
           class="h-24 w-auto rounded-full shadow-md">
@@ -155,8 +158,23 @@
     </div>
   </section>
 
+<!-- Sección de Niveles -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4 py-12 px-6 justify-items-center">
+  <div class="p-8 bg-red-600 text-white rounded-xl shadow-lg hover:scale-105 transition aspect-square w-full max-w-xs">
+    <h3 class="text-2xl font-bold mb-2">Nivel Infantil</h3>
+    <p>Participación en torneos oficiales y competencias regionales. Abarcaremos la Sub 8, Sub 10, Sub 12.</p>
+  </div>
+  <div class="p-8 bg-gray-800 text-white rounded-xl shadow-lg hover:scale-105 transition aspect-square w-full max-w-xs">
+    <h3 class="text-2xl font-bold mb-2">Nivel Intermedio</h3>
+    <p>Formación desde las bases con enfoque técnico y valores. Abarcaremos la Sub 15, Sub 17, Sub 19, Sub 21.</p>
+  </div>
+  <div class="p-8 bg-red-800 text-white rounded-xl shadow-lg hover:scale-105 transition aspect-square w-full max-w-xs">
+    <h3 class="text-2xl font-bold mb-2">Nivel Adulto - Categoría Libre</h3>
+    <p>Espacios dedicados al desarrollo integral de nuestras deportistas. Abarcaremos las demás edades.</p>
+  </div>
+</section>
+
   <section class="py-12 bg-gray-100 px-4 max-w-4xl mx-auto">
-    <!-- agregado px-4 max-w-4xl mx-auto para centrar y dar margen horizontal -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       <div class="text-left">
         <h3 class="text-3xl font-bold text-red-700 mb-4">¿QUÉ NOS HACE DIFERENTES?</h3>
@@ -190,30 +208,91 @@
       <img src="../static/img/PASION POR EL VOLEY3.jpg" alt="Foto de Grupo" class="rounded-md shadow-md">
     </div>
   </section>
-    <!-- ICONBOX estilo Cantolao con colores institucionales -->
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-4 py-12 px-6">
-    <div class="p-8 bg-red-600 text-white rounded-xl shadow-lg hover:scale-105 transition">
-      <h3 class="text-2xl font-bold mb-2">Nivel Infantil</h3>
-      <p>Participación en torneos oficiales y competencias regionales. Abarcaremos la Sub 8, Sub 10, Sub 12.</p>
+
+  <!-- Sección de Oferta de Implementos Deportivos con animación fade-in -->
+  <section class="py-12 bg-white px-4 max-w-7xl mx-auto text-center fade-in">
+    <h2 class="text-3xl font-bold text-red-700 mb-6 slide-up">¡INSCRÍBETE Y OBTÉN 30% DE DESCUENTO EN IMPLEMENTOS
+      DEPORTIVOS!</h2>
+    <p class="text-lg text-gray-700 mb-8 fade-in">Únete a Pasión por el Vóley y aprovecha esta oferta exclusiva en
+      balones y zapatillas. ¡Equípate para brillar en la cancha!</p>
+    <div id="carruselDescuento" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+            <img src="../static/img/zapatillas.webp" alt="Zapatillas ASICS"
+              class="w-full md:w-1/3 h-64 object-cover rounded-lg shadow-md scale-up">
+            <div class="text-center md:text-left">
+              <h3 class="text-2xl font-semibold text-gray-800">Zapatillas ASICS</h3>
+              <p class="text-gray-600 mb-2">Zapatillas para entrenamientos y torneos.</p>
+              <p class="text-gray-500 line-through">S/ 490.00</p>
+              <p class="text-red-600 font-bold text-xl">Con inscripción: S/ 343.00</p>
+              <a href="/formulario"
+                class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg pulse">¡Inscríbete
+                ahora!</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+            <img src="../static/img/balon.jpg" alt="Balón Oficial Mikasa"
+              class="w-full md:w-1/3 h-64 object-cover rounded-lg shadow-md scale-up">
+            <div class="text-center md:text-left">
+              <h3 class="text-2xl font-semibold text-gray-800">Balón Oficial Mikasa</h3>
+              <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+              <p class="text-gray-500 line-through">S/ 150.00</p>
+              <p class="text-red-600 font-bold text-xl">Con inscripción: S/ 105.00</p>
+              <a href="/formulario"
+                class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg pulse">¡Inscríbete
+                ahora!</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+            <img src="../static/img/balon2.webp" alt="Balón V33OW"
+              class="w-full md:w-1/3 h-64 object-cover rounded-lg shadow-md scale-up">
+            <div class="text-center md:text-left">
+              <h3 class="text-2xl font-semibold text-gray-800">Balón V33OW</h3>
+              <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+              <p class="text-gray-500 line-through">S/ 100.00</p>
+              <p class="text-red-600 font-bold text-xl">Con inscripción: S/ 70.00</p>
+              <a href="/formulario"
+                class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg pulse">¡Inscríbete
+                ahora!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carruselDescuento" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carruselDescuento" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <div class="p-8 bg-gray-800 text-white rounded-xl shadow-lg hover:scale-105 transition">
-      <h3 class="text-2xl font-bold mb-2">Nivel Intermedio</h3>
-      <p>Formación desde las bases con enfoque técnico y valores. Abarcaremos la Sub 15, Sub 17, Sub 19, Sub 21.</p>
-    </div>
-    <div class="p-8 bg-red-800 text-white rounded-xl shadow-lg hover:scale-105 transition">
-      <h3 class="text-2xl font-bold mb-2">Nivel Adulto - Categoría Libre</h3>
-      <p>Espacios dedicados al desarrollo integral de nuestras deportistas. Abarcaremos las demás edades.</p>
+  </section>
+
+
+  <section class="relative bg-fixed bg-center bg-cover text-white py-20 px-6"
+    style="background-image:url('../static/img/filiales_bg.jpg')">
+    <div class="bg-transparent p-10 rounded-lg max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-4">Nuestras Filiales</h2>
+      <p class="text-lg mb-6">Descubre nuestras sedes en distintas regiones y sé parte de la expansión del vóley
+        nacional.</p>
+      <a href="/donde_estamos"
+        class="bg-transparent border border-white text-white font-bold py-3 px-6 rounded hover:bg-white hover:text-red-700 transition">CONOCE
+        NUESTRAS FILIALES</a>
     </div>
   </section>
 
   <section class="bg-white py-16 px-6 md:px-20 max-w-7xl mx-auto">
-    <!-- ya tiene padding, pero agregué max-w-7xl mx-auto para centrar y limitar ancho -->
     <div class="flex flex-col md:flex-row items-center gap-10 animate-fade-in-up">
       <div class="w-full md:w-1/2 flex justify-center">
         <img src="{{ url_for('static', filename='img/Edward.jpg') }}" alt="Profesor de vóley"
           class="rounded-3xl shadow-lg w-80 h-auto object-cover img-hover-zoom">
       </div>
-
       <div class="w-full md:w-1/2">
         <h2 class="text-3xl font-bold text-red-700 mb-4">¡Bienvenidos a Pasión por el Vóley!</h2>
         <p class="text-gray-700 text-lg mb-6">
@@ -226,29 +305,14 @@
     </div>
   </section>
 
-    <!-- FILIALES con fondo fijo -->
-  <section class="relative bg-fixed bg-center bg-cover text-white py-20 px-6" style="background-image:url('../static/img/filiales_bg.jpg')">
-    <div class="bg-transparent p-10 rounded-lg max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl font-bold mb-4">Nuestras Filiales</h2>
-      <p class="text-lg mb-6">Descubre nuestras sedes en distintas regiones y sé parte de la expansión del vóley nacional.</p>
-      <a href="/donde_estamos" class="bg-transparent border border-white text-white font-bold py-3 px-6 rounded hover:bg-white hover:text-red-700 transition">CONOCE NUESTRAS FILIALES</a>
-    </div>
-  </section>
-
   <section class="tarifas-section py-16 bg-gray-100 px-4 max-w-7xl mx-auto">
-    <!-- agregado px-4 max-w-7xl mx-auto para centrar y padding horizontal -->
     <div class="container mx-auto px-4 text-center relative">
-      <!-- no hace falta el container extra si ya esta el max-w-7xl mx-auto, pero lo dejo para mantener estructura -->
-
       <h2 class="titulo-fondo-unete">ÚNETE</h2>
       <h1 class="titulo-principal">TARIFAS Y PAQUETES</h1>
-
       <div class="fondo-empresa">
         <span>PASIÓN POR EL VOLEY</span>
       </div>
-
       <div class="flex flex-wrap justify-center items-center gap-2 py-8 relative z-10">
-        <!-- Cards sin cambios -->
         <div class="e-card playing">
           <div class="image"></div>
           <div class="wave"></div>
@@ -263,7 +327,6 @@
               class="btn-inscribirse inline-block text-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
               Saber Más
             </a>
-
             <div class="name">@pasion_por_el_voley</div>
           </div>
         </div>
@@ -322,7 +385,6 @@
     </div>
   </section>
 
-  <!-- NOTICIAS DESTACADAS estilo Masonry -->
   <section class="py-12 px-6">
     <div class="max-w-7xl mx-auto mb-6">
       <h2 class="text-4xl font-bold text-center text-red-700">Noticias Destacadas</h2>
@@ -330,12 +392,16 @@
     <div class="row gx-4" data-masonry='{"percentPosition": true }'>
       <div class="col-sm-6 col-md-4 mb-4">
         <div class="card shadow-lg">
-          <img src="../static/img/noticia1.jpg" alt="Entrenamiento intensivo" class="w-full h-48 object-cover rounded-t-xl mb-4">
+          <img src="../static/img/noticia1.jpg" alt="Entrenamiento intensivo"
+            class="w-full h-48 object-cover rounded-t-xl mb-4">
           <div class="card-body">
             <h3 class="text-xl font-bold text-black-700 mb-2">¡Nuevo entrenamiento intensivo!</h3>
             <p class="text-sm text-gray-600">Publicado: 05 junio 2025</p>
-            <p class="mt-3 text-sm text-gray-700">Inscríbete en nuestro nuevo programa de mejora intensiva para jugadores avanzados. ¡Cupos limitados!</p>
-            <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
+            <p class="mt-3 text-sm text-gray-700">Inscríbete en nuestro nuevo programa de mejora intensiva para
+              jugadores avanzados. ¡Cupos limitados!</p>
+            <a href="/noticias"
+              class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer
+              más</a>
           </div>
         </div>
       </div>
@@ -345,25 +411,31 @@
           <div class="card-body">
             <h3 class="text-xl font-bold text-black-700 mb-2">Reconocimiento regional a la academia</h3>
             <p class="text-sm text-gray-600">Publicado: 30 mayo 2025</p>
-            <p class="mt-3 text-sm text-gray-700">Nuestra academia fue premiada por su gran contribución al deporte local en el sur de Lima.</p>
-            <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
+            <p class="mt-3 text-sm text-gray-700">Nuestra academia fue premiada por su gran contribución al deporte
+              local en el sur de Lima.</p>
+            <a href="/noticias"
+              class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer
+              más</a>
           </div>
         </div>
       </div>
       <div class="col-sm-6 col-md-4 mb-4">
         <div class="card shadow-lg">
-          <img src="../static/img/noticia4.jpg" alt="Alumna convocada" class="w-full h-48 object-cover rounded-t-xl mb-4">
+          <img src="../static/img/noticia4.jpg" alt="Alumna convocada"
+            class="w-full h-64 object-cover rounded-t-xl mb-4">
           <div class="card-body">
             <h3 class="text-xl font-bold text-black-700 mb-2">Alumno convocado a la selección</h3>
             <p class="text-sm text-gray-600">Publicado: 25 mayo 2025</p>
-            <p class="mt-3 text-sm text-gray-700">Nuestro jugador Fabián Rojas ha sido convocada para representar a Lima en los juegos escolares nacionales.</p>
-            <a href="/noticias" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer más</a>
-        </div>
+            <p class="mt-3 text-sm text-gray-700">Nuestro jugador Fabián Rojas ha sido convocada para representar a Lima
+              en los juegos escolares nacionales.</p>
+            <a href="/noticias"
+              class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Leer
+              más</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
-
 
   <section>
     <div class="max-w-4xl mx-auto text-center py-12 px-4 sm:px-6 md:px-8">
@@ -379,7 +451,6 @@
       </a>
     </div>
   </section>
-
 
   <footer style="background-color: #DC2626;" class="text-white py-10 mt-8">
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -417,7 +488,7 @@
       </div>
     </div>
     <div class="border-t border-white mt-6 pt-4 text-center text-xs">
-      <p>&copy; 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
+      <p>© 2024 Pasión por el Vóley. Todos los derechos reservados.</p>
       <p><a href="#" class="underline hover:text-gray-300">Términos y condiciones</a> | <a href="#"
           class="underline hover:text-gray-300">Política de privacidad</a></p>
       <p>Diseñado con ❤️ por el equipo de desarrollo de Pasión por el Vóley.</p>
@@ -427,72 +498,62 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-
-  <script>
-    // Script para togglear el menú móvil
-    const menuBtn = document.getElementById('menuBtn');
-    const menuMobile = document.getElementById('menuMobile');
-
-    menuBtn.addEventListener('click', () => {
-      menuMobile.classList.toggle('hidden');
-    });
-
-    // Opcional: cerrar menú al hacer click en algún enlace móvil
-    menuMobile.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuMobile.classList.add('hidden');
-      });
-    });
-  </script>
-
   <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
   <script src="../static/js/nosotros.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 
-
 <!-- Botón flotante de TikTok (más arriba) -->
 <a href="https://www.tiktok.com/@academiapasionporelvoley" target="_blank"
-   class="fixed bottom-40 right-5 z-50 bg-black hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition duration-300">
+  class="fixed bottom-40 right-5 z-50 bg-black hover:bg-gray-800 text-white p-3 rounded-full shadow-lg transition duration-300">
   <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-    <path d="M12 2C6.48 2 2 6.48 2 12c0 2.38.84 4.56 2.24 6.28l-1.1 4.14 4.14-1.1A9.93 9.93 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1.55 14.6c-.44.46-1.04.7-1.69.7-1.3 0-2.35-1.05-2.35-2.35s1.05-2.35 2.35-2.35c.12 0 .24.01.35.03v1.53c-.09-.02-.17-.03-.26-.03-.47 0-.85.38-.85.85s.38.85.85.85c.23 0 .45-.1.61-.26l.99.99zm2.44-3.78a4.002 4.002 0 01-3.09 6.23c-2.21 0-4.01-1.8-4.01-4.01 0-2.21 1.8-4.01 4.01-4.01.33 0 .65.04.96.11V6.7h1.58v6.12z"/>
+    <path
+      d="M12 2C6.48 2 2 6.48 2 12c0 2.38.84 4.56 2.24 6.28l-1.1 4.14 4.14-1.1A9.93 9.93 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1.55 14.6c-.44.46-1.04.7-1.69.7-1.3 0-2.35-1.05-2.35-2.35s1.05-2.35 2.35-2.35c.12 0 .24.01.35.03v1.53c-.09-.02-.17-.03-.26-.03-.47 0-.85.38-.85.85s.38.85.85.85c.23 0 .45-.1.61-.26l.99.99zm2.44-3.78a4.002 4.002 0 01-3.09 6.23c-2.21 0-4.01-1.8-4.01-4.01 0-2.21 1.8-4.01 4.01-4.01.33 0 .65.04.96.11V6.7h1.58v6.12z" />
   </svg>
 </a>
 
 <!-- Botón flotante de Facebook -->
 <a href="https://www.facebook.com/academiapasionporelvoley/?locale=es_LA" target="_blank"
-   class="fixed bottom-24 right-5 z-50 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition duration-300">
+  class="fixed bottom-24 right-5 z-50 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition duration-300">
   <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-    <path d="M22 12c0-5.5228-4.4772-10-10-10S2 6.4772 2 12c0 5 3.6575 9.1273 8.4375 9.8789V14.89H7.8984v-2.89h2.5391V9.7976c0-2.507 1.4926-3.89 3.7773-3.89 1.0945 0 2.2383.195 2.2383.195v2.4609h-1.2617c-1.242 0-1.6328.7711-1.6328 1.5625V12h2.7734l-.4434 2.89h-2.33v6.9889C18.3425 21.1273 22 17 22 12Z"/>
+    <path
+      d="M22 12c0-5.5228-4.4772-10-10-10S2 6.4772 2 12c0 5 3.6575 9.1273 8.4375 9.8789V14.89H7.8984v-2.89h2.5391V9.7976c0-2.507 1.4926-3.89 3.7773-3.89 1.0945 0 2.2383.195 2.2383.195v2.4609h-1.2617c-1.242 0-1.6328.7711-1.6328 1.5625V12h2.7734l-.4434 2.89h-2.33v6.9889C18.3425 21.1273 22 17 22 12Z" />
   </svg>
 </a>
 
 <!-- Botón flotante de WhatsApp -->
 <a href="https://wa.me/51987654321" target="_blank"
-   class="fixed bottom-8 right-5 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300">
+  class="fixed bottom-8 right-5 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300">
   <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-    <path d="M12.04 2C6.55 2 2 6.45 2 11.93c0 2.11.69 4.06 1.87 5.66L2 22l4.56-1.79a10.017 10.017 0 0 0 5.48 1.58c5.49 0 9.96-4.45 9.96-9.93S17.52 2 12.04 2Zm0 18.12c-1.73 0-3.34-.5-4.68-1.38l-.34-.21-2.7 1.05.72-2.63-.22-.34c-1.02-1.46-1.6-3.23-1.6-5.09 0-4.77 3.91-8.64 8.71-8.64 4.8 0 8.7 3.87 8.7 8.64s-3.91 8.64-8.7 8.64Zm4.85-6.46c-.27-.14-1.57-.78-1.81-.86-.24-.09-.41-.14-.59.14-.18.27-.68.86-.83 1.04-.15.18-.3.2-.56.07-.27-.14-1.12-.41-2.13-1.3-.79-.7-1.32-1.56-1.47-1.83-.15-.27-.02-.41.11-.54.11-.11.27-.29.41-.44.14-.14.18-.24.27-.41.09-.18.05-.32-.02-.45-.07-.14-.59-1.4-.8-1.92-.21-.5-.43-.44-.59-.45-.14 0-.32-.02-.5-.02s-.45.07-.68.32c-.23.25-.91.89-.91 2.16 0 1.27.93 2.49 1.06 2.66.14.18 1.83 2.86 4.43 4.01.62.27 1.11.43 1.48.54.62.2 1.19.17 1.64.1.5-.07 1.57-.64 1.79-1.25.23-.61.23-1.13.16-1.25-.07-.11-.23-.18-.5-.32Z"/>
+    <path
+      d="M12.04 2C6.55 2 2 6.45 2 11.93c0 2.11.69 4.06 1.87 5.66L2 22l4.56-1.79a10.017 10.017 0 0 0 5.48 1.58c5.49 0 9.96-4.45 9.96-9.93S17.52 2 12.04 2Zm0 18.12c-1.73 0-3.34-.5-4.68-1.38l-.34-.21-2.7 1.05.72-2.63-.22-.34c-1.02-1.46-1.6-3.23-1.6-5.09 0-4.77 3.91-8.64 8.71-8.64 4.8 0 8.7 3.87 8.7 8.64s-3.91 8.64-8.7 8.64Zm4.85-6.46c-.27-.14-1.57-.78-1.81-.86-.24-.09-.41-.14-.59.14-.18.27-.68.86-.83 1.04-.15.18-.3.2-.56.07-.27-.14-1.12-.41-2.13-1.3-.79-.7-1.32-1.56-1.47-1.83-.15-.27-.02-.41.11-.54.11-.11.27-.29.41-.44.14-.14.18-.24.27-.41.09-.18.05-.32-.02-.45-.07-.14-.59-1.4-.8-1.92-.21-.5-.43-.44-.59-.45-.14 0-.32-.02-.5-.02s-.45.07-.68.32c-.23.25-.91.89-.91 2.16 0 1.27.93 2.49 1.06 2.66.14.18 1.83 2.86 4.43 4.01.62.27 1.11.43 1.48.54.62.2 1.19.17 1.64.1.5-.07 1.57-.64 1.79-1.25.23-.61.23-1.13.16-1.25-.07-.11-.23-.18-.50-.32Z" />
   </svg>
 </a>
 
 <!-- Modal de Login para Entrenadores -->
 <div id="modalLogin" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
   <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md relative">
-    <button id="cerrarModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+    <button id="cerrarModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">×</button>
     <h2 class="text-xl font-bold text-red-800 mb-4">Entrenadores</h2>
-    <p class="text-gray-600 mb-5">Ingresa con tu usuario para registrar y/o visualizar torneos, clientes, equipos de todos los alumnos.</p>
+    <p class="text-gray-600 mb-5">Ingresa con tu usuario para registrar y/o visualizar torneos, clientes, equipos de
+      todos los alumnos.</p>
     <form action="/login-entrenador" method="POST">
       <input type="text" name="usuario" placeholder="Usuario" required class="w-full mb-3 p-2 border rounded">
       <input type="password" name="contrasena" placeholder="Contraseña" required class="w-full mb-3 p-2 border rounded">
-      <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full w-full">Ingresar</button>
+      <button type="submit"
+        class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full w-full">Ingresar</button>
     </form>
   </div>
 </div>
 
 <!-- Botón flotante expandible -->
+<!-- Botón flotante expandible -->
 <div class="fixed bottom-24 left-5 z-50">
   <div class="group relative">
-    <div class="flex items-center bg-red-600 hover:bg-red-700 text-white py-3 px-4 pr-5 rounded-full shadow-lg transition-all duration-300 w-12 group-hover:w-48 overflow-hidden cursor-pointer" id="abrirModal">
+    <div
+      class="flex items-center bg-red-600 hover:bg-red-700 text-white py-3 px-4 pr-5 rounded-full shadow-lg transition-all duration-300 w-12 group-hover:w-48 overflow-hidden cursor-pointer"
+      id="abrirModal">
       <span class="text-xl flex-shrink-0">👨‍🏫</span>
       <span class="ml-2 whitespace-nowrap text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         Entrenadores
@@ -501,27 +562,12 @@
   </div>
 </div>
 
-
-<!-- Script para abrir/cerrar el modal -->
-<script>
-  const btnAbrir = document.getElementById('abrirModal');
-  const btnCerrar = document.getElementById('cerrarModal');
-  const modal = document.getElementById('modalLogin');
-
-  btnAbrir.addEventListener('click', () => {
-    modal.classList.remove('hidden');
-  });
-
-  btnCerrar.addEventListener('click', () => {
-    modal.classList.add('hidden');
-  });
-
-  // También cerrar modal si se hace clic fuera del contenido
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.add('hidden');
-    }
-  });
-</script>
+<!-- Otros scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+<script src="../static/js/nosotros.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loginEntrenador.js') }}"></script>
 
 </html>
