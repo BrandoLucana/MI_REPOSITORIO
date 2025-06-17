@@ -1,164 +1,417 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del DOM
-    const form = document.getElementById('registroForm');
-    const steps = document.querySelectorAll('.voley-form-step');
-    const progressSteps = document.querySelectorAll('.voley-step');
-    const nextButtons = document.querySelectorAll('.voley-next-btn');
-    const prevButtons = document.querySelectorAll('.voley-prev-btn');
-    
-    let currentStep = 0;
+// Elementos del DOM
+const steps = document.querySelectorAll('.voley-form-step');
+const progressSteps = document.querySelectorAll('.voley-step');
+const nextButtons = document.querySelectorAll('.voley-next-btn');
+const prevButtons = document.querySelectorAll('.voley-prev-btn');
+const form = document.getElementById('registroForm');
+const feedbackDiv = document.getElementById('form-feedback');
+const loader = document.getElementById('loader');
+const successModal = document.getElementById('success-modal');
+const modalOkBtn = document.getElementById('modal-ok-btn');
+const emailInfo = document.getElementById('email-info');
+let currentStep = 1;
 
-    // Función para mostrar el paso actual
-    function showStep(stepIndex) {
-        steps.forEach((step, index) => {
-            step.classList.toggle('active', index === stepIndex);
-        });
-        
-        progressSteps.forEach((step, index) => {
-            step.classList.toggle('active', index <= stepIndex);
-        });
+// Mostrar un paso específico
+function showStep(step) {
+    steps.forEach(s => s.classList.remove('active'));
+    progressSteps.forEach(s => s.classList.remove('active'));
+    document.querySelector(`.voley-form-step[data-step="${step}"]`).classList.add('active');
+    document.querySelector(`.voley-step[data-step="${step}"]`).classList.add('active');
+    currentStep = step;
+    console.log(`Mostrando paso ${step}`);
+}
+
+// Validar campos requeridos en un paso
+function validateStep(step) {
+    const stepElement = document.querySelector(`.voley-form-step[data-step="${step}"]`);
+    const inputs = stepElement.querySelectorAll('[required]');
+    for (let input of inputs) {
+        if (!input.value || (input.type === 'checkbox' && !input.checked)) {
+            input.classList.add('error');
+            input.focus();
+            const fieldName = input.name.replace(/_/g, ' ').replace('apoderado', 'del apoderado');
+            showFeedback(`Por favor, complete el campo ${fieldName}.`, 'error');
+            return false;
+        }
+        input.classList.remove('error');
     }
+    return true;
+}
 
-    // Validar el paso actual antes de avanzar
-    function validateStep(stepIndex) {
-        const currentStepFields = steps[stepIndex].querySelectorAll('[required]');
-        let isValid = true;
-        
-        currentStepFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.classList.add('error');
-                showFieldError(field, 'Este campo es obligatorio');
-                isValid = false;
-            } else {
-                field.classList.remove('error');
-                clearFieldError(field);
+// Mostrar retroalimentación
+function showFeedback(message, type) {
+    feedbackDiv.textContent = message;
+    feedbackDiv.className = `p-4 rounded ${type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+    feedbackDiv.classList.remove('hidden');
+    setTimeout(() => {
+        feedbackDiv.classList.add('hidden');
+    }, 5000);
+    console.log(`Feedback mostrado: ${message} (${type})`);
+}
+
+// Calcular edad y manejar paso de apoderado
+function calculateAge() {
+    const birthDateInput = document.getElementById('fecha_nacimiento');
+    const ageInput = document.getElementById('edad');
+    const emailInput = document.getElementById('email');
+    const apoderadoStep = document.getElementById('apoderado-step');
+    const apoderadoForm = document.getElementById('apoderado-form');
+    const apoderadoInputs = apoderadoForm.querySelectorAll('input, select');
+
+    if (birthDateInput.value) {
+        const birthDate = new Date(birthDateInput.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        ageInput.value = age;
+
+        // Manejar visibilidad del paso de apoderado y requisitos del correo
+        if (age < 18) {
+            apoderadoStep.style.display = 'block';
+            apoderadoInputs.forEach(input => {
+                input.required = true;
+            });
+            emailInput.removeAttribute('required');
+            emailInfo.classList.remove('hidden');
+            if (!emailInput.value) {
+                emailInput.value = 'ninguno';
             }
+        } else {
+            apoderadoStep.style.display = 'none';
+            apoderadoInputs.forEach(input => {
+                input.required = false;
+                input.value = ''; // Limpiar campos de apoderado
+            });
+            emailInput.setAttribute('required', '');
+            emailInfo.classList.add('hidden');
+            if (emailInput.value === 'ninguno') {
+                emailInput.value = '';
+            }
+        }
+        console.log(`Edad calculada: ${age}, apoderado ${age < 18 ? 'requerido' : 'no requerido'}`);
+    }
+}
+
+// Validación del teléfono (solo al enviar el formulario, no en cada tecla)
+function validatePhone() {
+    const phoneInput = document.getElementById('telefono_apoderado');
+    if (phoneInput.value && !/^[0-9]{9}$/.test(phoneInput.value)) {
+        phoneInput.classList.add('error');
+        showFeedback('El teléfono debe contener exactamente 9 dígitos numéricos.', 'error');
+        return false;
+    }
+    phoneInput.classList.remove('error');
+    return true;
+}
+
+// Establecer fecha de pago actual
+function setCurrentDate() {
+    const dateInput = document.getElementById('fecha_pago');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+    console.log(`Fecha de pago establecida: ${today}`);
+}
+
+// Manejo de código de operación según medio de pago
+function handlePaymentMethod() {
+    const paymentMethod = document.getElementById('medio_pago');
+    const codeGroup = document.getElementById('codigo_operacion_group');
+    const codeInput = document.getElementById('codigo_operacion');
+
+    codeGroup.style.display = 'block';
+    codeInput.required = true;
+    console.log(`Medio de pago seleccionado: ${paymentMethod.value}`);
+}
+
+// Mostrar modal de éxito
+function showSuccessModal() {
+    successModal.classList.add('show');
+}
+
+// Verificar si el email ya está registrado
+async function verificarEmail(email) {
+    try {
+        const response = await fetch('/verificar_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}`
         });
-        
-        return isValid;
+        const data = await response.json();
+        return data.disponible;
+    } catch (error) {
+        console.error('Error al verificar email:', error);
+        return false;
     }
+}
 
-    // Mostrar mensaje de error en un campo
-    function showFieldError(field, message) {
-        clearFieldError(field);
-        const errorElement = document.createElement('div');
-        errorElement.className = 'error-message';
-        errorElement.textContent = message;
-        field.parentNode.insertBefore(errorElement, field.nextSibling);
-    }
+// Navegación: Botones "Siguiente"
+nextButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (validateStep(currentStep)) {
+            const age = parseInt(document.getElementById('edad').value);
+            if (currentStep === 1 && age >= 18) {
+                showStep(3); // Saltar apoderado si es mayor de edad
+            } else if (currentStep < 4) {
+                showStep(currentStep + 1);
+            }
+        }
+    });
+});
 
-    // Limpiar mensaje de error de un campo
-    function clearFieldError(field) {
-        const existingError = field.nextElementSibling;
-        if (existingError && existingError.classList.contains('error-message')) {
-            existingError.remove();
+// Navegación: Botones "Anterior"
+prevButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const age = parseInt(document.getElementById('edad').value);
+        if (currentStep === 3 && age >= 18) {
+            showStep(1); // Saltar apoderado si es mayor de edad
+        } else if (currentStep > 1) {
+            showStep(currentStep - 1);
+        }
+    });
+});
+
+// Enviar formulario
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    console.log('Formulario enviado, iniciando validación y envío...');
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true; // Deshabilitar botón para evitar envíos múltiples
+
+    // Validar todos los pasos visibles
+    const age = parseInt(document.getElementById('edad').value);
+    const stepsToValidate = age < 18 ? [1, 2, 3, 4] : [1, 3, 4];
+    for (let step of stepsToValidate) {
+        if (!validateStep(step)) {
+            showStep(step);
+            loader.style.display = 'none';
+            submitBtn.disabled = false;
+            return;
         }
     }
 
-    // Mostrar modal de éxito
-    function showSuccessModal() {
-        // Crear el modal
-        const modal = document.createElement('div');
-        modal.className = 'voley-modal';
-        modal.innerHTML = `
-            <div class="voley-modal-content">
-                <div class="voley-modal-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>¡Registro Exitoso!</h3>
-                <p>El formulario se ha enviado correctamente.</p>
-                <button class="voley-modal-button">Aceptar</button>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        // Configurar el botón para redirigir
-        const button = modal.querySelector('.voley-modal-button');
-        button.addEventListener('click', function() {
-            window.location.href = '/'; // Redirigir a la página de inicio
-        });
-        
-        // También redirigir automáticamente después de 3 segundos
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 3000);
+    // Validar teléfono si es requerido
+    if (age < 18 && !validatePhone()) {
+        showStep(2);
+        document.getElementById('telefono_apoderado').focus();
+        loader.style.display = 'none';
+        submitBtn.disabled = false;
+        return;
     }
 
-    // Event listeners para los botones Siguiente
-    nextButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            if (validateStep(currentStep)) {
-                currentStep++;
-                showStep(currentStep);
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Verificar disponibilidad del email (solo si no es "ninguno")
+    const email = document.getElementById('email').value;
+    if (email !== 'ninguno' && !await verificarEmail(email)) {
+        showFeedback('El correo electrónico ya está registrado. Por favor usa otro.', 'error');
+        loader.style.display = 'none';
+        submitBtn.disabled = false;
+        return;
+    }
+
+    loader.style.display = 'flex';
+    const formData = new FormData(form);
+
+    // Depuración: Mostrar datos enviados
+    for (let [key, value] of formData.entries()) {
+        console.log(`Enviando ${key}: ${value}`);
+    }
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        console.log('Respuesta del servidor:', data);
+
+        loader.style.display = 'none';
+
+        if (data.éxito) {
+            showSuccessModal();
+            modalOkBtn.addEventListener('click', () => {
+                window.location.href = data.redireccion || '/'; // Redirigir al index
+            });
+        } else {
+            let mensajeError = data.mensaje;
+            if (data.mensaje.includes('Duplicate entry') && data.mensaje.includes('email')) {
+                mensajeError = "El correo electrónico ya está registrado. Por favor usa otro.";
             }
-        });
-    });
-
-    // Event listeners para los botones Anterior
-    prevButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            currentStep--;
-            showStep(currentStep);
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    // Validación en tiempo real para campos requeridos
-    form.querySelectorAll('[required]').forEach(field => {
-        field.addEventListener('input', function() {
-            if (this.value.trim()) {
-                this.classList.remove('error');
-                clearFieldError(this);
+            showFeedback(mensajeError, 'error');
+            if (data.campo) {
+                const input = document.querySelector(`[name="${data.campo}"]`);
+                if (input) {
+                    const step = input.closest('.voley-form-step').dataset.step;
+                    showStep(parseInt(step));
+                    input.focus();
+                }
             }
-        });
+        }
+    } catch (error) {
+        loader.style.display = 'none';
+        showFeedback('Error al enviar el formulario: ' + error.message, 'error');
+        console.error('Error en fetch:', error);
+    } finally {
+        submitBtn.disabled = false; // Rehabilitar botón al finalizar
+    }
+});
+
+// Inicialización
+document.getElementById('fecha_nacimiento').addEventListener('input', calculateAge);
+document.getElementById('telefono_apoderado').addEventListener('input', () => {
+    // No validar en cada tecla, solo marcar como válido si está completo
+    const phoneInput = document.getElementById('telefono_apoderado');
+    if (phoneInput.value.length === 9 && /^[0-9]{9}$/.test(phoneInput.value)) {
+        phoneInput.classList.remove('error');
+    }
+});
+document.getElementById('medio_pago').addEventListener('change', handlePaymentMethod);
+window.addEventListener('load', () => {
+    calculateAge();
+    setCurrentDate();
+    handlePaymentMethod();
+    console.log('Formulario inicializado');
+});
+
+/*ACTUALIZACION DEL CORREO MENSAJES*/
+document.addEventListener("DOMContentLoaded", function () {
+    const fechaNacimiento = document.getElementById("fecha_nacimiento");
+    const edadInput = document.getElementById("edad");
+    const emailInput = document.getElementById("email");
+    const emailInfo = document.getElementById("email-info");
+
+    // Función para calcular la edad en base a la fecha
+    function calcularEdad(fecha) {
+        const hoy = new Date();
+        const nacimiento = new Date(fecha);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const m = hoy.getMonth() - nacimiento.getMonth();
+        if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--;
+        }
+        return edad;
+    }
+
+    // Verificar si debe mostrarse u ocultarse el mensaje según la edad
+    function actualizarMensajeEmail() {
+        const edad = parseInt(edadInput.value, 10);
+        if (!isNaN(edad) && edad < 18) {
+            emailInfo.textContent = "En caso de no tener, escriba 'ninguno'.";
+        } else {
+            emailInfo.textContent = "";
+            emailInfo.classList.add("hidden");
+        }
+    }
+
+    // Cuando cambia la fecha de nacimiento, actualiza edad y mensaje
+    fechaNacimiento.addEventListener("change", function () {
+        const fecha = fechaNacimiento.value;
+        if (fecha) {
+            const edad = calcularEdad(fecha);
+            edadInput.value = edad;
+            actualizarMensajeEmail();
+        } else {
+            edadInput.value = "";
+            emailInfo.textContent = "";
+            emailInfo.classList.add("hidden");
+        }
     });
 
-    // Calcular edad automáticamente
-    const fechaNacimiento = form.querySelector('[name="fecha_nacimiento"]');
-    const edadInput = form.querySelector('[name="edad"]');
+    // Mostrar mensaje al enfocar email si es menor de 18
+    emailInput.addEventListener("focus", function () {
+        const edad = parseInt(edadInput.value, 10);
+        if (!isNaN(edad) && edad < 18) {
+            emailInfo.classList.remove("hidden");
+        }
+    });
+
+    // Ocultar mensaje al salir del campo
+    emailInput.addEventListener("blur", function () {
+        emailInfo.classList.add("hidden");
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Configuración inicial
+    const form = document.getElementById('registroForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const loader = document.getElementById('loader');
+    const successModal = document.getElementById('success-modal');
     
-    if (fechaNacimiento && edadInput) {
-        fechaNacimiento.addEventListener('change', function() {
-            const birthDate = new Date(this.value);
-            if (isNaN(birthDate.getTime())) return;
-            
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            
-            edadInput.value = age >= 0 ? age : '';
-        });
-    }
+    // Configurar fecha automática
+    document.getElementById('fecha_pago').valueAsDate = new Date();
 
-    // Manejo del envío del formulario
+    // 2. Manejar el envío del formulario
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // ¡IMPORTANTE!
+        
+        console.log("Formulario enviándose..."); // Debug
+        submitBtn.disabled = true;
+        loader.style.display = 'flex';
+
+        // Crear FormData
+        const formData = new FormData(form);
+        
+        // Debug: Mostrar datos
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        // Enviar datos
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Respuesta:", data);
+            
+            if (data.éxito) {
+                successModal.classList.remove('hidden');
+                document.getElementById('modal-ok-btn').onclick = function() {
+                    window.location.href = data.redireccion || '/';
+                };
+            } else {
+                alert("Error: " + (data.mensaje || "Error desconocido"));
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error de conexión");
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            loader.style.display = 'none';
+        });
+    });
+
+    // 3. Manejar cambios en medio de pago (opcional)
+    document.getElementById('medio_pago').addEventListener('change', function() {
+        document.getElementById('codigo_operacion_group').style.display = 
+            this.value === 'Efectivo' ? 'none' : 'block';
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registroForm');
+    const feedbackDiv = document.getElementById('form-feedback');
+    
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Validar todos los pasos antes de enviar
-        let formIsValid = true;
-        steps.forEach((step, index) => {
-            if (!validateStep(index)) {
-                if (formIsValid) {
-                    currentStep = index;
-                    showStep(currentStep);
-                    formIsValid = false;
-                }
-            }
-        });
+        const loader = document.getElementById('loader');
+        const submitBtn = form.querySelector('button[type="submit"]');
         
-        if (!formIsValid) {
-            return;
-        }
-        
+        // Mostrar loader
+        loader.style.display = 'flex';
+        submitBtn.disabled = true;
+        feedbackDiv.classList.add('hidden');
+
         try {
             const formData = new FormData(form);
             const response = await fetch(form.action, {
@@ -166,191 +419,178 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData
             });
             
-            if (!response.ok) {
-                throw new Error('Error en la respuesta del servidor');
-            }
+            const data = await response.json();
             
-            const result = await response.json();
-            
-            if (result.éxito) {
-                showSuccessModal();
+            if (data.éxito) {
+                // Mostrar modal de éxito
+                document.getElementById('success-modal').classList.remove('hidden');
+                document.getElementById('modal-ok-btn').onclick = function() {
+                    window.location.href = data.redireccion || '/';
+                };
             } else {
-                // Manejar errores del servidor
-                if (result.error === 'dato_duplicado') {
-                    const inputField = form.querySelector(`[name="${result.campo}"]`);
-                    if (inputField) {
-                        // Ir al paso que contiene el campo con error
-                        const errorStep = inputField.closest('.voley-form-step');
-                        if (errorStep) {
-                            const stepIndex = Array.from(steps).indexOf(errorStep);
-                            currentStep = stepIndex;
-                            showStep(currentStep);
-                        }
-                        
-                        inputField.classList.add('error');
-                        inputField.focus();
-                        showFieldError(inputField, result.mensaje);
-                    }
-                } else {
-                    showNotification('Error: ' + (result.mensaje || 'Error al procesar el registro'), 'error');
+                // Mostrar error al usuario
+                showFeedback(data.mensaje || 'Error desconocido', 'error');
+                
+                // Resaltar campo con error
+                if (data.campo) {
+                    const input = document.querySelector(`[name="${data.campo}"]`);
+                    input?.classList.add('border-red-500');
+                    input?.scrollIntoView({ behavior: 'smooth' });
                 }
             }
         } catch (error) {
+            showFeedback('Error de conexión con el servidor', 'error');
             console.error('Error:', error);
-            // Solo mostrar error si realmente hay un problema de conexión
-            if (error.message.includes('Failed to fetch')) {
-                showNotification('Error de conexión con el servidor', 'error');
-            }
+        } finally {
+            loader.style.display = 'none';
+            submitBtn.disabled = false;
         }
     });
 
-    // Mostrar el primer paso al cargar la página
-    showStep(currentStep);
+    function showFeedback(message, type) {
+        feedbackDiv.textContent = message;
+        feedbackDiv.className = `p-4 rounded mb-4 ${
+            type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+        }`;
+        feedbackDiv.classList.remove('hidden');
+    }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuración inicial
+    const form = document.getElementById('registroForm');
+    const loader = document.getElementById('loader');
+    const feedbackDiv = document.getElementById('form-feedback');
 
-// Función para mostrar notificaciones
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `voley-notification ${type}`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.classList.add('fade-out');
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
+    // Manejar envío
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        loader.style.display = 'flex';
+        feedbackDiv.classList.add('hidden');
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) throw new Error(data.mensaje || 'Error desconocido');
+
+            if (data.éxito) {
+                document.getElementById('success-modal').classList.remove('hidden');
+            } else {
+                feedbackDiv.textContent = data.mensaje.includes('estructura') 
+                    ? 'Error del sistema. Contacte al administrador' 
+                    : data.mensaje;
+                feedbackDiv.className = 'p-4 rounded bg-red-100 text-red-700';
+                feedbackDiv.classList.remove('hidden');
+            }
+        } catch (error) {
+            feedbackDiv.textContent = error.message;
+            feedbackDiv.className = 'p-4 rounded bg-red-100 text-red-700';
+            feedbackDiv.classList.remove('hidden');
+        } finally {
+            submitBtn.disabled = false;
+            loader.style.display = 'none';
+        }
+    });
+});
+// Función mejorada para verificar email
+async function verificarEmail(email) {
+    // No verificar si el email es "ninguno" o está vacío
+    if (email === 'ninguno' || email === '') {
+        return true;
+    }
+
+    try {
+        const response = await fetch('/verificar_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        
+        const data = await response.json();
+        return data.disponible;
+    } catch (error) {
+        console.error('Error al verificar email:', error);
+        // En caso de error, permitir el envío pero mostrar advertencia
+        showFeedback('No se pudo verificar el email. Por favor confirme que no esté registrado.', 'warning');
+        return true; // Permitir continuar a pesar del error
+    }
 }
 
+// Modificación en el event listener del formulario
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
 
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
-    const edadInput = document.getElementById('edad');
-    const apoderadoStep = document.getElementById('apoderado-step');
-    const apoderadoForm = document.getElementById('apoderado-form');
-    const nextButtons = document.querySelectorAll('.voley-next-btn');
-    const prevButtons = document.querySelectorAll('.voley-prev-btn');
-    const steps = document.querySelectorAll('.voley-step');
-    const formSteps = document.querySelectorAll('.voley-form-step');
-    let currentStep = 1;
-    let isAdult = false;
-
-    // Calculate age and update visibility of Apoderado step
-    function calculateAge() {
-        const birthDate = new Date(fechaNacimientoInput.value);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
+    // Validar todos los pasos visibles
+    const age = parseInt(document.getElementById('edad').value);
+    const stepsToValidate = age < 18 ? [1, 2, 3, 4] : [1, 3, 4];
+    
+    for (let step of stepsToValidate) {
+        if (!validateStep(step)) {
+            showStep(step);
+            loader.style.display = 'none';
+            submitBtn.disabled = false;
+            return;
         }
-        edadInput.value = age;
-        isAdult = age >= 18;
+    }
 
-        // Toggle Apoderado step visibility and required fields
-        if (isAdult) {
-            apoderadoStep.style.display = 'none';
-            apoderadoForm.style.display = 'none';
-            // Remove required attributes for Apoderado fields when hidden
-            const apoderadoInputs = apoderadoForm.querySelectorAll('input, select');
-            apoderadoInputs.forEach(input => input.removeAttribute('required'));
+    // Validar teléfono si es requerido
+    if (age < 18 && !validatePhone()) {
+        showStep(2);
+        document.getElementById('telefono_apoderado').focus();
+        loader.style.display = 'none';
+        submitBtn.disabled = false;
+        return;
+    }
+
+    // Verificar disponibilidad del email (solo si no es "ninguno")
+    const email = document.getElementById('email').value;
+    if (email !== 'ninguno' && email !== '') {
+        const emailDisponible = await verificarEmail(email);
+        if (!emailDisponible) {
+            showFeedback('El correo electrónico ya está registrado. Por favor usa otro.', 'error');
+            document.getElementById('email').focus();
+            loader.style.display = 'none';
+            submitBtn.disabled = false;
+            return;
+        }
+    }
+
+    // Resto del código de envío del formulario...
+    loader.style.display = 'flex';
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.éxito) {
+            showSuccessModal();
         } else {
-            apoderadoStep.style.display = 'flex';
-            // Only show Apoderado form when it's the active step
-            apoderadoForm.style.display = currentStep === 2 ? 'block' : 'none';
-            // Set required attributes for mandatory fields
-            const mandatoryFields = apoderadoForm.querySelectorAll('input[name="nombre_apoderado"], input[name="telefono_apoderado"], select[name="seguro_medico_apoderado"], select[name="tipo_documento"], input[name="numero_documento"]');
-            mandatoryFields.forEach(input => input.setAttribute('required', 'required'));
-            // Email is optional, so no required attribute
-            const emailField = apoderadoForm.querySelector('input[name="correo_apoderado"]');
-            if (emailField) emailField.removeAttribute('required');
+            showFeedback(data.mensaje, 'error');
         }
-    }
-
-    // Update age when birth date changes
-    fechaNacimientoInput.addEventListener('change', calculateAge);
-
-    // Initialize age calculation on page load
-    if (fechaNacimientoInput.value) {
-        calculateAge();
-    }
-
-    // Handle next button click
-    nextButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            if (validateStep(currentStep)) {
-                if (currentStep === 1 && isAdult) {
-                    // Skip step 2 (Apoderado) if user is 18 or older
-                    changeStep(3);
-                } else if (currentStep < steps.length) {
-                    changeStep(currentStep + 1);
-                }
-            }
-        });
-    });
-
-    // Handle previous button click
-    prevButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            if (currentStep === 3 && isAdult) {
-                // Go back to step 1 if user is 18 or older
-                changeStep(1);
-            } else if (currentStep > 1) {
-                changeStep(currentStep - 1);
-            }
-        });
-    });
-
-    // Validate current step
-    function validateStep(step) {
-        const currentFormStep = document.querySelector(`.voley-form-step[data-step="${step}"]`);
-        const inputs = currentFormStep.querySelectorAll('input[required], select[required]');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            if (!input.value) {
-                isValid = false;
-                input.classList.add('error');
-                let errorMessage = input.nextElementSibling;
-                if (!errorMessage || !errorMessage.classList.contains('error-message')) {
-                    errorMessage = document.createElement('span');
-                    errorMessage.classList.add('error-message');
-                    errorMessage.textContent = 'Este campo es obligatorio';
-                    input.parentElement.appendChild(errorMessage);
-                }
-            } else {
-                input.classList.remove('error');
-                const errorMessage = input.nextElementSibling;
-                if (errorMessage && errorMessage.classList.contains('error-message')) {
-                    errorMessage.remove();
-                }
-            }
-        });
-
-        return isValid;
-    }
-
-    // Change step
-    function changeStep(newStep) {
-        steps[currentStep - 1].classList.remove('active');
-        formSteps[currentStep - 1].classList.remove('active');
-
-        currentStep = newStep;
-
-        steps[currentStep - 1].classList.add('active');
-        formSteps[currentStep - 1].classList.add('active');
-
-        // Ensure Apoderado form visibility is updated
-        if (currentStep === 2 && !isAdult) {
-            apoderadoForm.style.display = 'block';
-        } else {
-            apoderadoForm.style.display = isAdult ? 'none' : 'none';
-        }
+    } catch (error) {
+        showFeedback('Error de conexión', 'error');
+    } finally {
+        submitBtn.disabled = false;
+        loader.style.display = 'none';
     }
 });
-
-
