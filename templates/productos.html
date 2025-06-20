@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torneos - Pasión por el Vóley</title>
+    <title>Productos - Pasión por el Vóley</title>
     <link rel="icon" href="{{ url_for('static', filename='img/PASION POR EL VOLEY.jpg') }}" type="image/jpeg">
     <link href="{{ url_for('static', filename='css/torneos.css') }}" rel="stylesheet">
     <link href="../static/css/style.css" rel="stylesheet">
     <link href="../static/css/loader.css" rel="stylesheet">
+    <link href="../static/css/productos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -72,91 +73,105 @@
     </header>
 
 
-    <main class="p-6 bg-white">
-    <h1 class="text-4xl font-bold text-center mb-8">Productos</h1>
+    <main class="container mx-auto px-4 py-8">
+        <!-- Sección: Uniforme -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-red-700 mb-6">Uniforme</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/uniforme.png" alt="Uniforme Oficial" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Uniforme Oficial</h3>
+                    <p class="text-gray-600 mb-2">Camiseta y short - Tallas disponibles: S, M, L</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 80.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Uniforme%20Oficial)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Sección: Uniforme -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">Uniforme</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-        <!-- Tarjeta de producto -->
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/uniforme.png" alt="Uniforme Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Uniforme Oficial</h3>
-            <p class="text-gray-600 mb-2">Camiseta y short - Tallas disponibles: S, M, L</p>
-            <p class="text-red-600 font-bold mb-3">S/ 80.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Uniforme%20Oficial)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        <!-- Puedes duplicar esta tarjeta cambiando la imagen y datos -->
-        </div>
-    </section>
+        <!-- Sección: Implementos deportivos -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-red-700 mb-6">Implementos deportivos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/balon.jpg" alt="Balón Oficial" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Balón Oficial Mikasa</h3>
+                    <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 150.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20Mikasa)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/balon2.webp" alt="Balón V33OW" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Balón V33OW</h3>
+                    <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 100.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20V330W)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/zapatillas.webp" alt="Zapatillas ASICS" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Zapatillas ASICS</h3>
+                    <p class="text-gray-600 mb-2">Zapatillas para entrenamientos y torneos.</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 490.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Zapatillas%20ASICS)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Sección: Implementos deportivos -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">Implementos deportivos</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/balon.jpg" alt="Balón Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Balón Oficial Mikasa</h3>
-            <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
-            <p class="text-red-600 font-bold mb-3">S/ 150.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20Mikasa)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/balon2.webp" alt="Balón V33OW" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Balón V33OW</h3>
-            <p class="text-gray-600 mb-2">Balón certificado para entrenamientos y torneos.</p>
-            <p class="text-red-600 font-bold mb-3">S/ 100.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Balón%20V330W)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/zapatillas.webp" alt="Balón Oficial" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Zapatillas ASICS</h3>
-            <p class="text-gray-600 mb-2">Zapatillas para entrenamientos y torneos.</p>
-            <p class="text-red-600 font-bold mb-3">S/ 490.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Zapatillas%20ASICS)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        </div>
-    </section>
-
-    <!-- Sección: Rodilleras y mangas -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">Rodilleras y mangas</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/rodilleras.jpg" alt="Rodilleras Negras" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Rodilleras Mikasa</h3>
-            <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
-            <p class="text-red-600 font-bold mb-3">S/ 45.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Rodilleras%20Negras)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        <div class="bg-gray-100 rounded-2xl shadow-lg hover:scale-105 transition-transform p-4">
-            <img src="../static/img/mangas.jpg" alt="Mangas Negras" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <h3 class="text-xl font-semibold">Mangas MTD</h3>
-            <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
-            <p class="text-red-600 font-bold mb-3">S/ 35.00</p>
-            <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Mangas%20Negras)" target="_blank"
-            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
-            ¡Lo quiero!
-            </a>
-        </div>
-        </div>
-    </section>
+        <!-- Sección: Rodilleras y mangas -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-red-700 mb-6">Rodilleras y mangas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/rodilleras.jpg" alt="Rodilleras Negras" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Rodilleras Mikasa</h3>
+                    <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 45.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Rodilleras%20Negras)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg card-glow p-6 w-full max-w-sm">
+                    <div class="relative w-full h-64 mb-4">
+                        <img src="../static/img/mangas.jpg" alt="Mangas Negras" class="square-img rounded-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Mangas MTD</h3>
+                    <p class="text-gray-600 mb-2">Alta protección para entrenamientos intensos.</p>
+                    <p class="text-red-600 font-bold mb-4">S/ 35.00</p>
+                    <a href="https://wa.me/51987654321?text=Quiero%20comprar%20este%20artículo%20(Mangas%20Negras)" 
+                       target="_blank" 
+                       class="block text-center bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">
+                        ¡Lo quiero!
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
 

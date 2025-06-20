@@ -6,7 +6,6 @@
     <title>Formulario de inscripción - Pasión por el Voley</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="{{ url_for('static', filename='css/formulario.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/back-to-top.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/loader.css') }}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -40,8 +39,11 @@
             <div class="voley-step" data-step="3">
                 <i class="fas fa-volleyball-ball mr-2"></i>Datos deportivos
             </div>
+            <div class="voley-step" data-step="4">
+                <i class="fas fa-money-bill-wave mr-2"></i>Matrícula
+            </div>
         </div>
-        <form id="registroForm" method="POST" action="{{ url_for('registrar_usuario') }}" class="voley-form">
+        <form id="registroForm" method="POST" action="{{ url_for('registrar_usuario') }}" class="voley-form" enctype="multipart/form-data">
             <!-- Paso 1 -->
             <div class="voley-form-step active" data-step="1">
                 <h2 class="voley-form-title">
@@ -65,12 +67,25 @@
                         <input type="number" name="edad" id="edad" class="voley-input" required readonly>
                     </div>
                     <div class="voley-input-group">
-                        <label class="voley-label">Correo Electrónico</label>
-                        <input type="email" name="email" class="voley-input" required>
+                    <label class="voley-label">Correo Electrónico</label>
+                    <input type="email" name="email" id="email" class="voley-input">
+                    <span id="email-info" class="text-sm text-gray-600 hidden">
+                    </span>
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Dirección</label>
                         <input type="text" name="direccion" class="voley-input">
+                    </div>
+                    <div class="voley-input-group">
+                        <label class="voley-label">Tipo de Documento</label>
+                        <select name="tipo_documento" id="tipo_documento" class="voley-input" required>
+                            <option value="DNI">DNI</option>
+                            <option value="CE">Carnet de Extranjería</option>
+                        </select>
+                    </div>
+                    <div class="voley-input-group">
+                        <label class="voley-label">Número de Documento</label>
+                        <input type="text" name="numero_documento" id="numero_documento" class="voley-input" required maxlength="12" pattern="[0-9]{8}|[A-Za-z0-9]{1,12}">
                     </div>
                 </div>
                 <div class="voley-form-navigation">
@@ -87,19 +102,19 @@
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nombre del Apoderado</label>
-                        <input type="text" name="nombre_apoderado" class="voley-input">
+                        <input type="text" name="nombre_apoderado" id="nombre_apoderado" class="voley-input">
                     </div>
                     <div class="voley-input-group">
-                        <label class="voley-label">Teléfono</label>
-                        <input type="tel" name="telefono_apoderado" class="voley-input">
+                    <label class="voley-label">Teléfono</label>
+                    <input type="tel" name="telefono_apoderado" id="telefono_apoderado" class="voley-input" maxlength="9">
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Correo Electrónico</label>
-                        <input type="email" name="correo_apoderado" class="voley-input">
+                        <input type="email" name="correo_apoderado" id="correo_apoderado" class="voley-input">
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Centro de Salud</label>
-                        <select name="centro_salud" class="voley-input">
+                        <select name="centro_salud" id="centro_salud" class="voley-input">
                             <option value="SIS">SIS</option>
                             <option value="EsSalud">EsSalud</option>
                             <option value="Seguro Privado">Seguro Privado</option>
@@ -108,14 +123,14 @@
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Tipo de Documento</label>
-                        <select name="tipo_documento" class="voley-input">
+                        <select name="tipo_documento_apoderado" id="tipo_documento_apoderado" class="voley-input">
                             <option value="DNI">DNI</option>
                             <option value="CE">Carnet de Extranjería</option>
                         </select>
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Número de Documento</label>
-                        <input type="text" name="numero_documento" class="voley-input">
+                        <input type="text" name="numero_documento_apoderado" id="numero_documento_apoderado" class="voley-input" maxlength="12" pattern="[0-9]{8}|[A-Za-z0-9]{1,12}">
                     </div>
                 </div>
                 <div class="voley-form-navigation">
@@ -132,6 +147,7 @@
                 <h2 class="voley-form-title">
                     <i class="fas fa-volleyball-ball mr-2"></i>Datos Deportivos
                 </h2>
+
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nivel Actual</label>
@@ -155,21 +171,90 @@
                         </div>
                     </div>
                     <div class="voley-input-group">
-                        <label class="voley-label">Posición preferida</label>
-                        <input type="text" name="posicion" class="voley-input">
+                    <label class="voley-label">Posición preferida</label>
+                    <select name="posicion" class="voley-input">
+                <option value="Armador">Armador</option>
+                <option value="Opuesto">Opuesto</option>
+                <option value="Punta Receptora">Punta Receptora</option>
+                <option value="Central">Central</option>
+                <option value="Libero">Libero</option>
+                <option value="Defensa">Defensa</option>
+                        </select>
                     </div>
                     <div class="voley-input-group">
-                        <label class="voley-label">¿Tiene seguro médico?</label>
-                        <div class="voley-radio-group">
-                            <label class="voley-radio-label">
-                                <input type="radio" name="seguro_medico" value="si" class="voley-radio">
-                                <span>Sí</span>
-                            </label>
-                            <label class="voley-radio-label">
-                                <input type="radio" name="seguro_medico" value="no" class="voley-radio">
-                                <span>No</span>
-                            </label>
-                        </div>
+                        <label class="voley-label">Centro de Seguro</label>
+                        <select name="centro_seguro" class="voley-input">
+                            <option value="SIS">SIS</option>
+                            <option value="EsSalud">EsSalud</option>
+                            <option value="Seguro Privado">Seguro Privado</option>
+                            <option value="Ninguno">Ninguno</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="voley-form-navigation">
+                    <button type="button" class="voley-prev-btn">
+                        <i class="fas fa-arrow-left mr-2"></i> Anterior
+                    </button>
+                    <button type="button" class="voley-next-btn">
+                        Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Paso 4 -->
+            <div class="voley-form-step" data-step="4">
+                <h2 class="voley-form-title">
+                    <i class="fas fa-money-bill-wave mr-2"></i>Comprobante de matrícula
+                </h2>
+                <div class="voley-payment-info mb-6 p-4 bg-blue-100 rounded-lg">
+                    <p class="text-sm text-gray-700">
+                        <strong>Información de Pago:</strong><br>
+                        <strong>Número de Yape:</strong> 987-654-321<br>
+                        <strong>Cuenta Bancaria:</strong> BCP 123-456-789-012<br>
+                        Por favor, realice el pago correspondiente antes de subir el comprobante.
+                    </p>
+                </div>
+                <div class="voley-form-grid">
+                    <div class="voley-input-group">
+                        <label class="voley-label">Paquete Seleccionado</label>
+                        <select name="paquete" class="voley-input" required>
+                            <option value="Infantil">Nivel Infantil (S/ 25)</option>
+                            <option value="Juvenil">Nivel Juvenil (S/ 25)</option>
+                            <option value="Adulto">Nivel Adulto (S/ 25)</option>
+                            <option value="Libre">Categoría Libre (S/ 25)</option>
+                        </select>
+                    </div>
+                    <div class="voley-input-group">
+                        <label class="voley-label">Fecha del Pago</label>
+                        <input type="date" name="fecha_pago" id="fecha_pago" class="voley-input" readonly required>
+                    </div>
+                    <div class="voley-input-group">
+                        <label class="voley-label">Medio de Pago</label>
+                        <select name="medio_pago" id="medio_pago" class="voley-input" required>
+                            <option value="Yape">Yape</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                    </div>
+                    <div class="voley-input-group" id="codigo_operacion_group">
+                        <label class="voley-label">Código de Operación</label>
+                        <input type="text" name="codigo_operacion" id="codigo_operacion" class="voley-input" pattern="[A-Za-z0-9]{8,20}" title="Debe contener entre 8 y 20 caracteres alfanuméricos">
+                    </div>
+                    <div class="voley-input-group">
+                        <label class="voley-label">Comprobante de Pago</label>
+                        <input type="file" name="comprobante_pago" class="voley-input" accept=".jpg,.jpeg,.png,.pdf" required>
+                    </div>
+                    <div class="voley-input-group col-span-2">
+                        <h3 class="voley-label mb-2">Términos y Condiciones</h3>
+                        <ul class="list-disc pl-6 mb-4 text-gray-700">
+                            <li>El pago de la matrícula (S/ 25) es obligatorio para completar la inscripción y no es reembolsable.</li>
+                            <li>La academia no se responsabiliza por lesiones o accidentes ocurridos durante las sesiones, aunque se tomarán todas las medidas de seguridad necesarias.</li>
+                            <li>Es obligatorio presentar un comprobante de pago válido para procesar la inscripción.</li>
+                            <li>Los datos proporcionados en este formulario serán tratados con confidencialidad y solo se utilizarán para fines administrativos de la academia.</li>
+                            <li>Los menores de edad deben contar con la autorización de un apoderado para participar en las actividades.</li>
+                        </ul>
+                        <label class="voley-label flex items-center mt-2">
+                            <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones" class="voley-checkbox mr-2" required>
+                            <span>Acepto los términos y condiciones</span>
+                        </label>
                     </div>
                 </div>
                 <div class="voley-form-navigation">
@@ -183,13 +268,15 @@
             </div>
         </form>
     </div>
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" title="Volver arriba">
-        <img src="{{ url_for('static', filename='img/pelota.png') }}" alt="Balón de voley">
-    </button>
     <script src="{{ url_for('static', filename='js/formulario.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/back-to-top.js') }}"></script>
+    <div id="success-modal" class="voley-modal hidden">
+    <div class="voley-modal-content">
+        <i class="fas fa-check-circle voley-modal-icon"></i>
+        <h3>¡Registro Exitoso!</h3>
+        <p>Tu inscripción ha sido enviada correctamente. Serás redirigido a la página principal.</p>
+        <button id="modal-ok-btn" class="voley-modal-button" onclick="window.location.href='/'">OK</button>
+    </div>
+</div>
 </body>
 </html>
-```
