@@ -45,55 +45,64 @@
         </div>
         <form id="registroForm" method="POST" action="{{ url_for('registrar_usuario') }}" class="voley-form" enctype="multipart/form-data">
             <!-- Paso 1 -->
-            <div class="voley-form-step active" data-step="1">
-                <h2 class="voley-form-title">
-                    <i class="fas fa-user-circle mr-2"></i>Información personal
-                </h2>
-                <div class="voley-form-grid">
-                    <div class="voley-input-group">
-                        <label class="voley-label">Nombre</label>
-                        <input type="text" name="nombre" class="voley-input" required>
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Apellidos</label>
-                        <input type="text" name="apellidos" class="voley-input" required>
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Fecha de Nacimiento</label>
-                        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="voley-input" required>
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Edad</label>
-                        <input type="number" name="edad" id="edad" class="voley-input" required readonly>
-                    </div>
-                    <div class="voley-input-group">
-                    <label class="voley-label">Correo Electrónico</label>
-                    <input type="email" name="email" id="email" class="voley-input">
-                    <span id="email-info" class="text-sm text-gray-600 hidden">
-                    </span>
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Dirección</label>
-                        <input type="text" name="direccion" class="voley-input">
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Tipo de Documento</label>
-                        <select name="tipo_documento" id="tipo_documento" class="voley-input" required>
-                            <option value="DNI">DNI</option>
-                            <option value="CE">Carnet de Extranjería</option>
-                        </select>
-                    </div>
-                    <div class="voley-input-group">
-                        <label class="voley-label">Número de Documento</label>
-                        <input type="text" name="numero_documento" id="numero_documento" class="voley-input" required maxlength="12" pattern="[0-9]{8}|[A-Za-z0-9]{1,12}">
-                    </div>
-                </div>
-                <div class="voley-form-navigation">
-                    <button type="button" class="voley-next-btn">
-                        Siguiente <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
+<div class="voley-form-step active" data-step="1">
+    <h2 class="voley-form-title">
+        <i class="fas fa-user-circle mr-2"></i>Información personal
+    </h2>
+    <div class="voley-form-grid">
+        <div class="voley-input-group">
+            <label class="voley-label">Nombre</label>
+            <input type="text" name="nombre" class="voley-input" required>
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Apellidos</label>
+            <input type="text" name="apellidos" class="voley-input" required>
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Fecha de Nacimiento</label>
+            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="voley-input" required>
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Edad</label>
+            <input type="number" name="edad" id="edad" class="voley-input" required readonly>
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Correo Electrónico</label>
+            <input type="text" name="email" id="email" class="voley-input" placeholder="ejemplo@dominio.com">
+            <span id="email-info" class="text-sm text-gray-600 hidden">
+            </span>
+        </div>
+        <!-- Campo de teléfono agregado -->
+        <div class="voley-input-group">
+            <label class="voley-label">Teléfono/Celular</label>
+            <input type="tel" name="telefono" id="telefono" class="voley-input" 
+                   required 
+                   pattern="[0-9]{9}" 
+                   title="Ingrese un número de 9 dígitos" 
+                   placeholder="912345678">
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Dirección</label>
+            <input type="text" name="direccion" class="voley-input">
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Tipo de Documento</label>
+            <select name="tipo_documento" id="tipo_documento" class="voley-input" required>
+                <option value="DNI">DNI</option>
+                <option value="CE">Carnet de Extranjería</option>
+            </select>
+        </div>
+        <div class="voley-input-group">
+            <label class="voley-label">Número de Documento</label>
+            <input type="text" name="numero_documento" id="numero_documento" class="voley-input" required maxlength="12" pattern="[0-9]{8}|[A-Za-z0-9]{1,12}">
+        </div>
+    </div>
+    <div class="voley-form-navigation">
+        <button type="button" class="voley-next-btn">
+            Siguiente <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+    </div>
+</div>
             <!-- Paso 2 -->
             <div class="voley-form-step" data-step="2" id="apoderado-form">
                 <h2 class="voley-form-title">
@@ -101,7 +110,7 @@
                 </h2>
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
-                        <label class="voley-label">Nombre del Apoderado</label>
+                        <label class="voley-label">Nombre y Apellido</label>
                         <input type="text" name="nombre_apoderado" id="nombre_apoderado" class="voley-input">
                     </div>
                     <div class="voley-input-group">

@@ -30,7 +30,7 @@ body {
 }
 
 body {
-    background: url('/static/img/galeria6.jpg') no-repeat center center fixed;
+    background: url('/static/img/voley_peruano.jpg') no-repeat center center fixed;
     background-size: cover;
     min-height: 100vh;
 }
@@ -496,3 +496,54 @@ select.voley-input:focus {
     margin-top: 0.3rem;
 }
 
+/* Animación para los pasos del formulario */
+.pasos-formulario {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.paso {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0.5rem;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.paso.activo {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.paso:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    z-index: -1;
+}
+
+.paso.completado::after {
+    background-color: #28a745;
+}
+
+/* Para el formulario de apoderado */
+#formularioApoderado {
+    display: none;
+    transition: all 0.3s ease;
+}
+
+#formularioApoderado.mostrar {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
