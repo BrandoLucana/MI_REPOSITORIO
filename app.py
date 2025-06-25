@@ -711,7 +711,7 @@ def noticias():
 
 @app.route('/nosotros')
 def nosotros():
-    return render_template('nosotros')
+    return render_template('nosotros.html')
 
 @app.route('/inscripciones')
 def inscripciones():
