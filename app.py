@@ -4,6 +4,9 @@ from datetime import datetime
 import os
 import logging
 from werkzeug.utils import secure_filename
+import uuid
+import re
+
 
 # Configuración básica
 logging.basicConfig(level=logging.DEBUG)
@@ -65,7 +68,8 @@ def index():
 
 @app.route('/formulario')
 def formulario():
-    return render_template('formulario_unificado.html')
+    session['form_token'] = str(uuid.uuid4())  # Generar token único para el formulario
+    return render_template('formulario_unificado.html', form_token=session['form_token'])
 
 @app.route('/lista_usuarios')
 def lista_usuarios():
@@ -100,6 +104,15 @@ def verificar_email():
 
 @app.route('/registrar_usuario', methods=['POST'])
 def registrar_usuario():
+    logger.info(f"Recibida solicitud POST /registrar_usuario: {request.form}")
+    
+    # Verificar token para evitar duplicados
+    form_token = request.form.get('form_token')
+    if form_token != session.get('form_token'):
+        logger.warning("Solicitud duplicada o inválida detectada")
+        return jsonify({"éxito": False, "mensaje": "Solicitud duplicada o inválida"}), 400
+    session.pop('form_token', None)
+    
     conn = None
     cursor = None
     try:
@@ -137,6 +150,43 @@ def registrar_usuario():
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
+
+        # Validar código de operación según el medio de pago
+        medio_pago = request.form.get('medio_pago', 'Efectivo')
+        codigo_operacion = request.form.get('codigo_operacion', '').strip()
+
+        if medio_pago == 'Efectivo':
+            if codigo_operacion:
+                    return jsonify({
+                        "éxito": False,
+                        "mensaje": "No debe ingresar código de operación si paga en efectivo.",
+                        "campo": "codigo_operacion"
+                    }), 400
+            codigo_operacion = None  # asegurar que vaya como NULL a la BD
+
+        elif medio_pago == 'Yape':
+            if not re.fullmatch(r'[0-9]{8,12}', codigo_operacion):
+                    return jsonify({
+                        "éxito": False,
+                        "mensaje": "El código de operación para Yape debe tener entre 8 y 12 dígitos numéricos.",
+                        "campo": "codigo_operacion"
+                    }), 400
+
+        elif medio_pago == 'Transferencia':
+            if not re.fullmatch(r'[A-Za-z0-9]{8,20}', codigo_operacion):
+                    return jsonify({
+                        "éxito": False,
+                        "mensaje": "El código de operación para Transferencia debe tener entre 8 y 20 caracteres alfanuméricos.",
+                        "campo": "codigo_operacion"
+                    }), 400
+
+            else:
+                return jsonify({
+                    "éxito": False,
+                    "mensaje": "Medio de pago no válido.",
+                    "campo": "medio_pago"
+                }), 400
+
 
         # Insertar usuario
         datos_usuario = {
@@ -211,8 +261,8 @@ def registrar_usuario():
             'usuario_id': usuario_id,
             'paquete': request.form.get('paquete', 'Infantil'),
             'fecha_pago': datetime.now().date(),
-            'medio_pago': request.form.get('medio_pago', 'Efectivo'),
-            'codigo_operacion': request.form.get('codigo_operacion', None),
+            'medio_pago': medio_pago,
+            'codigo_operacion': codigo_operacion,
             'comprobante_ruta': filepath,
             'monto': float(request.form.get('monto', 25.00)),
             'estado': 'Pendiente'
@@ -246,6 +296,12 @@ def registrar_usuario():
                 "mensaje": "Error en la estructura de la base de datos",
                 "campo": None
             }), 500
+        elif e.errno == 3819:
+            return jsonify({
+                "éxito": False,
+                "mensaje": "El código de operación no es válido. Revisa el formato según el medio de pago.",
+                "campo": "codigo_operacion"
+            }), 400
         elif "Duplicate entry" in str(e):
             logger.info("Intento de duplicado detectado. Ignorando registro adicional.")
             return jsonify({
@@ -258,6 +314,11 @@ def registrar_usuario():
             "mensaje": f"Error de base de datos: {str(e)}",
             "campo": None
         }), 500
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 @app.route('/obtener_usuarios')
@@ -290,10 +351,6 @@ def obtener_usuarios():
             cursor.close()
         if conn:
             conn.close()
-            
-            
-            
-            
 
 @app.route('/eliminar_usuario/<int:id>', methods=['POST'])
 def eliminar_usuario(id):
@@ -540,12 +597,9 @@ def registro_torneo():
             else:
                 flash('No se pudo conectar a la base de datos para cargar los torneos.', 'error')
                 logger.error('Conexión fallida al cargar torneos.')
-        except mysql.connector.Error as e:
+        except Exception as e:
             logger.error(f'Error al cargar torneos: {str(e)}')
             flash(f'Error al cargar torneos: {str(e)}', 'error')
-        except Exception as e:
-            logger.error(f'Error inesperado al cargar torneos: {str(e)}')
-            flash(f'Error inesperado al cargar torneos: {str(e)}', 'error')
         finally:
             if cursor:
                 cursor.close()
@@ -569,23 +623,15 @@ def eliminar_torneo(id):
         conn.commit()
         return jsonify({
             'éxito': True,
-            'mensaje': 'Torneo eliminado exitosamente!'
+            'mensaje': 'Confirmado, torneo eliminado con éxito.'
         })
-    except mysql.connector.Error as e:
+    except Exception as e:
         logger.error(f'Error al eliminar torneo: {str(e)}')
         if conn:
             conn.rollback()
         return jsonify({
-            'éxito': False,
-            'mensaje': f'Error al eliminar torneo: {str(e)}'
-        }), 500
-    except Exception as e:
-        logger.error(f'Error inesperado al eliminar torneo: {str(e)}')
-        if conn:
-            conn.rollback()
-        return jsonify({
-            'éxito': False,
-            'mensaje': f'Error inesperado al eliminar torneo: {str(e)}'
+            "éxito": False,
+            "mensaje": f"Error al eliminar torneo: {str(e)}"
         }), 500
     finally:
         if cursor:
@@ -619,7 +665,7 @@ def login_admin():
         else:
             flash("Credenciales incorrectas", "error")
     
-    return render_template('login_admin.html')
+    return render_template('login_admin')
 
 @app.route('/logout-admin')
 def logout_admin():
@@ -665,14 +711,14 @@ def noticias():
 
 @app.route('/nosotros')
 def nosotros():
-    return render_template('nosotros.html')
+    return render_template('nosotros')
 
 @app.route('/inscripciones')
 def inscripciones():
     return render_template('inscripciones.html')
 
 @app.route('/usuarios-panel')
-def panel_usuarios():
+def usuarios_panel():
     return render_template('usuarios.html')
 
 @app.route('/torneos-panel')
@@ -690,12 +736,9 @@ def panel_torneos():
         else:
             flash('No se pudo conectar a la base de datos para cargar los torneos.', 'error')
             logger.error('Conexión fallida al cargar torneos.')
-    except mysql.connector.Error as e:
+    except Exception as e:
         logger.error(f'Error al cargar torneos: {str(e)}')
         flash(f'Error al cargar torneos: {str(e)}', 'error')
-    except Exception as e:
-        logger.error(f'Error inesperado al cargar torneos: {str(e)}')
-        flash(f'Error inesperado al cargar torneos: {str(e)}', 'error')
     finally:
         if cursor:
             cursor.close()
@@ -726,12 +769,9 @@ def inscripcion_equipos():
         else:
             flash('No se pudo conectar a la base de datos para cargar los equipos.', 'error')
             logger.error('Conexión fallida al cargar equipos.')
-    except mysql.connector.Error as e:
+    except Exception as e:
         logger.error(f'Error al cargar equipos: {str(e)}')
         flash(f'Error al cargar equipos: {str(e)}', 'error')
-    except Exception as e:
-        logger.error(f'Error inesperado al cargar equipos: {str(e)}')
-        flash(f'Error inesperado al cargar equipos: {str(e)}', 'error')
     finally:
         if cursor:
             cursor.close()

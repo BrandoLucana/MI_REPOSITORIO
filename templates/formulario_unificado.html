@@ -44,6 +44,7 @@
             </div>
         </div>
         <form id="registroForm" method="POST" action="{{ url_for('registrar_usuario') }}" class="voley-form" enctype="multipart/form-data">
+            <input type="hidden" name="form_token" value="{{ form_token }}">
             <!-- Paso 1 -->
             <div class="voley-form-step active" data-step="1">
                 <h2 class="voley-form-title">
@@ -67,10 +68,9 @@
                         <input type="number" name="edad" id="edad" class="voley-input" required readonly>
                     </div>
                     <div class="voley-input-group">
-                    <label class="voley-label">Correo Electrónico</label>
-                    <input type="email" name="email" id="email" class="voley-input">
-                    <span id="email-info" class="text-sm text-gray-600 hidden">
-                    </span>
+                        <label class="voley-label">Correo Electrónico</label>
+                        <input type="email" name="email" id="email" class="voley-input">
+                        <span id="email-info" class="text-sm text-gray-600 hidden"></span>
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Dirección</label>
@@ -105,8 +105,8 @@
                         <input type="text" name="nombre_apoderado" id="nombre_apoderado" class="voley-input">
                     </div>
                     <div class="voley-input-group">
-                    <label class="voley-label">Teléfono</label>
-                    <input type="tel" name="telefono_apoderado" id="telefono_apoderado" class="voley-input" maxlength="9">
+                        <label class="voley-label">Teléfono</label>
+                        <input type="tel" name="telefono_apoderado" id="telefono_apoderado" class="voley-input" maxlength="9">
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Correo Electrónico</label>
@@ -147,7 +147,6 @@
                 <h2 class="voley-form-title">
                     <i class="fas fa-volleyball-ball mr-2"></i>Datos Deportivos
                 </h2>
-
                 <div class="voley-form-grid">
                     <div class="voley-input-group">
                         <label class="voley-label">Nivel Actual</label>
@@ -171,14 +170,14 @@
                         </div>
                     </div>
                     <div class="voley-input-group">
-                    <label class="voley-label">Posición preferida</label>
-                    <select name="posicion" class="voley-input">
-                <option value="Armador">Armador</option>
-                <option value="Opuesto">Opuesto</option>
-                <option value="Punta Receptora">Punta Receptora</option>
-                <option value="Central">Central</option>
-                <option value="Libero">Libero</option>
-                <option value="Defensa">Defensa</option>
+                        <label class="voley-label">Posición preferida</label>
+                        <select name="posicion" class="voley-input">
+                            <option value="Armador">Armador</option>
+                            <option value="Opuesto">Opuesto</option>
+                            <option value="Punta Receptora">Punta Receptora</option>
+                            <option value="Central">Central</option>
+                            <option value="Libero">Libero</option>
+                            <option value="Defensa">Defensa</option>
                         </select>
                     </div>
                     <div class="voley-input-group">
@@ -214,15 +213,15 @@
                     </p>
                 </div>
                 <div class="voley-form-grid">
-                    <div class="voley-input-group">
-                        <label class="voley-label">Paquete Seleccionado</label>
-                        <select name="paquete" class="voley-input" required>
-                            <option value="Infantil">Nivel Infantil (S/ 25)</option>
-                            <option value="Juvenil">Nivel Juvenil (S/ 25)</option>
-                            <option value="Adulto">Nivel Adulto (S/ 25)</option>
-                            <option value="Libre">Categoría Libre (S/ 25)</option>
-                        </select>
-                    </div>
+                        <div class="voley-input-group">
+                            <label class="voley-label">Paquete Seleccionado</label>
+                            <select name="paquete" class="voley-input" required>
+                                <option value="Infantil">Nivel Infantil (S/ 25)</option>
+                                <option value="Juvenil">Nivel Juvenil (S/ 25)</option>
+                                <option value="Adulto">Nivel Adulto (S/ 25)</option>
+                                <option value="Libre">Categoría Libre (S/ 25)</option>
+                            </select>
+                        </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Fecha del Pago</label>
                         <input type="date" name="fecha_pago" id="fecha_pago" class="voley-input" readonly required>
@@ -232,11 +231,12 @@
                         <select name="medio_pago" id="medio_pago" class="voley-input" required>
                             <option value="Yape">Yape</option>
                             <option value="Transferencia">Transferencia</option>
+                            <option value="Efectivo">Efectivo</option>
                         </select>
                     </div>
                     <div class="voley-input-group" id="codigo_operacion_group">
                         <label class="voley-label">Código de Operación</label>
-                        <input type="text" name="codigo_operacion" id="codigo_operacion" class="voley-input" pattern="[A-Za-z0-9]{8,20}" title="Debe contener entre 8 y 20 caracteres alfanuméricos">
+                        <input type="text" name="codigo_operacion" id="codigo_operacion"class="voley-input" maxlength="20" pattern=".{8,20}" title="Debe tener entre 8 y 20 caracteres según el medio de pago">
                     </div>
                     <div class="voley-input-group">
                         <label class="voley-label">Comprobante de Pago</label>
@@ -261,7 +261,7 @@
                     <button type="button" class="voley-prev-btn">
                         <i class="fas fa-arrow-left mr-2"></i> Anterior
                     </button>
-                    <button type="submit" class="voley-submit-btn">
+                    <button type="submit" class="voley-submit-btn" id="submitButton">
                         <i class="fas fa-paper-plane mr-2"></i> Enviar registro
                     </button>
                 </div>
@@ -271,12 +271,12 @@
     <script src="{{ url_for('static', filename='js/formulario.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
     <div id="success-modal" class="voley-modal hidden">
-    <div class="voley-modal-content">
-        <i class="fas fa-check-circle voley-modal-icon"></i>
-        <h3>¡Registro Exitoso!</h3>
-        <p>Tu inscripción ha sido enviada correctamente. Serás redirigido a la página principal.</p>
-        <button id="modal-ok-btn" class="voley-modal-button" onclick="window.location.href='/'">OK</button>
+        <div class="voley-modal-content">
+            <i class="fas fa-check-circle voley-modal-icon"></i>
+            <h3>¡Registro Exitoso!</h3>
+            <p>Tu inscripción ha sido enviada correctamente. Serás redirigido a la página principal.</p>
+            <button id="modal-ok-btn" class="voley-modal-button">OK</button>
+        </div>
     </div>
-</div>
 </body>
 </html>
