@@ -1,0 +1,29 @@
+.boton-subir {
+    position: fixed;
+    right: 20px;
+    bottom: 250px; /* 60px arriba del botón de TikTok (que está en bottom: 100px) */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: url('../img/pelota.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9998; /* Un z-index menor que el de TikTok (9999) */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: none;
+    outline: none;
+}
+
+.boton-subir.mostrar {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.boton-subir:hover {
+    transform: scale(1.1) !important;
+}
