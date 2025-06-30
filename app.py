@@ -4,6 +4,11 @@ import mysql.connector
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Cargar variables del archivo .env
+
 
 # Configuración de logging
 logging.basicConfig(level=logging.DEBUG)
@@ -16,12 +21,13 @@ app.secret_key = '981837328rds'  # Usa una clave segura (puedes generar una con 
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
-            host="database-2.cbch08rjasxu.us-east-1.rds.amazonaws.com",
-            user="admin",
-            password="981837328rds",
-            database="pasion_por_el_voley",
-            connect_timeout=5
-        )
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
+    connect_timeout=5
+)
+
         logger.info("Conexión a la base de datos establecida correctamente")
         return conn
     except mysql.connector.Error as err:
@@ -473,4 +479,4 @@ def nosotros():
     return render_template('nosotros.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
