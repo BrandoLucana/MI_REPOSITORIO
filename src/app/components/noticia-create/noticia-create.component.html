@@ -1,0 +1,109 @@
+<!-- src/app/components/noticia-create/noticia-create.component.html -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Crear Nueva Noticia</h4>
+        </div>
+        
+        <div class="card-body">
+          <!-- Título -->
+          <div class="mb-3">
+            <label class="form-label">Título *</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="titulo" 
+                   (input)="onTituloChange()"
+                   maxlength="200"
+                   required>
+            <small class="text-muted">Mínimo 5 caracteres, máximo 200. Sin caracteres especiales ni espacios múltiples.</small>
+          </div>
+
+          <!-- Contenido -->
+          <div class="mb-3">
+            <label class="form-label">Contenido *</label>
+            <textarea class="form-control" rows="10"
+                      [(ngModel)]="contenido"
+                      (input)="onContenidoChange()"
+                      placeholder="Escriba aquí el contenido de la noticia (1500-2500 palabras)"
+                      required></textarea>
+            <div class="d-flex justify-content-between mt-2">
+              <small class="text-muted">Palabras: {{ palabrasCount }}</small>
+              <small class="text-muted" [ngClass]="{'text-success': palabrasCount >= 1500 && palabrasCount <= 2500, 'text-danger': palabrasCount < 1500 || palabrasCount > 2500}">
+                Requerido: 1500-2500 palabras
+              </small>
+            </div>
+          </div>
+
+          <!-- Corresponsal -->
+          <div class="mb-3">
+            <label class="form-label">Corresponsal *</label>
+            <select class="form-select" [(ngModel)]="corresponsalId" required>
+              <option value="">Seleccione un corresponsal</option>
+              <option *ngFor="let c of corresponsales" [value]="c.id">
+                {{ c.fullName }} ({{ c.numeroDocumento }}) - {{ c.centroPoblado }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Fotos -->
+          <div class="mb-3">
+            <label class="form-label">Fotos * (Mínimo 1, máximo 3)</label>
+            <input type="file" class="form-control" 
+                   id="fotosInput"
+                   accept="image/*"
+                   multiple
+                   (change)="onFotosSeleccionadas($event)"
+                   required>
+            <div class="mt-2">
+              <small class="text-muted">Formatos aceptados: JPG, PNG, GIF</small>
+              <div *ngIf="fotos.length > 0" class="mt-1">
+                <span class="badge bg-info">{{ fotos.length }} foto(s) seleccionada(s)</span>
+                <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="limpiarFotos()">
+                  <i class="bi bi-x"></i> Limpiar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video -->
+          <div class="mb-4">
+            <label class="form-label">Video (Opcional)</label>
+            <input type="file" class="form-control" 
+                   id="videoInput"
+                   accept="video/*"
+                   (change)="onVideoSeleccionado($event)">
+            <small class="text-muted">Formatos aceptados: MP4, AVI, MOV</small>
+            <div *ngIf="video" class="mt-1">
+              <span class="badge bg-info">Video seleccionado: {{ video.name }}</span>
+              <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="limpiarVideo()">
+                <i class="bi bi-x"></i> Eliminar
+              </button>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+          </div>
+
+          <!-- Botones -->
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-secondary" (click)="cancelar()" [disabled]="loading">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" (click)="onSubmit()" [disabled]="loading">
+              <span *ngIf="!loading">
+                <i class="bi bi-check-circle"></i> Crear Noticia
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Creando...
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

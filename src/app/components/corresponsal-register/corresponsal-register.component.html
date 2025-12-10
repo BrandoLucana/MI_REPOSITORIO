@@ -1,0 +1,79 @@
+<!-- src/app/components/corresponsal-register/corresponsal-register.component.html -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0"><i class="bi bi-person-plus"></i> Registrar Nuevo Corresponsal</h4>
+        </div>
+        
+        <div class="card-body">
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label class="form-label">Nombre Completo *</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="fullName" 
+                   (input)="onNombreChange()"
+                   maxlength="100"
+                   required>
+            <small class="text-muted">Solo letras y espacios. Mínimo 3 caracteres.</small>
+          </div>
+
+          <!-- Documento -->
+          <div class="mb-3">
+            <label class="form-label">Número de Documento *</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="numeroDocumento" 
+                   (input)="onDocumentoChange()"
+                   maxlength="12"
+                   required>
+            <small class="text-muted">Entre 8 y 12 dígitos. Solo números.</small>
+          </div>
+
+          <!-- Ubigeo -->
+          <div class="mb-3">
+            <label class="form-label">Ubigeo *</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="ubigeo" 
+                   (input)="onUbigeoChange()"
+                   maxlength="6"
+                   required>
+            <small class="text-muted">6 dígitos exactos. Solo números.</small>
+          </div>
+
+          <!-- Centro Poblado -->
+          <div class="mb-4">
+            <label class="form-label">Centro Poblado *</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="centroPoblado" 
+                   (input)="onCentroPobladoChange()"
+                   maxlength="100"
+                   required>
+            <small class="text-muted">Mínimo 3 caracteres. Sin caracteres especiales.</small>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+          </div>
+
+          <!-- Botones -->
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-secondary" (click)="cancelar()" [disabled]="loading">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+            <button class="btn btn-success" (click)="onSubmit()" [disabled]="loading">
+              <span *ngIf="!loading">
+                <i class="bi bi-check-circle"></i> Registrar
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Registrando...
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

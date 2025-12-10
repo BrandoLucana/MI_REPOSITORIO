@@ -1,0 +1,148 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  color: #1a237e;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1a237e;
+}
+
+.form-group small {
+  display: block;
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.radio-label input[type="radio"] {
+  margin: 0;
+}
+
+.mensaje {
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.mensaje.exito {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
+}
+
+.mensaje.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.btn.primary {
+  background-color: #1a237e;
+  color: white;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background-color: #283593;
+}
+
+.btn.primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn.secondary {
+  background-color: #757575;
+  color: white;
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background-color: #616161;
+}
+
+.info-box {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  border-left: 4px solid #1a237e;
+}
+
+.info-box h4 {
+  margin-top: 0;
+  color: #1a237e;
+}
+
+.info-box ul {
+  margin: 0.5rem 0 0 0;
+  padding-left: 1.5rem;
+}
+
+.info-box li {
+  margin-bottom: 0.25rem;
+  color: #555;
+}

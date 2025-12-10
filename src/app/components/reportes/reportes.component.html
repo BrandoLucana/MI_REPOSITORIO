@@ -1,0 +1,167 @@
+<!-- src/app/components/reportes/reportes.component.html -->
+<div class="container mt-4">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-0">📊 Reportes del Sistema</h2>
+      <p class="text-muted mb-0">Generación de reportes en formato PDF</p>
+    </div>
+    <div>
+      <a routerLink="/noticias" class="btn btn-outline-secondary me-2">
+        <i class="bi bi-arrow-left"></i> Volver a Noticias
+      </a>
+      <a routerLink="/" class="btn btn-outline-primary">
+        <i class="bi bi-house"></i> Inicio
+      </a>
+    </div>
+  </div>
+
+  <!-- Generar Reporte Completo -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">
+        <i class="bi bi-file-earmark-pdf"></i> Reporte Completo
+      </h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        Genera un reporte completo en PDF que incluye:
+      </p>
+      <ul>
+        <li>Lista de todos los corresponsales registrados</li>
+        <li>Lista de todas las noticias publicadas</li>
+        <li>Estadísticas del sistema</li>
+      </ul>
+      <button class="btn btn-primary" 
+              (click)="generarReporteCompleto()"
+              [disabled]="generandoReporte">
+        <span *ngIf="!generandoReporte">
+          <i class="bi bi-download"></i> Generar Reporte Completo
+        </span>
+        <span *ngIf="generandoReporte">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Generando...
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card bg-info text-white h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Noticias</h5>
+          <h1 class="display-4">{{ noticias.length }}</h1>
+          <small>Todas las noticias</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-success text-white h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Noticias Activas</h5>
+          <h1 class="display-4">{{ contarNoticiasActivas() }}</h1>
+          <small>Publicadas y visibles</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-secondary text-white h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Noticias Hoy</h5>
+          <h1 class="display-4">{{ contarNoticiasHoy() }}</h1>
+          <small>Publicadas hoy</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-warning text-white h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Inactivas</h5>
+          <h1 class="display-4">{{ contarNoticiasInactivas() }}</h1>
+          <small>No visibles</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de Noticias Recientes -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">
+        <i class="bi bi-newspaper"></i> Noticias Recientes
+      </h5>
+    </div>
+    <div class="card-body">
+      <div *ngIf="noticias.length === 0" class="text-center py-3">
+        <p class="text-muted">No hay noticias registradas</p>
+      </div>
+      
+      <div *ngIf="noticias.length > 0">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Corresponsal</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Palabras</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let noticia of noticias.slice(0, 10)">
+                <td>{{ noticia.id }}</td>
+                <td>{{ noticia.titulo | slice:0:50 }}...</td>
+                <td>{{ noticia.corresponsal?.fullName || 'N/A' }}</td>
+                <td>{{ formatearFecha(noticia.publishDate) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bg-success': noticia.active,
+                    'bg-secondary': !noticia.active
+                  }">
+                    {{ noticia.active ? 'Activa' : 'Inactiva' }}
+                  </span>
+                </td>
+                <td>{{ noticia.palabras || contarPalabras(noticia.contenido) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-end mt-2">
+          <small class="text-muted">Mostrando {{ noticias.slice(0, 10).length }} de {{ noticias.length }} noticias</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información del Sistema -->
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h5 class="mb-0">
+        <i class="bi bi-info-circle"></i> Información del Sistema
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h6>Fecha y Hora del Servidor:</h6>
+          <p class="text-muted">{{ getFechaHoraActual() }}</p>
+        </div>
+        <div class="col-md-6">
+          <h6>Servicio Backend:</h6>
+          <p class="text-muted">
+            <span class="badge bg-success">Conectado</span>
+            http://localhost:8085
+          </p>
+        </div>
+      </div>
+      <div class="alert alert-info mt-3">
+        <i class="bi bi-lightbulb"></i>
+        <strong>Nota:</strong> Los reportes se generan en tiempo real directamente desde la base de datos.
+      </div>
+    </div>
+  </div>
+</div>

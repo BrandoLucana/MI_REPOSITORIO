@@ -1,0 +1,300 @@
+<!-- src/app/components/noticia-list/noticia-list.component.html -->
+<div class="container mt-4">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-0">📰 Todas las Noticias</h2>
+      <p class="text-muted mb-0">Gestión completa de noticias del sistema</p>
+    </div>
+    <div>
+      <a routerLink="/crear-noticia" class="btn btn-primary me-2">
+        <i class="bi bi-plus-circle"></i> Crear Noticia
+      </a>
+      <a routerLink="/" class="btn btn-outline-secondary">
+        <i class="bi bi-house"></i> Inicio
+      </a>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total</h5>
+          <h2 class="mb-0">{{ noticias.length }}</h2>
+          <small>Noticias</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Activas</h5>
+          <h2 class="mb-0">{{ contarActivas() }}</h2>
+          <small>Visibles</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-secondary text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Inactivas</h5>
+          <h2 class="mb-0">{{ contarInactivas() }}</h2>
+          <small>Ocultas</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Hoy</h5>
+          <h2 class="mb-0">{{ noticiasHoy }}</h2>
+          <small>Publicadas hoy</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros, búsqueda y botón de reporte -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <!-- Filtros por estado -->
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="btn-group w-100" role="group">
+            <button type="button" class="btn btn-outline-primary" 
+                    [class.active]="filtroEstado === 'todas'"
+                    (click)="filtroEstado = 'todas'; onFiltroChange()">
+              Todas
+            </button>
+            <button type="button" class="btn btn-outline-success"
+                    [class.active]="filtroEstado === 'activas'"
+                    (click)="filtroEstado = 'activas'; onFiltroChange()">
+              Activas
+            </button>
+            <button type="button" class="btn btn-outline-secondary"
+                    [class.active]="filtroEstado === 'inactivas'"
+                    (click)="filtroEstado = 'inactivas'; onFiltroChange()">
+              Inactivas
+            </button>
+          </div>
+        </div>
+        
+        <!-- Búsqueda -->
+        <div class="col-md-5 mb-3 mb-md-0">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar por título, contenido o corresponsal..."
+                   [(ngModel)]="busqueda" (keyup.enter)="onBuscar()">
+            <button class="btn btn-outline-secondary" type="button" 
+                    (click)="limpiarBusqueda()" [disabled]="!busqueda"
+                    title="Limpiar búsqueda">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Botón de reporte PDF -->
+        <div class="col-md-3">
+          <button class="btn btn-warning w-100" 
+                  (click)="generarReporteCompleto()"
+                  [disabled]="generandoReporte"
+                  title="Generar reporte PDF con corresponsales y noticias">
+            <i class="bi bi-file-earmark-pdf"></i>
+            <span *ngIf="!generandoReporte">Generar Reporte PDF</span>
+            <span *ngIf="generandoReporte">
+              <span class="spinner-border spinner-border-sm me-2"></span>
+              Generando...
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3">Cargando noticias...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage && !loading" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+    <button class="btn btn-sm btn-outline-danger ms-2" (click)="cargarNoticias()">
+      <i class="bi bi-arrow-clockwise"></i> Reintentar
+    </button>
+  </div>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!loading && !errorMessage && noticiasFiltradas.length === 0" 
+       class="text-center py-5">
+    <i class="bi bi-newspaper display-1 text-muted"></i>
+    <h4 class="mt-3">No hay noticias encontradas</h4>
+    <p class="text-muted">
+      {{ busqueda ? 'No se encontraron noticias con ese criterio de búsqueda.' : 'No hay noticias registradas en el sistema.' }}
+    </p>
+    <a routerLink="/crear-noticia" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Crear Primera Noticia
+    </a>
+  </div>
+
+  <!-- Lista de noticias -->
+  <div *ngIf="!loading && !errorMessage && noticiasFiltradas.length > 0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <small class="text-muted">
+        <i class="bi bi-info-circle"></i> Mostrando {{ noticiasFiltradas.length }} noticias
+      </small>
+    </div>
+    
+    <div class="row">
+      <div *ngFor="let noticia of noticiasFiltradas" class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <!-- Estado -->
+          <div class="card-header" [ngClass]="{
+            'bg-success text-white': noticia.active,
+            'bg-secondary text-white': !noticia.active
+          }">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="badge" [ngClass]="{
+                'bg-light text-dark': noticia.active,
+                'bg-dark': !noticia.active
+              }">
+                <i class="bi" [class.bi-eye]="noticia.active" 
+                   [class.bi-eye-slash]="!noticia.active"></i>
+                {{ noticia.active ? 'Activa' : 'Inactiva' }}
+              </span>
+              <small class="opacity-75">#{{ noticia.id }}</small>
+            </div>
+          </div>
+          
+          <!-- Contenido -->
+          <div class="card-body">
+            <h5 class="card-title text-truncate" [title]="noticia.titulo">{{ noticia.titulo }}</h5>
+            <p class="card-text text-muted small" style="height: 60px; overflow: hidden;">
+              {{ noticia.contenido.substring(0, 100) }}...
+            </p>
+            
+            <!-- Información rápida -->
+            <div class="small mb-3">
+              <div><i class="bi bi-fonts"></i> {{ noticia.palabras || contarPalabras(noticia.contenido) }} palabras</div>
+              <div><i class="bi bi-image"></i> {{ noticia.fotos?.length || 0 }} fotos</div>
+              <div><i class="bi bi-calendar"></i> {{ formatearFecha(noticia.publishDate) }}</div>
+            </div>
+            
+            <!-- Corresponsal -->
+            <div class="border-top pt-2">
+              <small class="text-muted">Corresponsal:</small>
+              <p class="mb-0 small">
+                <strong>{{ noticia.corresponsal?.fullName || 'No asignado' }}</strong>
+                <br>
+                <small class="text-muted">{{ noticia.corresponsal?.centroPoblado || 'N/A' }}</small>
+              </p>
+            </div>
+          </div>
+          
+          <!-- Acciones - SOLO 2 botones: Editar y Desactivar/Restaurar -->
+          <div class="card-footer">
+            <div class="d-flex justify-content-between">
+              <!-- Botón Editar (abre modal) -->
+              <button class="btn btn-sm btn-outline-primary" 
+                      (click)="abrirModalEditar(noticia)"
+                      title="Editar noticia"
+                      [disabled]="!noticia.active">
+                <i class="bi bi-pencil"></i>
+                <span class="d-none d-md-inline ms-1">Editar</span>
+              </button>
+              
+              <!-- Botón Desactivar/Restaurar -->
+              <button class="btn btn-sm" 
+                      [class.btn-warning]="noticia.active"
+                      [class.btn-success]="!noticia.active"
+                      (click)="cambiarEstado(noticia)"
+                      [title]="noticia.active ? 'Desactivar noticia' : 'Activar noticia'">
+                <i class="bi" 
+                   [class.bi-toggle-off]="noticia.active"
+                   [class.bi-toggle-on]="!noticia.active"></i>
+                <span class="d-none d-md-inline ms-1">
+                  {{ noticia.active ? 'Desactivar' : 'Activar' }}
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de edición -->
+<div *ngIf="editando" class="modal-backdrop fade show" style="z-index: 1040;"></div>
+<div *ngIf="editando" class="modal fade show d-block" tabindex="-1" style="z-index: 1050;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-pencil-square"></i> Editar Noticia #{{ noticiaEditando?.id }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrarModalEditar()"></button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Título -->
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" 
+                 [(ngModel)]="editTitulo" 
+                 (input)="editTitulo = editTitulo.trim().replace(/\s{2,}/g, ' ')"
+                 maxlength="200">
+          <small class="text-muted">Máximo 200 caracteres, sin caracteres especiales</small>
+        </div>
+        
+        <!-- Contenido -->
+        <div class="mb-3">
+          <label class="form-label">Contenido</label>
+          <textarea class="form-control" rows="8"
+                    [(ngModel)]="editContenido"
+                    (input)="onEditContenidoChange()"
+                    placeholder="Entre 1500 y 2500 palabras"></textarea>
+          <div class="d-flex justify-content-between mt-2">
+            <small class="text-muted">Palabras: {{ editPalabrasCount }}</small>
+            <small class="text-muted">Requerido: 1500-2500 palabras</small>
+          </div>
+        </div>
+        
+        <!-- Fotos -->
+        <div class="mb-3">
+          <label class="form-label">Nuevas fotos (opcional, máximo 3)</label>
+          <input type="file" class="form-control" 
+                 accept="image/*"
+                 multiple
+                 (change)="onEditFotosSeleccionadas($event)">
+          <small class="text-muted">Se mantendrán las fotos existentes si no selecciona nuevas</small>
+          <div *ngIf="editFotos.length > 0" class="mt-2">
+            <small>Fotos seleccionadas: {{ editFotos.length }}</small>
+          </div>
+        </div>
+        
+        <!-- Video -->
+        <div class="mb-3">
+          <label class="form-label">Nuevo video (opcional)</label>
+          <input type="file" class="form-control" 
+                 accept="video/*"
+                 (change)="onEditVideoSeleccionado($event)">
+          <small class="text-muted">Se mantendrá el video existente si no selecciona uno nuevo</small>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalEditar()">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="guardarEdicion()">
+          <i class="bi bi-check-circle"></i> Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

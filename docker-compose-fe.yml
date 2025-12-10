@@ -1,0 +1,11 @@
+# docker-compose -f docker-compose-fe.yml up -d
+# docker-compose -f docker-compose-fe.yml down
+version: '3'
+
+services:
+  frontend:
+    image: jemith28/front-end:1.0   # cambiar por tu usuario de dockerhub
+    container_name: front-end
+    ports:
+      - "4200:4200"
+

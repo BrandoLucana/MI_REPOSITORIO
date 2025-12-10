@@ -1,0 +1,135 @@
+<!-- src/app/components/noticia-detail/noticia-detail.component.html -->
+<div class="container mt-4">
+  <!-- Botón para volver -->
+  <div class="mb-3">
+    <a routerLink="/noticias" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Volver a Noticias
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3">Cargando noticia...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage && !loading" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+  </div>
+
+  <!-- Detalle de noticia -->
+  <div *ngIf="!loading && !errorMessage && noticia" class="card shadow-lg">
+    <!-- Encabezado -->
+    <div class="card-header" [ngClass]="{
+      'bg-success text-white': noticia.active,
+      'bg-secondary text-white': !noticia.active
+    }">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h3 class="mb-1">{{ noticia.titulo }}</h3>
+          <p class="mb-0">
+            <i class="bi bi-calendar"></i> {{ formatearFecha(noticia.publishDate) }}
+          </p>
+        </div>
+        <span class="badge" [ngClass]="{
+          'bg-light text-dark': noticia.active,
+          'bg-dark': !noticia.active
+        }">
+          <i class="bi" [class.bi-eye]="noticia.active" [class.bi-eye-slash]="!noticia.active"></i>
+          {{ noticia.active ? 'Activa' : 'Inactiva' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Información básica -->
+    <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <p><i class="bi bi-fonts text-primary"></i> <strong>Palabras:</strong> {{ contarPalabras(noticia.contenido) }}</p>
+          <p><i class="bi bi-image text-primary"></i> <strong>Fotos:</strong> {{ noticia.fotos?.length || 0 }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><i class="bi bi-person-circle text-primary"></i> <strong>Corresponsal:</strong> {{ noticia.corresponsal?.fullName || 'No asignado' }}</p>
+          <p><i class="bi bi-geo-alt text-primary"></i> <strong>Ubicación:</strong> {{ noticia.corresponsal?.centroPoblado || 'N/A' }}</p>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="content-section mb-4">
+        <h5 class="border-bottom pb-2">Contenido de la Noticia</h5>
+        <div class="p-3 bg-light rounded mt-3">
+          <p style="white-space: pre-line; line-height: 1.8;">{{ noticia.contenido }}</p>
+        </div>
+      </div>
+
+      <!-- Fotos -->
+      <div *ngIf="noticia.fotos && noticia.fotos.length > 0" class="mb-4">
+        <h5 class="border-bottom pb-2">Fotos ({{ noticia.fotos.length }})</h5>
+        <div class="row mt-3">
+          <div *ngFor="let foto of noticia.fotos" class="col-md-4 mb-3">
+            <div class="card">
+              <img [src]="'http://localhost:8085/' + foto" 
+                   class="card-img-top" 
+                   alt="Foto de la noticia"
+                   style="height: 200px; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video -->
+      <div *ngIf="noticia.videoPath" class="mb-4">
+        <h5 class="border-bottom pb-2">Video</h5>
+        <div class="mt-3">
+          <video controls class="w-100 rounded" style="max-height: 400px;">
+            <source [src]="'http://localhost:8085/' + noticia.videoPath" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+          </video>
+        </div>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="border-top pt-3">
+        <div class="row">
+          <div class="col-md-6">
+            <small class="text-muted">
+              <i class="bi bi-calendar-plus"></i> <strong>Creada:</strong> {{ formatearFecha(noticia.createdAt) }}
+            </small>
+          </div>
+          <div class="col-md-6 text-end">
+            <small class="text-muted">
+              <i class="bi bi-calendar-check"></i> <strong>Actualizada:</strong> {{ formatearFecha(noticia.updatedAt) }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <a routerLink="/noticias" class="btn btn-outline-secondary">
+          <i class="bi bi-list-ul"></i> Ver todas las noticias
+        </a>
+        <a [routerLink]="['/editar-noticia', noticia.id]" 
+           class="btn btn-primary"
+           *ngIf="noticia.active">
+          <i class="bi bi-pencil"></i> Editar Noticia
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sin noticia -->
+  <div *ngIf="!loading && !errorMessage && !noticia" class="text-center py-5">
+    <i class="bi bi-exclamation-circle display-1 text-muted"></i>
+    <h3 class="mt-3">Noticia no encontrada</h3>
+    <p class="text-muted">La noticia que buscas no existe o ha sido eliminada.</p>
+    <a routerLink="/noticias" class="btn btn-primary">
+      <i class="bi bi-arrow-left"></i> Volver a Noticias
+    </a>
+  </div>
+</div>
