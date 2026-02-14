@@ -1,0 +1,36 @@
+<div class="valentine-background">
+  <div class="floating-heart heart1">❤️</div>
+  <div class="floating-heart heart2">💖</div>
+  <div class="floating-heart heart3">💕</div>
+  <div class="floating-flower flower1">🌸</div>
+  <div class="floating-flower flower2">🌹</div>
+  <div class="floating-flower flower3">🌷</div>
+  <div class="floating-flower flower4">🌺</div>
+</div>
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()" *ngIf="!showQuestion && !showName && !showHappy1 && !showHappy2 && !showHappy3 && !showHappy4 && !showError && !showCelebration" class="login-form">
+    <div class="form-header">
+      <h1>💕 Invitación Especial 💕</h1>
+      <p>Ingresa tu nombre para continuar...</p>
+    </div>
+    <div class="form-group">
+      <input 
+        type="text" 
+        [(ngModel)]="name" 
+        name="name" 
+        placeholder="Tu nombre aquí..." 
+        required
+        class="form-input"
+      >
+      <button type="submit" class="form-button">Continuar</button>
+    </div>
+  </form>
+
+  <div *ngIf="showError" class="error-modal">
+    <div class="error-content">
+      <h2>❌ Tu no eres mi amorcito</h2>
+      <p>{{ errorMessage }}</p>
+      <button (click)="closeError()" class="error-button">Intentar de nuevo</button>
+    </div>
+  </div>
+</div>

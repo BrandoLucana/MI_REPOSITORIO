@@ -1,0 +1,49 @@
+.valentine-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff69b4, #ffb6c1, #ff1493, #dc143c);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  z-index: -1;
+  overflow: hidden;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.floating-heart, .floating-flower {
+  position: absolute;
+  font-size: 2rem;
+  animation: float 6s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.floating-heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.floating-heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+.floating-heart:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+.floating-flower:nth-child(4) { top: 15%; right: 10%; animation-delay: 1s; }
+.floating-flower:nth-child(5) { bottom: 20%; right: 20%; animation-delay: 3s; }
+.floating-flower:nth-child(6) { top: 40%; left: 15%; animation-delay: 5s; }
+.floating-flower:nth-child(7) { bottom: 10%; left: 30%; animation-delay: 7s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 20, 147, 0.4);
+  z-index: 0;
+}
