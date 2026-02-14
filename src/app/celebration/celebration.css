@@ -89,7 +89,64 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar todo */
 }
+
+.gallery-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.photo-gallery {
+  display: flex;
+  justify-content: center; /* Centrar GIFs */
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.gallery-item {
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.gallery-image {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Agregar más elementos flotantes para mejorar el diseño */
+.floating-gift {
+  position: absolute;
+  font-size: 2rem;
+  animation: float 10s ease-in-out infinite, bounce 2s infinite;
+  opacity: 0.8;
+  color: #ff69b4;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: twinkle 3s ease-in-out infinite;
+  opacity: 0.6;
+  color: #ffd700;
+}
+
+.floating-gift:nth-child(7) { top: 30%; left: 10%; animation-delay: 2s; }
+.sparkle:nth-child(8) { bottom: 30%; right: 15%; animation-delay: 1s; }
 
 .hero-section {
   text-align: center;

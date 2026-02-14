@@ -76,102 +76,20 @@ export class ValentineComponent implements OnInit {
   }
 
   onNoClick() {
-    switch (this.noButtonState) {
-      case 0:
-        this.hideElement('gifContainer');
-        this.showElement('sadGifContainer');
-        this.updateNoBtn('¡Oh no! ¿Estás segura?', '#F1330A');
-        this.growSiBtn('40px', '20px 40px');
-        this.noButtonState++;
-        break;
-      case 1:
-        this.updateNoBtn('¡¿Realmente estas segura?!', '#F1330A');
-        this.hideElement('sadGifContainer');
-        this.showElement('sadGifContainer2');
-        this.growSiBtn('50px', '30px 50px');
-        this.noButtonState++;
-        break;
-      case 2:
-        this.updateNoBtn('Estás segura de verdad, ¿eh?', '#F1330A');
-        this.hideElement('sadGifContainer');
-        this.hideElement('sadGifContainer2');
-        this.showElement('sadGifContainer1');
-        this.growSiBtn('60px', '40px 60px');
-        this.noButtonState++;
-        break;
-      case 3:
-        this.updateNoBtn('¿Eres positiva?', '#F1330A');
-        this.growSiBtn('70px', '50px 70px');
-        this.noButtonState++;
-        break;
-      case 4:
-        this.updateNoBtn('Di que si por favor?', '#F1330A');
-        this.growSiBtn('80px', '60px 80px');
-        this.noButtonState++;
-        break;
-      case 5:
-        this.updateNoBtn('Solo piensa en ello', '#F1330A');
-        this.growSiBtn('90px', '70px 90px');
-        this.noButtonState++;
-        break;
-      case 6:
-        this.updateNoBtn('Si dices que no estaré muy triste', '#F1330A');
-        this.growSiBtn('100px', '80px 100px');
-        this.noButtonState++;
-        break;
-      case 7:
-        this.updateNoBtn('Estaré muy triste', '#F1330A');
-        this.growSiBtn('120px', '90px 120px');
-        this.noButtonState++;
-        break;
-      case 8:
-        this.updateNoBtn('Estaré muy muy muy triste', '#F1330A');
-        this.growSiBtn('140px', '100px 140px');
-        this.noButtonState++;
-        break;
-      case 9:
-        this.updateNoBtn('Estaré muy muy muy muy triste.', '#F1330A');
-        this.growSiBtn('160px', '110px 160px');
-        this.noButtonState++;
-        break;
-      case 10:
-        this.updateNoBtn('Vale, ya dejaré de preguntar...', '#F1330A');
-        this.growSiBtn('180px', '120px 180px');
-        this.noButtonState++;
-        break;
-      case 11:
-        this.updateNoBtn('Es broma, POR FAVOR DI SÍ', '#F1330A');
-        this.growSiBtn('200px', '130px 200px');
-        this.noButtonState++;
-        break;
-      case 12:
-        this.updateNoBtn('Estaré muy muy muy muy muy triste.', '#F1330A');
-        this.growSiBtn('220px', '140px 220px');
-        this.noButtonState++;
-        break;
-      case 13:
-        this.updateNoBtn('Estás rompiendo mi corazón :(', '#F1330A');
-        this.growSiBtn('240px', '150px 240px');
-        this.noButtonState++;
-        break;
-      case 14:
-        this.updateNoBtn('NO... ya di que si', '#F1330A');
-        this.growSiBtn('260px', '160px 260px');
-        this.noButtonState++;
-        break;
-      case 15:
-        this.updateNoBtn('Anda Siiiiiiiiiiiiiiiiiiiiiiiiiii', '#F1330A');
-        this.growSiBtn('280px', '170px 280px');
-        this.noButtonState++;
-        break;
-      case 16:
-        this.updateNoBtn('por favooooooor', '#F1330A');
-        this.hideElement('sadGifContainer');
-        this.hideElement('sadGifContainer2');
-        this.showElement('gifContainer');
-        this.hideElement('happyGifContainer');
-        this.noButtonState = 0;
-        break;
+    this.noButtonClickCount++;
+    if (this.noButtonClickCount === 1) {
+      // Primer NO: mostrar gatito llorando
+      this.hideElement('gifContainer');
+      this.showElement('sadGifContainer');
+      this.updateNoBtn('¡Oh no! ¿Estás segura?', '#F1330A');
+      this.growSiBtn('40px', '20px 40px');
+    } else if (this.noButtonClickCount >= 2) {
+      // Segundo NO o más: mostrar gatito llorando2 y quedarse
+      this.hideElement('sadGifContainer');
+      this.showElement('sadGifContainer2');
+      this.updateNoBtn('¡¿Realmente estas segura?!', '#F1330A');
+      this.growSiBtn('50px', '30px 50px');
+      // No cambiar más, se queda en llorando2
     }
   }
 
