@@ -35,40 +35,23 @@ export class ValentineComponent implements OnInit {
   }
 
   onSiClick() {
-    // Ocultar el gif triste y mostrar el gif feliz
+    // Ocultar los gifs tristes
     this.hideElement('sadGifContainer');
-    this.hideElement('sadGifContainer1');
     this.hideElement('sadGifContainer2');
-    this.hideElement('gifContainer');
-    this.showElement('happyGifContainer');
+    // Mostrar el gif feliz
+    this.showElement('gifContainer');
 
     // Ocultar los botones y pregunta
     this.hideElement('question');
     this.hideElement('siBtn');
-    document.body.classList.add('bg-green');
     this.hideElement('noBtn');
 
-    // Mostrar el mensaje específico
+    // Mostrar el mensaje
     this.showElement('messageContainer');
     const messageContainer = document.getElementById('messageContainer');
-    if (messageContainer) messageContainer.innerHTML = '¡Oh Siii! jajaja';
+    if (messageContainer) messageContainer.innerHTML = 'esto te lo dedico para ti Yass<br><img src="/images/gatitofeliz.gif" alt="Gatito Feliz" style="width: 200px; height: auto;">';
 
-    // Mostrar otros gifs después de timeouts
-    setTimeout(() => {
-      this.hideElement('happyGifContainer');
-      this.showElement('happyGifContainer2');
-    }, 1000);
-
-    setTimeout(() => {
-      this.hideElement('happyGifContainer2');
-      this.showElement('happyGifContainer3');
-    }, 2000);
-
-    setTimeout(() => {
-      this.hideElement('happyGifContainer3');
-      this.showElement('happyGifContainer4');
-    }, 3000);
-
+    // Navegar a celebration después de 3 segundos
     setTimeout(() => {
       this.router.navigate(['/celebration']);
     }, 3000);
