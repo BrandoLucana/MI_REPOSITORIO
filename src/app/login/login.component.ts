@@ -58,11 +58,11 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onSubmit() {
-    if (this.name.toLowerCase() === 'jassira') {
+    if (this.name.toLowerCase() === 'yassira') {
       this.router.navigate(['/valentine']);
     } else {
       this.showError = true;
-      this.errorMessage = '¡Ups! Solo Jassira puede entrar aqui y en mi corazòn ,vete porque ella es celosa 👻';
+      this.errorMessage = '¡Ups! Solo Yassira puede entrar aqui y en mi corazòn ,vete porque ella es celosa 👻';
     }
   }
 
